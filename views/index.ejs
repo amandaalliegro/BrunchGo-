@@ -1,17 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Home Page</title>
 
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+<head>
+  <title>Home Page</title>
 
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
-  </head>
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
-  <body>
-    <h1>Hello World!</h1>
-  </body>
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+  <script type="text/javascript" src="/scripts/client-helpers.js"></script>
+</head>
+
+<body>
+  <div class="cart-container">
+    <div class="cart-header">
+      <h1>Cart</h1>
+    </div>
+    <div class="cart-items">
+      <div class="cart-item">
+        <div>IMG</div>
+        <div>
+          <h2>Poutine</h2>
+          <div class="cart-item-buttons">
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </div>
+
+        </div>
+        <button class="cart-item-remove">X</button>
+      </div>
+      <div class="cart-item">
+        <div>IMG</div>
+        <div>
+          <h2>Milkshake</h2>
+          <div class="cart-item-buttons">
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </div>
+
+        </div>
+        <button class="cart-item-remove">X</button>
+      </div>
+
+    <div class="cart-item">
+      <div>IMG</div>
+      <div>
+        <h2>Hamburger</h2>
+        <div class="cart-item-buttons">
+          <button>-</button>
+          <span>0</span>
+          <button>+</button>
+        </div>
+
+      </div>
+      <button class="cart-item-remove">X</button>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <button class="checkout">Checkout</button>
+  </div>
+  </div>
+  <button class="cart-toggle">Expand</button>
+  <button class="add-item-test">+</button>
+</body>
+
 </html>
