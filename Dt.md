@@ -36,4 +36,6 @@ price               BIGINT // price per item (cents, BIGINT)
 available           BOOLEAN DEFAULT true // in stock or out of stock?
 preparation_time    INTEGER // (seconds)
 image               VARCHAR(255) // image of the item
+stock               
+
 
