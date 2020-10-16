@@ -8,7 +8,7 @@ CREATE TABLE restaurants (
   owner      VARCHAR(255) NOT NULL,
   address    VARCHAR(255) NOT NULL,
   phone      INTEGER NOT NULL,
-  open       BOOLEAN DEFAULT false
+  opened       BOOLEAN DEFAULT false
 );
 
 CREATE TABLE orders (
@@ -38,7 +38,7 @@ CREATE TABLE items (
   category            VARCHAR(255) NOT NULL,
   price               BIGINT NOT NULL DEFAULT 0,
   available           BOOLEAN DEFAULT true
-  preparation_time    INTEGER NOT NULL,
+  prep_time           TIMESTAMP NOT NULL,
   image               VARCHAR(255) NOT NULL,
   stock               INTEGER NOT NULL DEFAULT 0
 )
