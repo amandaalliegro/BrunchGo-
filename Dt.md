@@ -33,7 +33,7 @@ id                  PRIMARY KEY
 name                VARCHAR(255) // Title of the dish i.e. 'Pizza'
 category            VARCHAR (255) // Beverage, appetizer, entree, etc
 price               BIGINT // price per item (cents, BIGINT)
-available           BOOLEAN // in stock or out of stock?
+available           BOOLEAN DEFAULT true // in stock or out of stock?
 preparation_time    INTEGER // (seconds)
 image               VARCHAR(255) // image of the item
 
