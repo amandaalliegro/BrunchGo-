@@ -38,6 +38,7 @@
   max-height: 200px;
   border: 1px solid white;
   margin-bottom: 1em;
+
 }
 
 .cart-item > div {
@@ -53,6 +54,17 @@
   justify-content: center;
   align-items: flex-start;
   padding: 1em;
+
+}
+
+.cart-item > div:nth-child(2) > div > button > i {
+  color: white;
+}
+
+.cart-item > div:nth-child(2) > div > button {
+  background-color: unset;
+  border: none;
+  outline: none;
 }
 
 .cart-item > div:nth-child(3) {

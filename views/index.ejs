@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Brunch<b>Go!</b></title>
+  <title>BrunchGo!</title>
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -18,7 +18,9 @@
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
   <script type="text/javascript" src="/scripts/client-helpers.js"></script>
-
+  <script type="text/javascript" src="/scripts/client.js"></script>
+  <script type="text/javascript" src="/scripts/app-helpers.js"></script>
+  <script type="text/javascript" src="/local_db/local_db.js"></script>
 
 </head>
 
@@ -33,9 +35,9 @@
           <div>
             <h2>Poutine</h2>
             <div class="cart-item-buttons">
-              <button>-</button>
+              <button><i class="fas fa-minus"></i></button>
               <span>0</span>
-              <button><i class=“fas fa-plus” style="color: red"></i>
+              <button><i class="fas fa-plus"></i>
               </button>
             </div>
 
@@ -47,10 +49,12 @@
           <div>
             <h2>Milkshake</h2>
             <div class="cart-item-buttons">
-              <button>-</button>
+              <button><i class="fas fa-minus"></i></button>
               <span>0</span>
-              <button>+</button>
+              <button><i class="fas fa-plus"></i>
+              </button>
             </div>
+
 
           </div>
           <button class="cart-item-remove">X</button>
@@ -61,11 +65,12 @@
           <div>
             <h2>Hamburger</h2>
             <div class="cart-item-buttons">
-              <button><i class=“fas fa-plus”></i></button>
+              <button><i class="fas fa-minus"></i></button>
               <span>0</span>
-              <button></button>
-
+              <button><i class="fas fa-plus"></i>
+              </button>
             </div>
+
 
           </div>
           <button class="cart-item-remove">X</button>
@@ -75,7 +80,6 @@
         <button class="checkout">Checkout</button>
       </div>
     </div>
-  </div>
 
   <nav>
     <span id="logo">BrunchGo!</span>
@@ -91,138 +95,9 @@
   <header>
 
   </header>
-
-
-
-
-
-  <h1>Hello World!</h1>
-
   <main>
     <div class='main-container'>
-      <div class='item-container'>
-        <h3 class='item-heading'>Appetizers</h3>
-        <div class="item-row">
-          <div class="item-box">
-            <header class="item-header">Caesar Salad</header>
-            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-            <footer class="item-footer">
-              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              <div class="select-item-container">
-                <i class="fas fa-plus"></i>
-                <span class="menu-item-quantity">0</span>
-                <i class="fas fa-minus"></i>
-              </div>
-            </footer>
-          </div>
-          <div class="item-box">
-            <header class="item-header">Caesar Salad</header>
-            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-            <footer class="item-footer">
-              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              <div class="select-item-container">
-                <i class="fas fa-plus"></i>
-                <span class="menu-item-quantity">0</span>
-                <i class="fas fa-minus"></i>
-              </div>
-            </footer>
-          </div>
-          <div class="item-box">
-            <header class="item-header">Caesar Salad</header>
-            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-            <footer class="item-footer">
-              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              <div class="select-item-container">
-                <i class="fas fa-plus"></i>
-                <span class="menu-item-quantity">0</span>
-                <i class="fas fa-minus"></i>
-              </div>
-            </footer>
-          </div>
-        </div>
-      </div>
-      <div class='item-container'>
-        <h3 class='item-heading'>Appetizers</h3>
-        <div class="item-row">
-          <div class="item-box">
-            <header class="item-header">Caesar Salad</header>
-            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-            <footer class="item-footer">
-              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              <div class="select-item-container">
-                <i class="fas fa-plus"></i>
-                <span class="menu-item-quantity">0</span>
-                <i class="fas fa-minus"></i>
-              </div>
-            </footer>
-          </div>
-          <div class="item-box">
-            <header class="item-header">Caesar Salad</header>
-            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-            <footer class="item-footer">
-              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              <div class="select-item-container">
-                <i class="fas fa-plus"></i>
-                <span class="menu-item-quantity">0</span>
-                <i class="fas fa-minus"></i>
-              </div>
-            </footer>
-          </div>
-          <div class="item-box">
-            <header class="item-header">Caesar Salad</header>
-            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-            <footer class="item-footer">
-              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              <div class="select-item-container">
-                <i class="fas fa-plus"></i>
-                <span class="menu-item-quantity">0</span>
-                <i class="fas fa-minus"></i>
-              </div>
-            </footer>
-          </div>
-        </div>
-      </div>
-      <div class='item-container'>
-        <h3 class='item-heading'>Appetizers</h3>
-        <div class="item-row">
-          <div class="item-box">
-            <header class="item-header">Caesar Salad</header>
-            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-            <footer class="item-footer">
-              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              <div class="select-item-container">
-                <i class="fas fa-plus"></i>
-                <span class="menu-item-quantity">0</span>
-                <i class="fas fa-minus"></i>
-              </div>
-            </footer>
-          </div>
-          <div class="item-box">
-            <header class="item-header">Caesar Salad</header>
-            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-            <footer class="item-footer">
-              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              <div class="select-item-container">
-                <i class="fas fa-plus"></i>
-                <span class="menu-item-quantity">0</span>
-                <i class="fas fa-minus"></i>
-              </div>
-            </footer>
-          </div>
-          <div class="item-box">
-            <header class="item-header">Caesar Salad</header>
-            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-            <footer class="item-footer">
-              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              <div class="select-item-container">
-                <i class="fas fa-plus"></i>
-                <span class="menu-item-quantity">0</span>
-                <i class="fas fa-minus"></i>
-              </div>
-            </footer>
-          </div>
-        </div>
-      </div>
+
     </div>
   </main>
 
