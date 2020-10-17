@@ -8,10 +8,12 @@ $(() => {
 
     createLocalDatabase(items);
 
+
+
     let newMenuCategory = `
-    <div class='item-container'>
+    <div class='container'>
         <h3 class='item-heading'>Appetizers</h3>
-        <div class="item-row">
+        <div class="row">
         </div>
       </div>`;
 
@@ -19,21 +21,18 @@ $(() => {
 
     for (let item of items) {
       let menuItem = `
-      <div class="item-box" id="${item.id}">
-              <div class="item-header">${item.name}</div>
-              <div class="item-main" style="background-image: url('${item.image}')"></div>
-              <div class="item-footer">
-                <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="item-price">$${item.price /100}</div>
-                <div class="select-item-container">
-                  <i class="fas fa-plus"></i>
-                  <span class="menu-item-quantity">0</span>
-                  <i class="fas fa-minus"></i>
-                </div>
-              </div>
-            </div>
+      <div class="d-flex justify-content-center col-md-4 col-sm-6 text-center">
+      <a href="#" class="thumbnail">
+        <img src="${item.image}" alt="Card image cap">
+      </a>
+      <h2>${item.name}</h2>
+      <span><a class="btn btn-default" href="#" role="button">-</a></span>
+      <span id="item1">0</span>
+      <span><a class="btn btn-default" href="#" role="button">+</a></span>
+    </div>
             `
-            $('.item-row').append(menuItem);
+
+            $('.main-container > .container:nth-child(1) > .row').append(menuItem);
     }
   });
 
@@ -46,10 +45,12 @@ $(() => {
 
     createLocalDatabase(items);
 
+
+
     let newMenuCategory = `
-    <div class='item-container'>
+    <div class='container'>
         <h3 class='item-heading'>Mains</h3>
-        <div class="item-row">
+        <div class="row">
         </div>
       </div>`;
 
@@ -57,22 +58,18 @@ $(() => {
 
     for (let item of items) {
       let menuItem = `
-      <div class="item-box" id="${item.id}">
-              <div class="item-header">${item.name}</div>
-              <div class="item-main" style="background-image: url('${item.image}')"></div>
-              <div class="item-footer">
-                <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="item-price">$${item.price /100}</div>
-                <div class="select-item-container">
-                  <i class="fas fa-plus"></i>
-                  <span class="menu-item-quantity">0</span>
-                  <i class="fas fa-minus"></i>
-                </div>
-              </div>
-            </div>
+      <div class="d-flex justify-content-center col-md-4 col-sm-6 text-center">
+      <a href="#" class="thumbnail">
+        <img src="${item.image}" alt="Card image cap">
+      </a>
+      <h2>${item.name}</h2>
+      <span><a class="btn btn-default" href="#" role="button">-</a></span>
+      <span id="item1">0</span>
+      <span><a class="btn btn-default" href="#" role="button">+</a></span>
+    </div>
             `
 
-            $('.main-container > .item-container:nth-child(2) > .item-row').append(menuItem);
+            $('.main-container > .container:nth-child(2) > .row').append(menuItem);
     }
   });
 
@@ -85,10 +82,12 @@ $(() => {
 
     createLocalDatabase(items);
 
+
+
     let newMenuCategory = `
-    <div class='item-container'>
+    <div class='container'>
         <h3 class='item-heading'>Desserts</h3>
-        <div class="item-row">
+        <div class="row">
         </div>
       </div>`;
 
@@ -96,24 +95,18 @@ $(() => {
 
     for (let item of items) {
       let menuItem = `
-      <div class="item-box" id="${item.id}">
-              <div class="item-header">${item.name}</div>
-              <div class="item-main" style="background-image: url('${item.image}')"></div>
-              <div class="item-footer">
-                <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="item-price">$${item.price /100}</div>
-                <div class="select-item-container">
-                  <i class="fas fa-plus"></i>
-                  <span class="menu-item-quantity">0</span>
-                  <i class="fas fa-minus"></i>
-                </div>
-              </div>
-            </div>
+      <div class="d-flex justify-content-center col-md-4 col-sm-6 text-center">
+      <a href="#" class="thumbnail">
+        <img src="${item.image}" alt="Card image cap">
+      </a>
+      <h2>${item.name}</h2>
+      <span><a class="btn btn-default" href="#" role="button">-</a></span>
+      <span id="item1">0</span>
+      <span><a class="btn btn-default" href="#" role="button">+</a></span>
+    </div>
             `
 
-            $('.main-container > .item-container:nth-child(3) > .item-row').append(menuItem);
-
-            console.log(local_db)
+            $('.main-container > .container:nth-child(3) > .row').append(menuItem);
     }
   });
 });
