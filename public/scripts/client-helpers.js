@@ -2,7 +2,7 @@ $(() => {
 
   const cartItemCount = function () {
     const itemCount = $('.cart-items > div').length;
-    $('.cart-toggle').text(itemCount);
+    $('.cart-btn').append(`${itemCount}`)
   };
   cartItemCount();
 
@@ -30,7 +30,7 @@ $(() => {
     })
   });
 
-  $('.cart-toggle').click(() => {
+  $('.cart-btn').click(() => {
     $('.cart-container').slideToggle(300);
     $('.cart-container').css('display', 'flex');
   });

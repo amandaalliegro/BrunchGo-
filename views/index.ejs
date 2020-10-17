@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
 
 <head>
   <title>Brunch<b>Go!</b></title>
@@ -8,11 +7,13 @@
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/menu.css" type="text/css"/>
-  <link rel="stylesheet" href="/styles/header.css" type="text/css"/>
+  <link rel="stylesheet" href="/styles/menu.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/header.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/cart.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/navbar.css" type="text/css" />
 
-   <!-- Font awesome -->
-   <link rel=“stylesheet” href=“https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css”>
+  <!-- Font awesome -->
+  <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
@@ -22,209 +23,205 @@
 </head>
 
 <body>
-  <div class="cart-container">
-    <div class="cart-header">
-      <h1>Cart</h1>
-    </div>
-    <div class="cart-items">
-      <div class="cart-item">
-        <div>IMG</div>
-        <div>
-          <h2>Poutine</h2>
-          <div class="cart-item-buttons">
-            <button>-</button>
-            <span>0</span>
-            <button><i class=“fas fa-plus” style="color: red"></i>
-            </button>
+    <div class="cart-container">
+      <div class="cart-header">
+        <h1>Cart</h1>
+      </div>
+      <div class="cart-items">
+        <div class="cart-item">
+          <div>IMG</div>
+          <div>
+            <h2>Poutine</h2>
+            <div class="cart-item-buttons">
+              <button>-</button>
+              <span>0</span>
+              <button><i class=“fas fa-plus” style="color: red"></i>
+              </button>
+            </div>
+
           </div>
-
+          <button class="cart-item-remove">X</button>
         </div>
-        <button class="cart-item-remove">X</button>
-      </div>
-      <div class="cart-item">
-        <div>IMG</div>
-        <div>
-          <h2>Milkshake</h2>
-          <div class="cart-item-buttons">
-            <button>-</button>
-            <span>0</span>
-            <button>+</button>
+        <div class="cart-item">
+          <div>IMG</div>
+          <div>
+            <h2>Milkshake</h2>
+            <div class="cart-item-buttons">
+              <button>-</button>
+              <span>0</span>
+              <button>+</button>
+            </div>
+
           </div>
-
-        </div>
-        <button class="cart-item-remove">X</button>
-      </div>
-
-    <div class="cart-item">
-      <div>IMG</div>
-      <div>
-        <h2>Hamburger</h2>
-        <div class="cart-item-buttons">
-          <button><i class=“fas fa-plus”></i></button>
-          <span>0</span>
-          <button></button>
-
+          <button class="cart-item-remove">X</button>
         </div>
 
+        <div class="cart-item">
+          <div>IMG</div>
+          <div>
+            <h2>Hamburger</h2>
+            <div class="cart-item-buttons">
+              <button><i class=“fas fa-plus”></i></button>
+              <span>0</span>
+              <button></button>
+
+            </div>
+
+          </div>
+          <button class="cart-item-remove">X</button>
+        </div>
       </div>
-      <button class="cart-item-remove">X</button>
+      <div class="cart-footer">
+        <button class="checkout">Checkout</button>
+      </div>
     </div>
   </div>
-  <div class="cart-footer">
-    <button class="checkout">Checkout</button>
-  </div>
-  </div>
-  <button class="cart-toggle">Expand</button>
-  <button class="add-item-test">+</button>
-  </div>
 
-<!-- < HEADER WITH IMAGE > -->
+  <nav>
+    <span id="logo">BrunchGo!</span>
+
+    <section class="sidenav">
+      <a href="#appetizer">Appetizers</a><br>
+      <a href="#main">Main Dishes</a><br>
+      <a href="#dessert">Dessert</a><br>
+      <a href="#beverage">Beverages</a>
+    </section>
+    <button class='cart-btn'><i class="fas fa-shopping-basket fa-2x"></i></button>
+  </nav>
   <header>
-    <div>
-      <img src=styles/header.jpeg>
-      </div>
-    </header>
-      <nav>
-        <span id="logo">BrunchGo!</span>
-        <!-- < NAV BAR > -->
-        <div class='menu-container'>
-          <div><h1>Menu</h1></div>
-          <section class="nav">
-        <a href="#appetizer">Appetizers</a><br>
-        <a href="#main">Main Dishes</a><br>
-        <a href="#dessert">Dessert</a><br>
-        <a href="#beverage">Beverages</a>
-      </section>
-        </div>
 
-    <h1>Brunch<b>Go!</b></h1>
+  </header>
 
-    <main>
-      <div class='main-container'>
-        <div class='item-container'>
-          <h3 class='item-heading'>Appetizers</h3>
-          <div class="item-row">
-            <div class="item-box">
-              <header class="item-header">Caesar Salad</header>
-              <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-              <footer class = "item-footer">
-                <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="select-item-container">
-                  <i class="fas fa-plus"></i>
-                  <span class="menu-item-quantity">0</span>
-                  <i class="fas fa-minus"></i>
-                </div>
-              </footer>
-            </div>
-            <div class="item-box">
-              <header class="item-header">Caesar Salad</header>
-              <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-              <footer class = "item-footer">
-                <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="select-item-container">
-                  <i class="fas fa-plus"></i>
-                  <span class="menu-item-quantity">0</span>
-                  <i class="fas fa-minus"></i>
-                </div>
-              </footer>
-            </div>
-            <div class="item-box">
-              <header class="item-header">Caesar Salad</header>
-              <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-              <footer class = "item-footer">
-                <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="select-item-container">
-                  <i class="fas fa-plus"></i>
-                  <span class="menu-item-quantity">0</span>
-                  <i class="fas fa-minus"></i>
-                </div>
-              </footer>
-            </div>
+  <main>
+    <div class='main-container'>
+      <div class='item-container'>
+        <h3 class='item-heading'>Appetizers</h3>
+        <div class="item-row">
+          <div class="item-box">
+            <header class="item-header">Caesar Salad</header>
+            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
+            <footer class="item-footer">
+              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              <div class="select-item-container">
+                <i class="fas fa-plus"></i>
+                <span class="menu-item-quantity">0</span>
+                <i class="fas fa-minus"></i>
+              </div>
+            </footer>
           </div>
-        </div>
-        <div class='item-container'>
-          <h3 class='item-heading'>Appetizers</h3>
-          <div class="item-row">
-            <div class="item-box">
-              <header class="item-header">Caesar Salad</header>
-              <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-              <footer class = "item-footer">
-                <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="select-item-container">
-                  <i class="fas fa-plus"></i>
-                  <span class="menu-item-quantity">0</span>
-                  <i class="fas fa-minus"></i>
-                </div>
-              </footer>
-            </div>
-            <div class="item-box">
-              <header class="item-header">Caesar Salad</header>
-              <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-              <footer class = "item-footer">
-                <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="select-item-container">
-                  <i class="fas fa-plus"></i>
-                  <span class="menu-item-quantity">0</span>
-                  <i class="fas fa-minus"></i>
-                </div>
-              </footer>
-            </div>
-            <div class="item-box">
-              <header class="item-header">Caesar Salad</header>
-              <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-              <footer class = "item-footer">
-                <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="select-item-container">
-                  <i class="fas fa-plus"></i>
-                  <span class="menu-item-quantity">0</span>
-                  <i class="fas fa-minus"></i>
-                </div>
-              </footer>
-            </div>
+          <div class="item-box">
+            <header class="item-header">Caesar Salad</header>
+            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
+            <footer class="item-footer">
+              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              <div class="select-item-container">
+                <i class="fas fa-plus"></i>
+                <span class="menu-item-quantity">0</span>
+                <i class="fas fa-minus"></i>
+              </div>
+            </footer>
           </div>
-        </div>
-        <div class='item-container'>
-          <h3 class='item-heading'>Appetizers</h3>
-          <div class="item-row">
-            <div class="item-box">
-              <header class="item-header">Caesar Salad</header>
-              <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-              <footer class = "item-footer">
-                <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="select-item-container">
-                  <i class="fas fa-plus"></i>
-                  <span class="menu-item-quantity">0</span>
-                  <i class="fas fa-minus"></i>
-                </div>
-              </footer>
-            </div>
-            <div class="item-box">
-              <header class="item-header">Caesar Salad</header>
-              <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-              <footer class = "item-footer">
-                <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="select-item-container">
-                  <i class="fas fa-plus"></i>
-                  <span class="menu-item-quantity">0</span>
-                  <i class="fas fa-minus"></i>
-                </div>
-              </footer>
-            </div>
-            <div class="item-box">
-              <header class="item-header">Caesar Salad</header>
-              <!-- <img class="menu-item-image" src="url_address" alt=""> -->
-              <footer class = "item-footer">
-                <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <div class="select-item-container">
-                  <i class="fas fa-plus"></i>
-                  <span class="menu-item-quantity">0</span>
-                  <i class="fas fa-minus"></i>
-                </div>
-              </footer>
-            </div>
+          <div class="item-box">
+            <header class="item-header">Caesar Salad</header>
+            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
+            <footer class="item-footer">
+              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              <div class="select-item-container">
+                <i class="fas fa-plus"></i>
+                <span class="menu-item-quantity">0</span>
+                <i class="fas fa-minus"></i>
+              </div>
+            </footer>
           </div>
         </div>
       </div>
-    </main>
-  </body>
+      <div class='item-container'>
+        <h3 class='item-heading'>Appetizers</h3>
+        <div class="item-row">
+          <div class="item-box">
+            <header class="item-header">Caesar Salad</header>
+            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
+            <footer class="item-footer">
+              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              <div class="select-item-container">
+                <i class="fas fa-plus"></i>
+                <span class="menu-item-quantity">0</span>
+                <i class="fas fa-minus"></i>
+              </div>
+            </footer>
+          </div>
+          <div class="item-box">
+            <header class="item-header">Caesar Salad</header>
+            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
+            <footer class="item-footer">
+              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              <div class="select-item-container">
+                <i class="fas fa-plus"></i>
+                <span class="menu-item-quantity">0</span>
+                <i class="fas fa-minus"></i>
+              </div>
+            </footer>
+          </div>
+          <div class="item-box">
+            <header class="item-header">Caesar Salad</header>
+            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
+            <footer class="item-footer">
+              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              <div class="select-item-container">
+                <i class="fas fa-plus"></i>
+                <span class="menu-item-quantity">0</span>
+                <i class="fas fa-minus"></i>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <div class='item-container'>
+        <h3 class='item-heading'>Appetizers</h3>
+        <div class="item-row">
+          <div class="item-box">
+            <header class="item-header">Caesar Salad</header>
+            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
+            <footer class="item-footer">
+              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              <div class="select-item-container">
+                <i class="fas fa-plus"></i>
+                <span class="menu-item-quantity">0</span>
+                <i class="fas fa-minus"></i>
+              </div>
+            </footer>
+          </div>
+          <div class="item-box">
+            <header class="item-header">Caesar Salad</header>
+            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
+            <footer class="item-footer">
+              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              <div class="select-item-container">
+                <i class="fas fa-plus"></i>
+                <span class="menu-item-quantity">0</span>
+                <i class="fas fa-minus"></i>
+              </div>
+            </footer>
+          </div>
+          <div class="item-box">
+            <header class="item-header">Caesar Salad</header>
+            <!-- <img class="menu-item-image" src="url_address" alt=""> -->
+            <footer class="item-footer">
+              <p class='item-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              <div class="select-item-container">
+                <i class="fas fa-plus"></i>
+                <span class="menu-item-quantity">0</span>
+                <i class="fas fa-minus"></i>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+
+</body>
+
 </html>

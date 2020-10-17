@@ -1,11 +1,10 @@
-
 nav {
   position: fixed;
-  display:flex;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  background-color:  #A0522D;
+  background-color: red;
   margin-top: 0;
 }
 
@@ -14,5 +13,4 @@ nav {
   flex-direction: row;
   justify-content: space-between;
   width: 60%;
->>>>>>> eefc9aa0bad39c429a824c17f6e63836326015c5
 }
