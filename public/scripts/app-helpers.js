@@ -46,11 +46,11 @@ const removeCartItem = function (userid, itemid) {
     user_carts[userid][itemid].quantity -= 1;
   } else {
   }
-  return user_carts[userid][itemid].quantity
+  return user_carts[userid][itemid].quantity;
 };
 
 const setItemQuantity = function (userid, itemid) {
-  return user_carts[userid][itemid].quantity
+  return user_carts[userid][itemid].quantity;
 };
 
 // renders plus and minus buttons for each item on the menu
@@ -59,11 +59,11 @@ const renderPlusMinusButtons = function () {
 
   $('.plusbutton').click(function () {
     const itemId = $(this).closest('div')[0].id;
-    console.log(itemId)
+    console.log(itemId);
     getUserId().then((userid) => {
       return addCartItem(userid, itemId);
     }).then((quantity) => {
-      console.log(quantity)
+      console.log(quantity);
       let parent = $(this).parents()[1];
       $(parent).find('.counter').text(quantity)
     })
@@ -75,24 +75,25 @@ const renderPlusMinusButtons = function () {
     getUserId().then((userid) => {
       return removeCartItem(userid, itemId);
     }).then((quantity) => {
-      console.log(quantity)
+      console.log(quantity);
       let parent = $(this).parents()[1];
       $(parent).find('.counter').text(quantity)
-    })
+    });
   });
 
 };
 
-const renderMenuRow = function(data, title, id, order) {
+const renderMenuRow = function (data, title, id, order) {
+
   let newMenuCategory = `<div class="row">
   <a id="${id}"></a>
   <h2>${title}</h2>
   </div>`;
 
-        $('#main-container').append(newMenuCategory);
+  $('#main-container').append(newMenuCategory);
 
-        for (let item of data) {
-          let menuItem = `
+  for (let item of data) {
+    let menuItem = `
   <div class="d-flex justify-content-center col-md-4 text-center" id="${item.id}">
   <a href="#" class="thumbnail">
     <img src="//placehold.it/200" alt="Card image cap">
@@ -101,9 +102,8 @@ const renderMenuRow = function(data, title, id, order) {
   <span><a class="minusbutton btn btn-default" role="button">-</a></span>
   <span class="counter">0</span>
   <span><a class="plusbutton btn btn-default" role="button">+</a></span>
-</div>
-        `
+  </div>`;
 
-          $(`#main-container > .row:nth-child(${order})`).append(menuItem);
-}
+    $(`#main-container > .row:nth-child(${order})`).append(menuItem);
+  }
 }
