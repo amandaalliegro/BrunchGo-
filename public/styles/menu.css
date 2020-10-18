@@ -4,3 +4,7 @@ main {
   flex-direction: column;
   background-color: #A0522D;
 }
+
+.row {
+  border-top: 2px solid black;
+}
