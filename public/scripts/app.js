@@ -45,7 +45,7 @@ $.ajax({
 
 
   let newMenuCategory = `<div class="row">
-  <a id="mains"></a>
+  <a id="mainsdishes"></a>
   <h2>Mains</h2>
   </div>`;
 
