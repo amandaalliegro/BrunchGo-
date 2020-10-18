@@ -11,3 +11,8 @@ const createLocalDatabase = function (items) {
     };
   }
 };
+
+// Takes the req.session id and creates a new cart (an empty array) in local_db/local_db.js for that id
+const createUserCart = function(id) {
+  user_carts[id] = [];
+};

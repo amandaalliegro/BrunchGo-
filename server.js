@@ -52,10 +52,19 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
-  const newId = Math.round(Math.random() * 100000);
-  req.session.user_id = newId;
-  res.render("index");
+  if (req.session.user_id) {
+    res.render("index");
+  } else {
+    const newId = Math.round(Math.random() * 100000);
+    req.session.user_id = newId;
+    res.render("index");
+  }
+});
 
+// Returns the user's cookie so it can be used to create a local entry with the user's menu selections
+app.get("/userid", (req, res) => {
+  const userid = req.session.user_id.toString();
+  res.send(userid);
 });
 
 app.listen(PORT, () => {
