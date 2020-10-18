@@ -3,4 +3,14 @@ main {
   display: flex;
   flex-direction: column;
   background-color: #A0522D;
+  align-items: center;
+  height: 6rem;
+  padding: 2rem;
+  position: fixed;
+  width: 100%;
+  z-index: 5;
+}
+
+.row {
+  border-top: 2px solid black;
 }
