@@ -18,14 +18,14 @@ $(() => {
 
     for (let item of items) {
       let menuItem = `
-      <div class="d-flex justify-content-center col-md-4 text-center">
+      <div class="d-flex justify-content-center col-md-4 text-center" id="${item.id}">
       <a href="#" class="thumbnail">
         <img src="//placehold.it/200" alt="Card image cap">
       </a>
       <h2>${item.name}</h2>
-      <span><a class="btn btn-default" href="#" role="button">-</a></span>
-      <span id="item1">0</span>
-      <span><a class="btn btn-default" href="#" role="button">+</a></span>
+      <span><a class="minusbutton btn btn-default" role="button">-</a></span>
+      <span class="counter">0</span>
+      <span><a class="plusbutton btn btn-default" role="button">+</a></span>
     </div>
             `
 
@@ -53,14 +53,14 @@ $(() => {
 
       for (let item of items) {
         let menuItem = `
-  <div class="d-flex justify-content-center col-md-4 text-center">
+  <div class="d-flex justify-content-center col-md-4 text-center" id="${item.id}">
   <a href="#" class="thumbnail">
     <img src="//placehold.it/200" alt="Card image cap">
   </a>
   <h2>${item.name}</h2>
-  <span><a class="btn btn-default" href="#" role="button">-</a></span>
-  <span id="item1">0</span>
-  <span><a class="btn btn-default" href="#" role="button">+</a></span>
+  <span><a class="minusbutton btn btn-default" role="button">-</a></span>
+  <span class="counter">0</span>
+  <span><a class="plusbutton btn btn-default" role="button">+</a></span>
 </div>
         `
 
@@ -86,24 +86,47 @@ $(() => {
 
         for (let item of items) {
           let menuItem = `
-  <div class="d-flex justify-content-center col-md-4 text-center">
+  <div class="d-flex justify-content-center col-md-4 text-center" id="${item.id}">
   <a href="#" class="thumbnail">
     <img src="//placehold.it/200" alt="Card image cap">
   </a>
   <h2>${item.name}</h2>
-  <span><a class="btn btn-default" href="#" role="button">-</a></span>
-  <span id="item1">0</span>
-  <span><a class="btn btn-default" href="#" role="button">+</a></span>
+  <span><a class="minusbutton btn btn-default" role="button">-</a></span>
+  <span class="counter">0</span>
+  <span><a class="plusbutton btn btn-default" role="button">+</a></span>
 </div>
         `
 
           $('#main-container > .row:nth-child(3)').append(menuItem);
         }
-      });
+      }).then(() => {
+        $('.plusbutton').click(function () {
+          const itemId = $(this).closest('div')[0].id;
+          console.log(itemId)
+          getUserId().then((userid) => {
+            return addCartItem(userid, itemId);
+          }).then((quantity) => {
+            console.log(quantity)
+            let parent = $(this).parents()[1];
+            $(parent).find('.counter').text(quantity)
+          })
+        })
 
-    });
+        $('.minusbutton').click(function () {
+          const itemId = $(this).closest('div')[0].id;
+          getUserId().then((userid) => {
+            return removeCartItem(userid, itemId);
+          }).then((quantity) => {
+            console.log(quantity)
+            let parent = $(this).parents()[1];
+            $(parent).find('.counter').text(quantity)
+          })
+        })
+    })
 
-  });
+    })
+
+  })
 
 $.ajax({
   method: "GET",
@@ -112,5 +135,8 @@ $.ajax({
   createUserCart(userid)
 })
 
+$('#test').click(() => {
+  console.log(user_carts)
+})
 
-});
+})
