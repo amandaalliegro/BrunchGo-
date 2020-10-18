@@ -1,4 +1,4 @@
-.sidenav a {
-  float: left;
-  display: inline-start;
+.jumbotron {
+  background-image: url("header.jpeg");
+  background-size: cover;
 }

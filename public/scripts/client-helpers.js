@@ -2,7 +2,7 @@ $(() => {
 
   const cartItemCount = function () {
     const itemCount = $('.cart-items > div').length;
-    $('.cart-toggle').text(itemCount);
+    $('.cart-btn').append(`${itemCount}`)
   };
   cartItemCount();
 
@@ -30,12 +30,13 @@ $(() => {
     })
   });
 
-  $('.cart-toggle').click(() => {
-    $('.cart-container').slideToggle(300);
-    $('.cart-container').css('display', 'flex');
+  $('#cart-toggle').click(() => {
+    $('#cart-container').slideToggle(300);
+    $('#cart-container').css('display', 'flex');
   });
 
   $('.cart-item-remove').click(function () {
+    console.log('click')
     const parent = $(this).closest('.cart-item');
     $(parent).remove();
   });
