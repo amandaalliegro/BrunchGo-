@@ -45,7 +45,7 @@ $(() => {
 
 
     let newMenuCategory = `<div class="row">
-    <a id="mains"></a>
+    <a id="maindishes"></a>
     <h2>Mains</h2>
     </div>`;
 

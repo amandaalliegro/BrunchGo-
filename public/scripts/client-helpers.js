@@ -8,19 +8,13 @@ $(() => {
 
   $('.add-item-test').click(() => {
     const divToInsert = `
-    <div class="cart-item">
-    <div>IMG</div>
-    <div>
-      <h2>Hamburger</h2>
-      <div class="cart-item-buttons">
-        <button>-</button>
-        <span>0</span>
-        <button>+</button>
-      </div>
-
-    </div>
-    <button class="cart-item-remove">X</button>
-  </div>
+    <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
     `;
     $('.cart-items').append(divToInsert);
 
