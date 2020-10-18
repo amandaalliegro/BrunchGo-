@@ -55,7 +55,7 @@ $(() => {
     // Get itemId
     let itemId = $(this).attr('id').split("-")[$(this).attr('id').split("-").length - 1];
 
-    // Update itemId
+    // Update cookie
     cartItems[itemId] = {quantity: quantity};
     console.log('cartItems', cartItems);
   });
