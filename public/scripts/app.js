@@ -8,108 +8,97 @@ $(() => {
 
     createLocalDatabase(items);
 
+    console.log(items)
 
+    let newMenuCategory = `<div class="row"></div>`;
 
-    let newMenuCategory = `
-    <div class='container'>
-        <h3 class='item-heading'>Appetizers</h3>
-        <div class="row">
-        </div>
-      </div>`;
-
-      $('.main-container').append(newMenuCategory);
+      $('#main-container').append(newMenuCategory);
 
     for (let item of items) {
       let menuItem = `
-      <div class="d-flex justify-content-center col-lg-4 col-md-6 col-sm-12 text-center">
+      <div class="d-flex justify-content-center col-md-4 text-center">
       <a href="#" class="thumbnail">
-        <img src="${item.image}" alt="Card image cap">
+        <img src="//placehold.it/200" alt="Card image cap">
       </a>
       <h2>${item.name}</h2>
-      <h3>$${(item.price / 100).toFixed(2)}</h3>
       <span><a class="btn btn-default" href="#" role="button">-</a></span>
       <span id="item1">0</span>
       <span><a class="btn btn-default" href="#" role="button">+</a></span>
     </div>
             `
 
-            $('.main-container > .container:nth-child(1) > .row').append(menuItem);
+            $('#main-container > .row:first-child').append(menuItem);
     }
   });
 
   // RENDER "MAINS" MENU ROW
 
-  $.ajax({
-    method: "GET",
-    url: "/api/menu/mains"
-  }).then((items) => {
+  // $.ajax({
+  //   method: "GET",
+  //   url: "/api/menu/mains"
+  // }).then((items) => {
 
-    createLocalDatabase(items);
-
-
-
-    let newMenuCategory = `
-    <div class='container'>
-        <h3 class='item-heading'>Mains</h3>
-        <div class="row">
-        </div>
-      </div>`;
-
-      $('.main-container').append(newMenuCategory);
-
-    for (let item of items) {
-      let menuItem = `
-      <div class="d-flex justify-content-center col-md-4 col-sm-6 text-center">
-      <a href="#" class="thumbnail">
-        <img src="${item.image}" alt="Card image cap">
-      </a>
-      <h2>${item.name}</h2>
-      <h3>$${(item.price / 100).toFixed(2)}</h3>
-      <span><a class="btn btn-default" href="#" role="button">-</a></span>
-      <span id="item1">0</span>
-      <span><a class="btn btn-default" href="#" role="button">+</a></span>
-    </div>
-            `
-
-            $('.main-container > .container:nth-child(2) > .row').append(menuItem);
-    }
-  });
-
-  // RENDER "DESSERTS" MENU ROW
-
-  $.ajax({
-    method: "GET",
-    url: "/api/menu/desserts"
-  }).then((items) => {
-
-    createLocalDatabase(items);
+  //   createLocalDatabase(items);
 
 
 
-    let newMenuCategory = `
-    <div class='container'>
-        <h3 class='item-heading'>Desserts</h3>
-        <div class="row">
-        </div>
-      </div>`;
+  //   let newMenuCategory = `
+  //   <div class='container'>
+  //       <div class="row">
+  //       </div>
+  //     </div>`;
 
-      $('.main-container').append(newMenuCategory);
+  //     $('main').append(newMenuCategory);
 
-    for (let item of items) {
-      let menuItem = `
-      <div class="d-flex justify-content-center col-md-4 col-sm-6 text-center">
-      <a href="#" class="thumbnail">
-        <img src="${item.image}" alt="Card image cap">
-      </a>
-      <h2>${item.name}</h2>
-      <h3>$${(item.price / 100).toFixed(2)}</h3>
-      <span><a class="btn btn-default" href="#" role="button">-</a></span>
-      <span id="item1">0</span>
-      <span><a class="btn btn-default" href="#" role="button">+</a></span>
-    </div>
-            `
+  //   for (let item of items) {
+  //     let menuItem = `
+  //     <div class="d-flex justify-content-center col-md-4 text-center">
+  //     <a href="#" class="thumbnail">
+  //       <img src="//placehold.it/200" alt="Card image cap">
+  //     </a>
+  //     <h2>Heading</h2>
+  //     <span><a class="btn btn-default" href="#" role="button">-</a></span>
+  //     <span id="item1">0</span>
+  //     <span><a class="btn btn-default" href="#" role="button">+</a></span>
+  //   </div>
+  //           `
 
-            $('.main-container > .container:nth-child(3) > .row').append(menuItem);
-    }
-  });
+  //           $('.container > .container:nth-child(2)').append(menuItem);
+  //   }
+  // });
+
+  // // RENDER "DESSERTS" MENU ROW
+
+  // $.ajax({
+  //   method: "GET",
+  //   url: "/api/menu/desserts"
+  // }).then((items) => {
+
+  //   createLocalDatabase(items);
+
+
+  //   let newMenuCategory = `
+  //   <div class='container'>
+  //       <div class="row">
+  //       </div>
+  //     </div>`;
+
+  //     $('main').append(newMenuCategory);
+
+  //   for (let item of items) {
+  //     let menuItem = `
+  //     <div class="d-flex justify-content-center col-md-4 text-center">
+  //     <a href="#" class="thumbnail">
+  //       <img src="//placehold.it/200" alt="Card image cap">
+  //     </a>
+  //     <h2>Heading</h2>
+  //     <span><a class="btn btn-default" href="#" role="button">-</a></span>
+  //     <span id="item1">0</span>
+  //     <span><a class="btn btn-default" href="#" role="button">+</a></span>
+  //   </div>
+  //           `
+
+  //           $('main:nth-child(1) > .container:nth-child(3)').append(menuItem);
+  //   }
+  // });
 });
