@@ -40,3 +40,45 @@ $(() => {
     $(parent).remove();
   });
 });
+
+let cartItems = {};
+
+
+// Menu item listener
+$(() => {
+  $("#add-item-1").click(function() {
+    let $counter = $(this).parent().children('span');
+    let quantity = Number($counter.text());
+    quantity++;
+    $counter.text(quantity);
+
+    // Get itemId
+    let itemId = $(this).attr('id').split("-")[$(this).attr('id').split("-").length - 1];
+
+    // Update itemId
+    cartItems[itemId] = {quantity: quantity};
+    console.log('cartItems', cartItems);
+  });
+
+  $("#minus-item-1").click(function() {
+    let $counter = $(this).parent().children('span');
+    let quantity = Number($counter.text());
+    if (quantity > 0) {
+      quantity--;
+      $counter.text(quantity);
+    } else {
+      return;
+    }
+    // Get itemId
+    let itemId = $(this).attr('id').split("-")[$(this).attr('id').split("-").length - 1];
+
+    if (quantity !== 0){
+      // Update itemId
+      cartItems[itemId] = {quantity: quantity};
+    } else {
+      delete cartItems[itemId];
+    }
+
+    console.log('cartItems', cartItems);
+  });
+});
