@@ -100,30 +100,8 @@ $(() => {
           $('#main-container > .row:nth-child(3)').append(menuItem);
         }
       }).then(() => {
-        $('.plusbutton').click(function () {
-          const itemId = $(this).closest('div')[0].id;
-          console.log(itemId)
-          getUserId().then((userid) => {
-            return addCartItem(userid, itemId);
-          }).then((quantity) => {
-            console.log(quantity)
-            let parent = $(this).parents()[1];
-            $(parent).find('.counter').text(quantity)
-          })
-        })
-
-        $('.minusbutton').click(function () {
-          const itemId = $(this).closest('div')[0].id;
-          getUserId().then((userid) => {
-            return removeCartItem(userid, itemId);
-          }).then((quantity) => {
-            console.log(quantity)
-            let parent = $(this).parents()[1];
-            $(parent).find('.counter').text(quantity)
-          })
-        })
-    })
-
+        renderPlusMinusButtons();
+      })
     })
 
   })
@@ -133,10 +111,10 @@ $.ajax({
   url: '/userid'
 }).then((userid) => {
   createUserCart(userid)
-})
+});
 
 $('#test').click(() => {
   console.log(user_carts)
-})
+});
 
-})
+});

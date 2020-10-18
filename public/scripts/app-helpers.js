@@ -13,15 +13,15 @@ const createLocalDatabase = function (items) {
 };
 
 // Takes the req.session id and creates a new cart (an empty array) in local_db/local_db.js for that id
-const createUserCart = function(id) {
-  if (user_carts[id])  {
+const createUserCart = function (id) {
+  if (user_carts[id]) {
   } else {
     user_carts[id] = {};
   }
   console.log(user_carts)
 };
 
-const getUserId = function() {
+const getUserId = function () {
   return $.ajax({
     method: 'GET',
     url: '/userid'
@@ -30,7 +30,7 @@ const getUserId = function() {
   })
 }
 
-const addCartItem = function(userid, itemid) {
+const addCartItem = function (userid, itemid) {
   console.log(local_db[itemid])
   if (user_carts[userid][itemid]) {
     user_carts[userid][itemid].quantity += 1;
@@ -41,7 +41,7 @@ const addCartItem = function(userid, itemid) {
   return user_carts[userid][itemid].quantity
 };
 
-const removeCartItem = function(userid, itemid) {
+const removeCartItem = function (userid, itemid) {
   if (user_carts[userid][itemid].quantity > 0) {
     user_carts[userid][itemid].quantity -= 1;
   } else {
@@ -51,4 +51,34 @@ const removeCartItem = function(userid, itemid) {
 
 const setItemQuantity = function (userid, itemid) {
   return user_carts[userid][itemid].quantity
+};
+
+// renders plus and minus buttons for each item on the menu
+
+const renderPlusMinusButtons = function () {
+
+  $('.plusbutton').click(function () {
+    const itemId = $(this).closest('div')[0].id;
+    console.log(itemId)
+    getUserId().then((userid) => {
+      return addCartItem(userid, itemId);
+    }).then((quantity) => {
+      console.log(quantity)
+      let parent = $(this).parents()[1];
+      $(parent).find('.counter').text(quantity)
+    })
+  })
+
+
+  $('.minusbutton').click(function () {
+    const itemId = $(this).closest('div')[0].id;
+    getUserId().then((userid) => {
+      return removeCartItem(userid, itemId);
+    }).then((quantity) => {
+      console.log(quantity)
+      let parent = $(this).parents()[1];
+      $(parent).find('.counter').text(quantity)
+    })
+  });
+
 };
