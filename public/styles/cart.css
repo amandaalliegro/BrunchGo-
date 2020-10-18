@@ -1,18 +1,21 @@
-.cart-container {
+#cart-container {
   position: fixed;
   display: none;
   flex-direction: column;
-  height: 90%;
+  max-height: 90%;
   width: 600px;
+  margin-top: 100px;
   color: white;
   background-color: black;
   right: 0;
   top: 30px;
+  z-index: 1000;
 }
 
 .cart-header {
   width: 100%;
   height: 150px;
+  font-size: 3em;
   text-align: center;
   line-height: 130px;
 }

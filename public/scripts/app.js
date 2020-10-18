@@ -21,11 +21,12 @@ $(() => {
 
     for (let item of items) {
       let menuItem = `
-      <div class="d-flex justify-content-center col-md-4 col-sm-6 text-center">
+      <div class="d-flex justify-content-center col-lg-4 col-md-6 col-sm-12 text-center">
       <a href="#" class="thumbnail">
         <img src="${item.image}" alt="Card image cap">
       </a>
       <h2>${item.name}</h2>
+      <h3>$${(item.price / 100).toFixed(2)}</h3>
       <span><a class="btn btn-default" href="#" role="button">-</a></span>
       <span id="item1">0</span>
       <span><a class="btn btn-default" href="#" role="button">+</a></span>
@@ -63,6 +64,7 @@ $(() => {
         <img src="${item.image}" alt="Card image cap">
       </a>
       <h2>${item.name}</h2>
+      <h3>$${(item.price / 100).toFixed(2)}</h3>
       <span><a class="btn btn-default" href="#" role="button">-</a></span>
       <span id="item1">0</span>
       <span><a class="btn btn-default" href="#" role="button">+</a></span>
@@ -100,6 +102,7 @@ $(() => {
         <img src="${item.image}" alt="Card image cap">
       </a>
       <h2>${item.name}</h2>
+      <h3>$${(item.price / 100).toFixed(2)}</h3>
       <span><a class="btn btn-default" href="#" role="button">-</a></span>
       <span id="item1">0</span>
       <span><a class="btn btn-default" href="#" role="button">+</a></span>

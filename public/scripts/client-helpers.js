@@ -31,8 +31,8 @@ $(() => {
   });
 
   $('.cart-btn').click(() => {
-    $('.cart-container').slideToggle(300);
-    $('.cart-container').css('display', 'flex');
+    $('#cart-container').slideToggle(300);
+    $('#cart-container').css('display', 'flex');
   });
 
   $('.cart-item-remove').click(function () {
