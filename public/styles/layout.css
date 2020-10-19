@@ -1,24 +1,56 @@
 body {
-  background-color: #fff;
+  background-color:	#DEB887;
   margin: 0;
   padding: 0;
 }
 
 body h1 {
   color: #244751;
+  background-color:	#DEB887;
+}
+.nav {
+  background-color:	##49290f
+}
+.navbar-default {
+  background-color: #49290f;
+  border-color: #49290f;
+}
+.navbar-default .navbar-brand {
+  color: #ddaa7b;
+
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+  color: #ce9661;
+  background-color: #49290f;
+}
+.navbar-default .navbar-nav>li>a {
+  color: #ce9661;
+  background-color: #49290f;
+}
+.btn-info {
+  background-color:#49290f;
+  border-color: #49290f;
+  color-interpolation-filters: auto
+  ;
 }
 
 .main-container {
   border: 2px red solid;
   width: 80%;
   height: auto;
-  margin: 0px auto;
+  margin: 0px auto
+  background-color:	#DEB887;
+}
+.cart-container {
+  background-color:#4e2d12 ;
 }
 
 .item-container {
   width: 100%;
   padding: 10px 0;
-  border: 2px orange solid;
+  border: 2px orange solid
+  background-color:	#DEB887;
 }
 
 .item-heading {
@@ -34,7 +66,7 @@ body h1 {
 .item-box {
   width: 200px;
   height: 300px;
-  border: 2px solid green;
+  border: 2px solid rgb(221, 153, 98);
   display: flex;
   flex-flow: column;
   justify-content: space-between;
@@ -46,13 +78,13 @@ body h1 {
   text-align: center;
   color: orange;
   font-size: 1.5em;
-  background-color: white;
+  background-color: rgb(121, 74, 4);
 }
 
 .item-footer {
   display: flex;
   bottom: 0px;
-  background-color: white;
+  background-color: rgb(121, 74, 4);
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
