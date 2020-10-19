@@ -17,7 +17,6 @@ $(() => {
         <span>0</span>
         <button>+</button>
       </div>
-
     </div>
     <button class="cart-item-remove">X</button>
   </div>
