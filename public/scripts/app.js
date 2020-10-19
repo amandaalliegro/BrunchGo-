@@ -4,7 +4,7 @@ $(() => {
     method: "GET",
     url: '/userid'
   }).then((userid) => {
-    createUserCart(userid)
+    createUserCart(userid);
 
   });
 
@@ -34,10 +34,7 @@ $(() => {
         renderMenuRow(items, 'Desserts', 'desserts', 3)
       }).then(() => {
         renderPlusMinusButtons();
-      })
-    })
-  })
-
-
-
+      });
+    });
+  });
 });
