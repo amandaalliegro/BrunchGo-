@@ -108,6 +108,9 @@ const renderMenuRow = function(data, title, id, order) {
   <span><a class="minusbutton btn btn-default" role="button">-</a></span>
   <span class="counter">0</span>
   <span><a class="plusbutton btn btn-default" role="button">+</a></span>
+  <button type="button" class="btn btn-default btn-lg">
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
+  </button>
   </div>`;
 
     $(`#main-container > .row:nth-child(${order})`).append(menuItem);
