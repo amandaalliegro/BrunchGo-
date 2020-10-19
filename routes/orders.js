@@ -1,6 +1,6 @@
 /*
  * All routes for orders are defined here
- * Since this file is loaded in server.js into api/users,
+ * Since this file is loaded in server.js into /orders,
  *   these routes are mounted onto /users
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
@@ -68,8 +68,10 @@ module.exports = (db) => {
     .then(data => {
       // An object with order_id and estimated_time
       const templateVar = data.rows[0];
-
       res.render('order', templateVar);
+
+      // Send message with Twilio
+
     })
     .catch(err => {
       res.status(500).json({ error: err.message });
