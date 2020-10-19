@@ -34,7 +34,8 @@ $(() => {
         renderMenuRow(items, 'Desserts', 'desserts', 3)
       }).then(() => {
         renderPlusMinusButtons();
-      });
+        renderAddItemButtons();
+      })
     });
   });
 });
