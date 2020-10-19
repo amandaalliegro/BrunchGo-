@@ -17,7 +17,6 @@ sub-total           INTEGER
 tax                 INTEGER
 total               INTEGER
 completed_datetime  TIMESTAMP
-status              BOOLEAN DEFAULT false
 
 order_items
 ___________________
@@ -25,7 +24,7 @@ id                  PRIMARY KEY
 order_id            INTEGER
 item_id             INTEGER
 quantity            INTEGER 
-specifications      TEXT
+specification       TEXT
 
 items
 ___________________
