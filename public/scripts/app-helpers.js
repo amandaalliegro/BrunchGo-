@@ -87,6 +87,10 @@ const renderPlusMinusButtons = function() {
   });
 };
 
+renderAddItemButtons = function() {
+
+}
+
 
 // generates a new html row for a menu category (appetizers, mains, etc) with a column for each menu item in that category
 const renderMenuRow = function(data, title, id, order) {
@@ -109,7 +113,7 @@ const renderMenuRow = function(data, title, id, order) {
   <span class="counter">0</span>
   <span><a class="plusbutton btn btn-default" role="button">+</a></span>
   <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
+  <span class="glyphicon glyphicon-plus add-cart-item" aria-hidden="true"></span> Add
   </button>
   </div>`;
 
