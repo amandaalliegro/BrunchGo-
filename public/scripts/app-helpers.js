@@ -8,7 +8,7 @@ const createLocalDatabase = function(items) {
       prep_time: item.prep_time,
       image: item.image,
       stock: item.stock
-    };console.log(user_carts)
+    };
   }
 };
 
@@ -22,11 +22,7 @@ const createUserCart = function (id) {
 };
 
 // queries the server for the user's cookie and returns the cookie
-<<<<<<< HEAD
-const getUserId = function () {
-=======
 const getUserId = function() {
->>>>>>> 7cef849df118de8546b70de3c286df01ee16941e
   return $.ajax({
     method: 'GET',
     url: '/userid'
@@ -34,19 +30,11 @@ const getUserId = function() {
     return userid;
   });
 };
-<<<<<<< HEAD
-
-
-// Adds an item to the user's cart (in user_carts).
-// If the item already exists in the cart, the item's quantity is increased by 1.
-const addCartItem = function (userid, itemid) {
-=======
 
 
 // Adds an item to the user's cart (in user_carts).
 // If the item already exists in the cart, the item's quantity is increased by 1.
 const addCartItem = function(userid, itemid) {
->>>>>>> 7cef849df118de8546b70de3c286df01ee16941e
   // check if item exists
   if (user_carts[userid][itemid]) {
     user_carts[userid][itemid].quantity += 1;
@@ -101,11 +89,7 @@ const renderPlusMinusButtons = function() {
 
 
 // generates a new html row for a menu category (appetizers, mains, etc) with a column for each menu item in that category
-<<<<<<< HEAD
-const renderMenuRow = function (data, title, id, order) {
-=======
 const renderMenuRow = function(data, title, id, order) {
->>>>>>> 7cef849df118de8546b70de3c286df01ee16941e
 
   let newMenuCategory = `<div class="row">
   <a id="${id}"></a>
