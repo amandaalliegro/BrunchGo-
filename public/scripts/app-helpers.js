@@ -8,39 +8,46 @@ const createLocalDatabase = function (items) {
       prep_time: item.prep_time,
       image: item.image,
       stock: item.stock
-    };
+    };console.log(user_carts)
   }
 };
 
-// Takes the req.session id and creates a new cart (an empty array) in local_db/local_db.js for that id
+// Takes the req.session id and creates a new cart (an empty object) in local_db/local_db.js for that id
 const createUserCart = function (id) {
   if (user_carts[id]) {
   } else {
     user_carts[id] = {};
   }
-  console.log(user_carts)
 };
 
+// queries the server for the user's cookie and returns the cookie
 const getUserId = function () {
   return $.ajax({
     method: 'GET',
     url: '/userid'
   }).then((userid) => {
     return userid;
-  })
-}
+  });
+};
 
+
+// Adds an item to the user's cart (in user_carts).
+// If the item already exists in the cart, the item's quantity is increased by 1.
 const addCartItem = function (userid, itemid) {
-  console.log(local_db[itemid])
+  // check if item exists
   if (user_carts[userid][itemid]) {
     user_carts[userid][itemid].quantity += 1;
+    // if item doesn't exist, create the item and set quantity to 1
   } else {
-    user_carts[userid][itemid] = local_db[itemid]
+    user_carts[userid][itemid] = local_db[itemid];
     user_carts[userid][itemid].quantity = 1;
   }
   return user_carts[userid][itemid].quantity
 };
 
+
+// Removes an item from the user's cart (in user_carts).
+// If the quantity of the item is greater than 1, it decreases the quantity by 1
 const removeCartItem = function (userid, itemid) {
   if (user_carts[userid][itemid].quantity > 0) {
     user_carts[userid][itemid].quantity -= 1;
@@ -83,6 +90,8 @@ const renderPlusMinusButtons = function () {
 
 };
 
+
+// generates a new html row for a menu category (appetizers, mains, etc) with a column for each menu item in that category
 const renderMenuRow = function (data, title, id, order) {
 
   let newMenuCategory = `<div class="row">

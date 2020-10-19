@@ -5,6 +5,7 @@ $(() => {
     url: '/userid'
   }).then((userid) => {
     createUserCart(userid)
+    console.log(user_carts)
   });
 
 // RENDER MENUS
