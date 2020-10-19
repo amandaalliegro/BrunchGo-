@@ -102,9 +102,9 @@ const renderMenuRow = function(data, title, id, order) {
     let menuItem = `
   <div class="d-flex justify-content-center col-md-4 text-center" id="${item.id}">
   <a href="#" class="thumbnail">
-    <img src="//placehold.it/200" alt="Card image cap">
+    <img src=${item.image} alt="Card image cap">
   </a>
-  <h2>${item.name}</h2>
+  <h2>${item.name}  $${item.price}</h2>
   <span><a class="minusbutton btn btn-default" role="button">-</a></span>
   <span class="counter">0</span>
   <span><a class="plusbutton btn btn-default" role="button">+</a></span>
