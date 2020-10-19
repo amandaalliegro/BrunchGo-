@@ -4,8 +4,13 @@ $(() => {
     method: "GET",
     url: '/userid'
   }).then((userid) => {
+<<<<<<< HEAD
     createUserCart(userid)
     console.log(user_carts)
+=======
+    createUserCart(userid);
+
+>>>>>>> 7cef849df118de8546b70de3c286df01ee16941e
   });
 
 // RENDER MENUS
@@ -34,10 +39,7 @@ $(() => {
         renderMenuRow(items, 'Desserts', 'desserts', 3)
       }).then(() => {
         renderPlusMinusButtons();
-      })
-    })
-  })
-
-
-
+      });
+    });
+  });
 });
