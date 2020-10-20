@@ -7,6 +7,7 @@
 
 const e = require('express');
 const express = require('express');
+const { sendSMS } = require('../twilio');
 const router = express.Router();
 
 module.exports = (db) => {
@@ -59,9 +60,35 @@ module.exports = (db) => {
         res.send('success');
       }
     })
-  })
+  });
 
+  // POST accept order base on order_id
+  router.post("/order/accept/:order_id", (req, res) => {
+    const orderId = req.params.order_id;
+
+
+    const acceptOrderDatetime = new Date().toISOString();
+    console.log('the orderId is:', orderId);
+
+    // Update order table with accept_order_datetime
+    db.query(`UPDATE orders
+    SET accept_order_datetime = $1
+    WHERE id = $2
+    RETURNING *;
+    `,[acceptOrderDatetime, orderId])
+    .then(data => {
+      const {id, phone} = data.rows[0];
+      sendSMS(phone, 'order accepted');
+    })
+    .then(() => res.send(`Thank you for your order! Order ID: ${id}`))
+  });
+
+  // POST complete order by
 
 
   return router;
+
+
+
+
 }

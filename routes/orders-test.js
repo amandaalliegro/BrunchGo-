@@ -6,6 +6,7 @@
  */
 
 const express = require('express');
+const { sendSMS } = require('../twilio');
 const router = express.Router();
 
 module.exports = (db) => {
@@ -25,9 +26,6 @@ module.exports = (db) => {
 
     const { restaurantId, name, phone, subTotal, tax, total } = req.body;
 
-    // console.log(req.body);
-    // res.send('done');
-    // [restaurantId, name, phone, placeOrderDatetime, subTotal, tax, total, null, null]
     // 1. INSERT the data to order database
     const currentDateTime = new Date().toISOString();
 
@@ -37,6 +35,10 @@ module.exports = (db) => {
     ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     RETURNING *
     ;`, [restaurantId, name, phone, currentDateTime, subTotal, tax, total, null, null])
+    .then(data => {
+      sendSMS('6478730463', 'new order received!');
+      return data;
+    })
     .then(data => res.send(`the order_id is ${data.rows[0].id}`))
     .catch(err => {
       res.status(500).json({ error: err.message })});
