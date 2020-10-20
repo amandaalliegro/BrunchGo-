@@ -17,7 +17,6 @@ $(() => {
         <span>0</span>
         <button>+</button>
       </div>
-
     </div>
     <button class="cart-item-remove">X</button>
   </div>
@@ -30,12 +29,13 @@ $(() => {
     })
   });
 
-  $('.cart-btn').click(() => {
-    $('.cart-container').slideToggle(300);
-    $('.cart-container').css('display', 'flex');
+  $('#cart-toggle').click(() => {
+    $('#cart-container').slideToggle(300);
+    $('#cart-container').css('display', 'flex');
   });
 
   $('.cart-item-remove').click(function () {
+    console.log('click')
     const parent = $(this).closest('.cart-item');
     $(parent).remove();
   });

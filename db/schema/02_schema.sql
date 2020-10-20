@@ -16,13 +16,25 @@ CREATE TABLE orders (
   resturant_id        INTEGER REFERENCES restaurants(id) ON DELETE CASCADE,
   name                VARCHAR(255) NOT NULL,
   phone               VARCHAR (255) NOT NULL,
-  order_datetime      TIMESTAMP NOT NULL,
+  place_order_datetime      TIMESTAMP NOT NULL,
   sub_total           INTEGER NOT NULL,
   tax                 INTEGER NOT NULL,
   total               INTEGER NOT NULL,
-  completed_datetime  TIMESTAMP NOT NULL,
-  status              BOOLEAN DEFAULT false
+  accept_order_datetime TIMESTAMP,
+  complete_order_datetime  TIMESTAMP,
 );
+
+CREATE TABLE items (
+  id                  SERIAL PRIMARY KEY NOT NULL,
+  name                VARCHAR(255) NOT NULL,
+  category            VARCHAR(255) NOT NULL,
+  price               BIGINT NOT NULL DEFAULT 0,
+  available           BOOLEAN DEFAULT true,
+  prep_time           INTEGER NOT NULL,
+  image               VARCHAR(255) NOT NULL,
+  stock               INTEGER NOT NULL DEFAULT 0
+);
+
 
 CREATE TABLE order_items(
   id                  SERIAL PRIMARY KEY NOT NULL,
@@ -32,13 +44,4 @@ CREATE TABLE order_items(
   specifications      TEXT
 );
 
-CREATE TABLE items (
-  id                  SERIAL PRIMARY KEY NOT NULL,
-  name                VARCHAR(255) NOT NULL,
-  category            VARCHAR(255) NOT NULL,
-  price               BIGINT NOT NULL DEFAULT 0,
-  available           BOOLEAN DEFAULT true
-  prep_time           TIMESTAMP NOT NULL,
-  image               VARCHAR(255) NOT NULL,
-  stock               INTEGER NOT NULL DEFAULT 0
-)
+

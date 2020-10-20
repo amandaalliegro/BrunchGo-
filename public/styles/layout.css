@@ -1,5 +1,5 @@
 body {
-  background-color: #EEE;
+  background-color: #fff;
   margin: 0;
   padding: 0;
 }
@@ -11,7 +11,6 @@ body h1 {
 .main-container {
   border: 2px red solid;
   width: 80%;
-  height: auto;
   margin: 0px auto;
 }
 
@@ -43,7 +42,9 @@ body h1 {
 
 .item-header {
   top: 0px;
+  text-align: center;
   color: orange;
+  font-size: 1.5em;
   background-color: white;
 }
 
@@ -51,10 +52,23 @@ body h1 {
   display: flex;
   bottom: 0px;
   background-color: white;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
+  flex-wrap: wrap;
+  align-content: center;
 }
 
 .select-item-container {
   margin: auto;
+}
+
+.item-main {
+  height: 70%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-y: center;
+}
+
+.item-description {
+  width: 100%;
 }
