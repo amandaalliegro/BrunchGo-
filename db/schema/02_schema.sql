@@ -21,7 +21,7 @@ CREATE TABLE orders (
   tax                 INTEGER NOT NULL,
   total               INTEGER NOT NULL,
   accept_order_datetime TIMESTAMP,
-  complete_order_datetime  TIMESTAMP,
+  complete_order_datetime  TIMESTAMP
 );
 
 CREATE TABLE items (
@@ -44,4 +44,8 @@ CREATE TABLE order_items(
   specifications      TEXT
 );
 
-
+CREATE TABLE manager (
+  id           SERIAL PRIMARY KEY NOT NULL,
+  user_name    VARCHAR(255) NOT NULL,
+  password     VARCHAR(255) NOT NULL
+);
