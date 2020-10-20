@@ -25,6 +25,7 @@ function setCookie(cname, cvalue, exdays) {
 
 
 $(() => {
+
   // Render user cart if one does not already exist
   $.ajax({
     method: "GET",

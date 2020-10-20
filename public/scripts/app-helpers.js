@@ -46,6 +46,19 @@ const addCartItem = function(userid, itemid) {
   return user_carts[userid][itemid].quantity;
 };
 
+const findCounterDiv = function(id, location) {
+  if (location === 'Menu') {
+    const parentDiv = $('body').find(`#${id}`);
+    const counterDiv = $(parentDiv).find('.counter')[0];
+    return counterDiv
+  } else if (location === 'Cart') {
+   const parentDiv = $('body').find(`#cart-item${id}`);
+   const counterDiv = $(parentDiv).find('.counter')[0];
+   return counterDiv;
+  }
+
+}
+
 
 // Removes an item from the user's cart (in user_carts).
 // If the quantity of the item is greater than 1, it decreases the quantity by 1
@@ -72,7 +85,12 @@ const renderPlusMinusButtons = function() {
     const itemId = $(this).closest('div')[0].id;
     let parent = $(this).parents()[1];
       const currentCount = Number($(parent).find('.counter').text());
-      $(parent).find('.counter').text(currentCount + 1)
+      $(parent).find('.counter').text(currentCount + 1);
+
+      // sync menu counter and cart counter
+      let cartCounter = findCounterDiv(itemId, 'Cart');
+      const updatedCount = Number($(parent).find('.counter').text());
+      $(cartCounter).text(updatedCount)
   });
 
 
@@ -85,6 +103,11 @@ const renderPlusMinusButtons = function() {
         //do not decrease past 0
       } else {
         $(parent).find('.counter').text(currentCount - 1)
+
+         // sync menu counter and cart counter
+      let cartCounter = findCounterDiv(itemId, 'Cart');
+      const updatedCount = Number($(parent).find('.counter').text());
+      $(cartCounter).text(updatedCount)
       }
 
   });
@@ -97,14 +120,13 @@ const renderCartPlusMinus = function() {
     const currentCount = $(counterDiv).text()
     let itemId = $(this).closest('.cart-row')[0].id[9];
     let itemPrice = Number((local_db[itemId].price)) / 100;
-    console.log(itemPrice)
-    console.log(currentCount)
     const totalPrice = (itemPrice * currentCount).toFixed(2);
-
-
-
     const priceDiv = $(this).closest('.cart-row').find('.itemprice');
     $(priceDiv).text(`$${totalPrice}`)
+
+    // Sync cart counter with menu counter
+    let menuCounter = findCounterDiv(itemId, 'Menu');
+    $(menuCounter).text(currentCount)
 
   })
 }
