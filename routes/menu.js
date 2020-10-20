@@ -11,7 +11,10 @@ const toTitleCase = require('./menu-helpers');
 
 module.exports = (db) => {
   router.get("/:category", (req, res) => {
+
+    // converts req.params.category to Title Case to avoid any issues querying the database
     let category = toTitleCase(req.params.category);
+
     db.query(`SELECT * FROM items WHERE category = '${category}';`).then(data => {
       const menu = data.rows;
       res.send(menu);
