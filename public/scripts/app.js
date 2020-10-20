@@ -33,7 +33,9 @@ $(() => {
   }).then((userid) => {
     createUserCart(userid);
 
-  });
+  }).then(() => {
+    refreshCart()
+  })
 
 // RENDER MENUS
   // RENDER "APPETIZERS" MENU ROW
@@ -69,7 +71,6 @@ $(() => {
           renderMenuRow(items, 'Desserts', 'desserts', 4)
         }).then(() => {
           renderPlusMinusButtons();
-          renderAddItemButtons();
         })
       });
     })
