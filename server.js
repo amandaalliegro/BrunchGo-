@@ -81,6 +81,24 @@ app.get("/manager", (req, res) => {
     res.render('index_manager');
   }
 });
+app.get("/update", (req, res) => {
+  if (req.session.user_id) {
+    res.render('index_menu_update');
+  } else {
+    const newId = Math.round(Math.random() * 100000);
+    req.session.user_id = newId;
+    res.render('index_menu_update');
+  }
+});
+
+app.post("/update", (req, res) => {
+  console.log(req.body)
+  db.query(`
+  INSERT INTO items (id, name, category, price, available, prep_time, image, stock)
+  VALUES(1000000, '${req.body.name}', '${req.body.category}', ${req.body.price}, ${req.body.available}, ${req.body.prep_time}, '${req.body.image}', ${req.body.stock});
+  `)
+  res.send('ok')
+})
 
 // Returns the user's cookie so it can be used to create a local entry with the user's menu selections
 app.get("/userid", (req, res) => {
