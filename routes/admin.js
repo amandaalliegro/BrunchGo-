@@ -11,7 +11,7 @@ const router = express.Router();
 
 module.exports = (db) => {
 
-  // Get: Root page of admin
+  // GET: Root page of admin
   router.get("/", (req, res) => {
 
     // if not logged in, direct to login page
@@ -23,12 +23,27 @@ module.exports = (db) => {
     }
   });
 
+  // GET: login page of admin
+
   router.get("/login", (req, res) => {
+
+    // direct to order page if already login
     if (req.session.admin_id) {
       return res.render("./admin/order");
     }
     res.render("login");
   });
+
+  // POST login
+  router.post("/login", (req, res) => {
+
+    const { username, password } = req.body;
+
+
+
+  })
+
+
 
   return router;
 }
