@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 // Web server config
-const PORT       = process.env.PORT || 3050;
+const PORT       = process.env.PORT || 8080;
 const ENV        = process.env.ENV || "development";
 const express    = require("express");
 const bodyParser = require("body-parser");
@@ -58,6 +58,25 @@ app.get("/", (req, res) => {
     const newId = Math.round(Math.random() * 100000);
     req.session.user_id = newId;
     res.render("index");
+  }
+});
+app.get("/login", (req, res) => {
+  if (req.session.user_id) {
+    res.render('index_login');
+  } else {
+    const newId = Math.round(Math.random() * 100000);
+    req.session.user_id = newId;
+    res.render('index_login');
+  }
+});
+
+app.get("/manager", (req, res) => {
+  if (req.session.user_id) {
+    res.render('index_manager');
+  } else {
+    const newId = Math.round(Math.random() * 100000);
+    req.session.user_id = newId;
+    res.render('index_manager');
   }
 });
 
