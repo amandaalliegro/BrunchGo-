@@ -11,7 +11,6 @@ body h1 {
 .main-container {
   border: 2px red solid;
   width: 80%;
-  height: auto;
   margin: 0px auto;
 }
 
