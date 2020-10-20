@@ -11,7 +11,7 @@ const router = express.Router();
 
 module.exports = (db) => {
 
-  // GET: Root page of admin
+  // GET Root page of admin
   router.get("/", (req, res) => {
 
     // if not logged in, direct to login page
@@ -23,8 +23,7 @@ module.exports = (db) => {
     }
   });
 
-  // GET: login page of admin
-
+  // GET admin login page
   router.get("/login", (req, res) => {
 
     // direct to order page if already login
@@ -34,13 +33,32 @@ module.exports = (db) => {
     res.render("login");
   });
 
-  // POST login
+  // POST login username and password
   router.post("/login", (req, res) => {
+
+    if (req.session.adminLogin) {
+      return res.render('./admin/order')
+    }
 
     const { username, password } = req.body;
 
-
-
+    db.query(`SELECT * FROM admin
+    WHERE username = $1;
+    `, [username])
+    .then(data => {
+      console.log('data.rows is', data.rows);
+      const result = data.rows[0];
+      console.log('result is', result);
+      if (!result) {
+        res.send('User does not exist.');
+      } else if (password !== result.password){
+        res.send('Incorrect password.');
+      } else {
+        // set cookie for user
+        // res.session.adminLogin = true
+        res.send('success');
+      }
+    })
   })
 
 

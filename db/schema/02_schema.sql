@@ -2,6 +2,8 @@ DROP TABLE IF EXISTS restaurants CASCADE;
 DROP TABLE IF EXISTS orders CASCADE;
 DROP TABLE IF EXISTS order_items CASCADE;
 DROP TABLE IF EXISTS items CASCADE;
+DROP TABLE IF EXISTS admin CASCADE;
+
 
 CREATE TABLE restaurants (
   id         SERIAL PRIMARY KEY NOT NULL,
@@ -42,6 +44,12 @@ CREATE TABLE order_items(
   item_id             INTEGER REFERENCES items(id) ON DELETE CASCADE,
   quantity            INTEGER NOT NULL,
   specifications      TEXT
+);
+
+CREATE TABLE admin (
+  id                  SERIAL PRIMARY KEY NOT NULL,
+  username            VARCHAR(255) NOT NULL,
+  password            VARCHAR(255) NOT NULL
 );
 
 

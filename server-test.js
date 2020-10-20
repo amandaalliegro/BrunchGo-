@@ -1,7 +1,7 @@
 // load .env data into process.env
 require('dotenv').config();
 
-const { sendSMS } = require("./helpers");
+const { sendSMS } = require("./twilio");
 
 // Web server config
 const PORT       = process.env.PORT || 8080;
@@ -52,7 +52,7 @@ app.use(cookieSession({
 const menuRoutes = require("./routes/menu");
 const widgetsRoutes = require("./routes/widgets");
 const ordersTestRoutes = require("./routes/orders-test");
-
+const adminRoutes = require("./routes/admin");
 
 const { reapIntervalMillis } = require('pg/lib/defaults');
 
@@ -61,6 +61,8 @@ const { reapIntervalMillis } = require('pg/lib/defaults');
 app.use("/api/menu", menuRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 app.use("/api/orders_test", ordersTestRoutes(db));
+app.use("/admin", adminRoutes(db));
+
 // Note: mount other resources here, using the same pattern above
 
 
@@ -78,6 +80,7 @@ app.get("/", (req, res) => {
   //   res.render("index");
   // }
 });
+
 
 // // test the POST method for sending SMS message
 // app.post('/test', (req, res) => {

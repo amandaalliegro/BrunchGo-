@@ -31,3 +31,8 @@ INSERT INTO restaurants (id, owner, address, phone, opened)
 VALUES
 (100, 'Jamie Rolland',  '55 Queens st', 00000000, true),
 (200, 'Suzie M.', '289 Joker Boulevard', 00000002, false);
+
+INSERT INTO admin (username, password)
+VALUES
+('admin1',  'pw1'),
+('admin2', 'pw2');
