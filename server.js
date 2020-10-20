@@ -1,6 +1,8 @@
 // load .env data into process.env
 require('dotenv').config();
 
+const { sendSMS } = require("./helpers");
+
 // Web server config
 const PORT       = process.env.PORT || 8080;
 const ENV        = process.env.ENV || "development";
@@ -10,8 +12,6 @@ const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
 const cookieSession = require('cookie-session');
-
-const cookieSession = require("cookie-session");
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -26,7 +26,10 @@ db.connect();
 app.use(morgan('dev'));
 
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
+
+// Need this for postman; need to check if it's needed for the app
+app.use(express.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -61,24 +64,33 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
-<<<<<<< HEAD
-  req.session.test = 'testing';
-  res.render("index");
-=======
-  if (req.session.user_id) {
-    res.render("index");
-  } else {
-    const newId = Math.round(Math.random() * 100000);
-    req.session.user_id = newId;
-    res.render("index");
-  }
+
+  res.send('hello');
+  // if (req.session.user_id) {
+  //   res.render("index");
+  // } else {
+  //   const newId = Math.round(Math.random() * 100000);
+  //   req.session.user_id = newId;
+  //   res.render("index");
+  // }
+});
+
+
+// test the POST method for sending SMS message
+app.post('/test', (req, res) => {
+
+  const { phone, message } = req.body;
+  // console.log(typeof req.body);
+  // const {phone, message} = req.body;
+  sendSMS(phone, message);
+  res.send('SMS message sent');
+
 });
 
 // Returns the user's cookie so it can be used to create a local entry with the user's menu selections
 app.get("/userid", (req, res) => {
   const userid = req.session.user_id.toString();
   res.send(userid);
->>>>>>> master
 });
 
 app.listen(PORT, () => {

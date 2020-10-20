@@ -68,6 +68,10 @@ module.exports = (db) => {
     .then(data => {
       // An object with order_id and estimated_time
       const templateVar = data.rows[0];
+
+      // Send message with Twilio
+
+
       res.render('order', templateVar);
 
       // Send message with Twilio
