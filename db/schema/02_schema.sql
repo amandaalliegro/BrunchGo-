@@ -22,7 +22,6 @@ CREATE TABLE orders (
   total               INTEGER NOT NULL,
   accept_order_datetime TIMESTAMP,
   complete_order_datetime  TIMESTAMP,
-  status              BOOLEAN DEFAULT false
 );
 
 CREATE TABLE items (

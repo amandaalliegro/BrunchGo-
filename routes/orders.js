@@ -29,7 +29,7 @@ module.exports = (db) => {
 
     // 1. INSERT the data to order database
     db.query(
-      `INSERT INTO orders (resturant_id, name, phone, order_datetime, sub_total, tax, total, completed_datetime)
+      `INSERT INTO orders (resturant_id, name, phone, place_order_datetime, sub_total, tax, total, accept_order_datetime, complete_order_datetime)
     VALUES
     ($1, $2, $3, $4, $5, $6, $7, $8)
     RETURNING *
