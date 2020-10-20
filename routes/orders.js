@@ -1,7 +1,7 @@
 /*
  * All routes for orders are defined here
  * Since this file is loaded in server.js into /orders,
- *   these routes are mounted onto /users
+ *   these routes are mounted onto /orders
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
@@ -25,7 +25,7 @@ module.exports = (db) => {
     // {restaurantId, name, phone, tax, subtotal, total, etc } = req object
 
     // Set orderDatetime to current time
-    const orderDatetime = Date.now();
+    const placeOrderDatetime = Date.now();
 
     // 1. INSERT the data to order database
     db.query(
@@ -33,7 +33,7 @@ module.exports = (db) => {
     VALUES
     ($1, $2, $3, $4, $5, $6, $7, $8)
     RETURNING *
-    ;`, [restaurantId, name, phone, orderDatetime, sub_total, tax, total, null])
+    ;`, [restaurantId, name, phone, placeOrderDatetime, sub_total, tax, total, null, null])
 
     // 2. INSERT the data into order_items database
     .then(data => {
@@ -66,14 +66,9 @@ module.exports = (db) => {
     })
     // 4. Return order completion page (need to create)
     .then(data => {
-      // An object with order_id and estimated_time
-      const templateVar = data.rows[0];
 
-      // Send message with Twilio
-
-
-      res.render('order', templateVar);
-
+      // Render page to notify customer the order is received
+      res.render('order');
       // Send message with Twilio
 
     })

@@ -8,8 +8,8 @@ CREATE TABLE restaurants (
   owner      VARCHAR(255) NOT NULL,
   address    VARCHAR(255) NOT NULL,
   phone      INTEGER NOT NULL,
-  opened       BOOLEAN DEFAULT false
-);
+  opened     BOOLEAN DEFAULT false
+  );
 
 CREATE TABLE orders (
   id                  SERIAL PRIMARY KEY NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE orders (
   tax                 INTEGER NOT NULL,
   total               INTEGER NOT NULL,
   accept_order_datetime TIMESTAMP,
-  complete_order_datetime  TIMESTAMP,
+  complete_order_datetime  TIMESTAMP
 );
 
 CREATE TABLE items (
