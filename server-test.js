@@ -4,7 +4,7 @@ require('dotenv').config();
 const { sendSMS } = require("./helpers");
 
 // Web server config
-const PORT       = process.env.PORT || 3050;
+const PORT       = process.env.PORT || 8080;
 const ENV        = process.env.ENV || "development";
 const express    = require("express");
 const bodyParser = require("body-parser");
@@ -12,7 +12,6 @@ const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
 const cookieSession = require('cookie-session');
-
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -86,25 +85,6 @@ app.post('/test', (req, res) => {
   sendSMS(phone, message);
   res.send('SMS message sent');
 
-});
-app.get("/login", (req, res) => {
-  if (req.session.user_id) {
-    res.render('index_login');
-  } else {
-    const newId = Math.round(Math.random() * 100000);
-    req.session.user_id = newId;
-    res.render('index_login');
-  }
-});
-
-app.get("/manager", (req, res) => {
-  if (req.session.user_id) {
-    res.render('index_manager');
-  } else {
-    const newId = Math.round(Math.random() * 100000);
-    req.session.user_id = newId;
-    res.render('index_manager');
-  }
 });
 
 // Returns the user's cookie so it can be used to create a local entry with the user's menu selections
