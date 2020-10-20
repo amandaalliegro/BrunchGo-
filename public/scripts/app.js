@@ -51,17 +51,28 @@ $(() => {
       createLocalDatabase(items);
       renderMenuRow(items, 'Mains', 'maindishes', 2)
     }).then(() => {
-      // // RENDER "DESSERTS" MENU ROW
+      // RENDER BEVERAGES MENU ROW
       $.ajax({
-        method: "GET",
-        url: "/api/menu/desserts"
+        method: 'GET',
+        url: '/api/menu/beverages'
       }).then((items) => {
         createLocalDatabase(items);
-        renderMenuRow(items, 'Desserts', 'desserts', 3)
+        renderMenuRow(items, 'Beverages', 'beverages', 3)
       }).then(() => {
-        renderPlusMinusButtons();
-        renderAddItemButtons();
-      })
-    });
+        // // RENDER "DESSERTS" MENU ROW
+        $.ajax({
+          method: "GET",
+          url: "/api/menu/desserts"
+        }).then((items) => {
+          createLocalDatabase(items);
+          renderMenuRow(items, 'Desserts', 'desserts', 4)
+        }).then(() => {
+          renderPlusMinusButtons();
+          renderAddItemButtons();
+        })
+      });
+    })
+
+
   });
 });
