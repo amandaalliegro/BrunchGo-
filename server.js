@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 // Web server config
-const PORT       = process.env.PORT || 3050;
+const PORT       = process.env.PORT || 8080;
 const ENV        = process.env.ENV || "development";
 const express    = require("express");
 const bodyParser = require("body-parser");
@@ -70,6 +70,19 @@ app.get("/login", (req, res) => {
     req.session.user_id = newId;
     res.render('index_login');
   }
+});
+
+app.post('/login', (req, res) => {
+  const {email, password} = req.body;
+  login(email, password)
+    .then(user => {
+      if (!user) {
+        res.send({error: "error"});
+        return;
+      }
+      res.send({user: {name: user.name, email: user.email, id: user.id}});
+    })
+    .catch(e => res.send(e));
 });
 
 app.get("/manager", (req, res) => {
