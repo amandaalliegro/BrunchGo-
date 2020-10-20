@@ -1,37 +1,3 @@
-const createLocalDatabase = function(items) {
-  for (const item of items) {
-    local_db[item.id] = {
-      name: item.name,
-      category: item.category,
-      price: item.price,
-      available: item.available,
-      prep_time: item.prep_time,
-      image: item.image,
-      stock: item.stock
-    };
-  }
-};
-
-// Takes the req.session id and creates a new cart (an empty object) in local_db/local_db.js for that id
-const createUserCart = function (id) {
-  if (user_carts[id]) {
-    // if a cart already exists for this user id, do nothing
-  } else {
-    user_carts[id] = {};
-  }
-};
-
-// queries the server for the user's cookie and returns the cookie
-const getUserId = function() {
-  return $.ajax({
-    method: 'GET',
-    url: '/userid'
-  }).then((userid) => {
-    return userid;
-  });
-};
-
-
 // Adds an item to the user's cart (in user_carts).
 // If the item already exists in the cart, the item's quantity is increased by 1.
 const addCartItem = function(userid, itemid) {
@@ -47,67 +13,76 @@ const addCartItem = function(userid, itemid) {
 };
 
 
-// Removes an item from the user's cart (in user_carts).
-// If the quantity of the item is greater than 1, it decreases the quantity by 1
-const removeCartItem = function (userid, itemid) {
-  if (user_carts[userid][itemid].quantity > 0) {
-    user_carts[userid][itemid].quantity -= 1;
-  } else {
+const addToCart = function(userid, itemid, quantity) {
+  if (quantity === 0) {
+    return null;
   }
-  return user_carts[userid][itemid].quantity;
-};
-
-const setItemQuantity = function (userid, itemid) {
-  return user_carts[userid][itemid].quantity;
-};
-
-// renders plus and minus buttons for each item on the menu
-
-const renderPlusMinusButtons = function() {
-  $('.plusbutton').off("click");
-  $('.minusbutton').off("click");
-
-  $('.plusbutton').click(function(e) {
-    e.stopPropagation()
-    const itemId = $(this).closest('div')[0].id;
-    let parent = $(this).parents()[1];
-      const currentCount = Number($(parent).find('.counter').text());
-      $(parent).find('.counter').text(currentCount + 1)
-  });
 
 
-  $('.minusbutton').click(function(e) {
-    e.stopPropagation()
-    const itemId = $(this).closest('div')[0].id;
-    let parent = $(this).parents()[1];
-      const currentCount = Number($(parent).find('.counter').text());
-      if (currentCount === 0) {
-        //do not decrease past 0
-      } else {
-        $(parent).find('.counter').text(currentCount - 1)
-      }
+  const currentItem = user_carts[userid][itemid];
 
-  });
-};
-
-const renderCartPlusMinus = function() {
-  $('.cart-button').click(function() {
-    const thisDiv = $(this).closest('div')[0];
-    const counterDiv = $(thisDiv).find('.counter')[0];
-    const currentCount = $(counterDiv).text()
-    let itemId = $(this).closest('.cart-row')[0].id[9];
-    let itemPrice = Number((local_db[itemId].price)) / 100;
-    console.log(itemPrice)
-    console.log(currentCount)
-    const totalPrice = (itemPrice * currentCount).toFixed(2);
-
-
-
-    const priceDiv = $(this).closest('.cart-row').find('.itemprice');
-    $(priceDiv).text(`$${totalPrice}`)
-
-  })
+  if (currentItem) {
+    user_carts[userid][itemid].quantity = quantity;
+    const cartCounterToChange = $(`#cart-item${itemid}`).find('.counter')[0];
+    $(cartCounterToChange).text(quantity);
+  } else {
+    const menuItem = local_db[itemid]
+    menuItem.quantity = quantity;
+    insertCartItem(menuItem, itemid);
+    user_carts[userid][itemid] = menuItem;
+    $('.cart').find('')
+  }
 }
+
+const createLocalDatabase = function(items) {
+  for (const item of items) {
+    local_db[item.id] = {
+      name: item.name,
+      category: item.category,
+      price: item.price,
+      available: item.available,
+      prep_time: item.prep_time,
+      image: item.image,
+      stock: item.stock
+    };
+  }
+};
+
+const createNewOrder = function(userid) {
+
+}
+
+// Takes the req.session id and creates a new cart (an empty object) in local_db/local_db.js for that id
+const createUserCart = function (id) {
+  if (user_carts[id]) {
+    // if a cart already exists for this user id, do nothing
+  } else {
+    user_carts[id] = {};
+  }
+};
+
+const findCounterDiv = function(id, location) {
+  if (location === 'Menu') {
+    const parentDiv = $('body').find(`#${id}`);
+    const counterDiv = $(parentDiv).find('.counter')[0];
+    return counterDiv
+  } else if (location === 'Cart') {
+   const parentDiv = $('body').find(`#cart-item${id}`);
+   const counterDiv = $(parentDiv).find('.counter')[0];
+   return counterDiv;
+  }
+
+}
+
+// queries the server for the user's cookie and returns the cookie
+const getUserId = function() {
+  return $.ajax({
+    method: 'GET',
+    url: '/userid'
+  }).then((userid) => {
+    return userid;
+  });
+};
 
 const insertCartItem = function(menuItem, itemid) {
   if ($('.cart').children().length === 1) {
@@ -118,6 +93,12 @@ const insertCartItem = function(menuItem, itemid) {
                 </div>
               </div>
     `);
+    $('.cart-checkout-button').click(() => {
+      getUserId().then((userid) => {
+        createNewOrder(userid);
+      })
+
+    })
   }
   const newCartItem = `
   <div class="row cart-row" id="cart-item${itemid}">
@@ -142,26 +123,15 @@ const insertCartItem = function(menuItem, itemid) {
   $('.cart-items').append(newCartItem)
 }
 
-const addToCart = function(userid, itemid, quantity) {
-  if (quantity === 0) {
-    return null;
-  }
-
-
-  const currentItem = user_carts[userid][itemid];
-
-  if (currentItem) {
-    user_carts[userid][itemid].quantity = quantity;
-    const cartCounterToChange = $(`#cart-item${itemid}`).find('.counter')[0];
-    $(cartCounterToChange).text(quantity);
+// Removes an item from the user's cart (in user_carts).
+// If the quantity of the item is greater than 1, it decreases the quantity by 1
+const removeCartItem = function (userid, itemid) {
+  if (user_carts[userid][itemid].quantity > 0) {
+    user_carts[userid][itemid].quantity -= 1;
   } else {
-    const menuItem = local_db[itemid]
-    menuItem.quantity = quantity;
-    insertCartItem(menuItem, itemid);
-    user_carts[userid][itemid] = menuItem;
-    $('.cart').find('')
   }
-}
+  return user_carts[userid][itemid].quantity;
+};
 
 const renderAddItemButtons = function() {
   $('.add-cart-item').click(function (e) {
@@ -179,6 +149,61 @@ const renderAddItemButtons = function() {
   })
 }
 
+const renderCartPlusMinus = function() {
+  $('.cart-button').click(function() {
+    const thisDiv = $(this).closest('div')[0];
+    const counterDiv = $(thisDiv).find('.counter')[0];
+    const currentCount = $(counterDiv).text()
+    let itemId = $(this).closest('.cart-row')[0].id[9];
+    let itemPrice = Number((local_db[itemId].price)) / 100;
+    const totalPrice = (itemPrice * currentCount).toFixed(2);
+    const priceDiv = $(this).closest('.cart-row').find('.itemprice');
+    $(priceDiv).text(`$${totalPrice}`)
+
+    // Sync cart counter with menu counter
+    let menuCounter = findCounterDiv(itemId, 'Menu');
+    $(menuCounter).text(currentCount)
+
+  })
+}
+
+// renders plus and minus buttons for each item on the menu
+const renderPlusMinusButtons = function() {
+  $('.plusbutton').off("click");
+  $('.minusbutton').off("click");
+
+  $('.plusbutton').click(function(e) {
+    e.stopPropagation()
+    const itemId = $(this).closest('div')[0].id;
+    let parent = $(this).parents()[1];
+      const currentCount = Number($(parent).find('.counter').text());
+      $(parent).find('.counter').text(currentCount + 1);
+
+      // sync menu counter and cart counter
+      let cartCounter = findCounterDiv(itemId, 'Cart');
+      const updatedCount = Number($(parent).find('.counter').text());
+      $(cartCounter).text(updatedCount)
+  });
+
+
+  $('.minusbutton').click(function(e) {
+    e.stopPropagation()
+    const itemId = $(this).closest('div')[0].id;
+    let parent = $(this).parents()[1];
+      const currentCount = Number($(parent).find('.counter').text());
+      if (currentCount === 0) {
+        //do not decrease past 0
+      } else {
+        $(parent).find('.counter').text(currentCount - 1)
+
+         // sync menu counter and cart counter
+      let cartCounter = findCounterDiv(itemId, 'Cart');
+      const updatedCount = Number($(parent).find('.counter').text());
+      $(cartCounter).text(updatedCount)
+      }
+
+  });
+};
 
 // generates a new html row for a menu category (appetizers, mains, etc) with a column for each menu item in that category
 const renderMenuRow = function(data, title, id, order) {
@@ -208,3 +233,8 @@ const renderMenuRow = function(data, title, id, order) {
     $(`#main-container > .row:nth-child(${order})`).append(menuItem);
   };
 };
+
+const setItemQuantity = function (userid, itemid) {
+  return user_carts[userid][itemid].quantity;
+};
+
