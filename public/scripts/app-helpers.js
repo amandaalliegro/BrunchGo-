@@ -234,11 +234,9 @@ const renderMenuRow = function(data, title, id, order) {
   };
 };
 
-<<<<<<< HEAD
 const setItemQuantity = function (userid, itemid) {
   return user_carts[userid][itemid].quantity;
 };
-=======
 const renderNewMenuManager = function(data) {
   let newMenuManager = `<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
   <h2 class="sub-header">Include new items:</h2>
@@ -342,5 +340,4 @@ const renderMenuManager = function(data) {
   </tbody>`
   }
 }
->>>>>>> amanda
 

@@ -10,6 +10,7 @@ const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
 const cookieSession = require('cookie-session');
+const bcrypt = require('bcrypt');
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -73,14 +74,14 @@ app.get("/login", (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  const {email, password} = req.body;
-  login(email, password)
+  const {user_name, password} = req.body;
+  login(user_name, password)
     .then(user => {
       if (!user) {
         res.send({error: "error"});
         return;
       }
-      res.send({user: {name: user.name, email: user.email, id: user.id}});
+      res.send({user: {name: user.name, id: user.id}});
     })
     .catch(e => res.send(e));
 });
