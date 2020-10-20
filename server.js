@@ -86,6 +86,25 @@ app.post('/test', (req, res) => {
   res.send('SMS message sent');
 
 });
+app.get("/login", (req, res) => {
+  if (req.session.user_id) {
+    res.render('index_login');
+  } else {
+    const newId = Math.round(Math.random() * 100000);
+    req.session.user_id = newId;
+    res.render('index_login');
+  }
+});
+
+app.get("/manager", (req, res) => {
+  if (req.session.user_id) {
+    res.render('index_manager');
+  } else {
+    const newId = Math.round(Math.random() * 100000);
+    req.session.user_id = newId;
+    res.render('index_manager');
+  }
+});
 
 // Returns the user's cookie so it can be used to create a local entry with the user's menu selections
 app.get("/userid", (req, res) => {

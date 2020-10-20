@@ -64,8 +64,11 @@ const setItemQuantity = function (userid, itemid) {
 // renders plus and minus buttons for each item on the menu
 
 const renderPlusMinusButtons = function() {
+  $('.plusbutton').off("click");
+  $('.minusbutton').off("click");
 
-  $('.plusbutton').click(function() {
+  $('.plusbutton').click(function(e) {
+    e.stopPropagation()
     const itemId = $(this).closest('div')[0].id;
     let parent = $(this).parents()[1];
       const currentCount = Number($(parent).find('.counter').text());
@@ -73,7 +76,8 @@ const renderPlusMinusButtons = function() {
   });
 
 
-  $('.minusbutton').click(function() {
+  $('.minusbutton').click(function(e) {
+    e.stopPropagation()
     const itemId = $(this).closest('div')[0].id;
     let parent = $(this).parents()[1];
       const currentCount = Number($(parent).find('.counter').text());
@@ -86,7 +90,35 @@ const renderPlusMinusButtons = function() {
   });
 };
 
+const renderCartPlusMinus = function() {
+  $('.cart-button').click(function() {
+    const thisDiv = $(this).closest('div')[0];
+    const counterDiv = $(thisDiv).find('.counter')[0];
+    const currentCount = $(counterDiv).text()
+    let itemId = $(this).closest('.cart-row')[0].id[9];
+    let itemPrice = Number((local_db[itemId].price)) / 100;
+    console.log(itemPrice)
+    console.log(currentCount)
+    const totalPrice = (itemPrice * currentCount).toFixed(2);
+
+
+
+    const priceDiv = $(this).closest('.cart-row').find('.itemprice');
+    $(priceDiv).text(`$${totalPrice}`)
+
+  })
+}
+
 const insertCartItem = function(menuItem, itemid) {
+  if ($('.cart').children().length === 1) {
+    $('.cart').append(`
+    <div class="row cart-row" style="border: none">
+                <div class="col-lg-12 col-sm-12 cart-checkout-button">
+                  <button class="btn btn-success checkout-btn">Checkout</button>
+                </div>
+              </div>
+    `);
+  }
   const newCartItem = `
   <div class="row cart-row" id="cart-item${itemid}">
   <div class="col-lg-3 col-sm-3 cart-item-img">
@@ -95,19 +127,19 @@ const insertCartItem = function(menuItem, itemid) {
   <div class="col-lg-6 col-sm-6 cart-item-info">
     <span>
       <h3>${menuItem.name}</h3>
-      <p>$${(menuItem.price / 100) * menuItem.quantity}</p>
+      <p class="itemprice">$${((menuItem.price / 100) * menuItem.quantity).toFixed(2)}</p>
     </span>
   </div>
   <div class="col-lg-3 col-sm-3 cart-counter">
     <div>
-      <span><a class="minusbutton btn btn-default" role="button">-</a></span>
+      <span><a class="minusbutton cart-button btn btn-default" role="button">-</a></span>
       <span class="counter">${menuItem.quantity}</span>
-      <span><a class="plusbutton btn btn-default" role="button">+</a></span>
+      <span><a class="plusbutton cart-button btn btn-default" role="button">+</a></span>
     </div>
   </div>
 </div>
   `
-  $('.cart-items').append(newCartItem);
+  $('.cart-items').append(newCartItem)
 }
 
 const addToCart = function(userid, itemid, quantity) {
@@ -140,6 +172,9 @@ const renderAddItemButtons = function() {
     getUserId().then((userid) => {
       addToCart(userid, itemId, quantity)
 
+    }).then(() => {
+      renderPlusMinusButtons();
+      renderCartPlusMinus();
     })
   })
 }
@@ -161,7 +196,7 @@ const renderMenuRow = function(data, title, id, order) {
   <a href="#" class="thumbnail">
     <img src=${item.image} alt="Card image cap">
   </a>
-  <h2>${item.name}  $${item.price}</h2>
+  <h2>${item.name}  $${(item.price / 100).toFixed(2)}</h2>
   <span><a class="minusbutton btn btn-default" role="button">-</a></span>
   <span class="counter">0</span>
   <span><a class="plusbutton btn btn-default" role="button">+</a></span>
