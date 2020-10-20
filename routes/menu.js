@@ -7,35 +7,18 @@
 
 const express = require('express');
 const router = express.Router();
+const toTitleCase = require('./menu-helpers');
 
 module.exports = (db) => {
-  router.get("/appetizers", (req, res) => {
-    db.query(`SELECT * FROM items WHERE category = 'Appetizers';`).then(data => {
+  router.get("/:category", (req, res) => {
+    let category = toTitleCase(req.params.category);
+    db.query(`SELECT * FROM items WHERE category = '${category}';`).then(data => {
       const menu = data.rows;
       res.send(menu);
     }).catch(err => {
       res.status(500).json({ error: err.message });
     });
-
-  })
-  router.get("/mains", (req, res) => {
-    db.query(`SELECT * FROM items WHERE category = 'Mains';`).then(data => {
-      const menu = data.rows;
-      res.send(menu);
-    }).catch(err => {
-      res.status(500).json({ error: err.message });
-    });
-
   });
 
-  router.get("/desserts", (req, res) => {
-    db.query(`SELECT * FROM items WHERE category = 'Desserts';`).then(data => {
-      const menu = data.rows;
-      res.send(menu);
-    }).catch(err => {
-      res.status(500).json({ error: err.message });
-    });
-
-  })
   return router;
 }
