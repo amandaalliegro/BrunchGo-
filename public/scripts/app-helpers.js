@@ -234,7 +234,113 @@ const renderMenuRow = function(data, title, id, order) {
   };
 };
 
+<<<<<<< HEAD
 const setItemQuantity = function (userid, itemid) {
   return user_carts[userid][itemid].quantity;
 };
+=======
+const renderNewMenuManager = function(data) {
+  let newMenuManager = `<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <h2 class="sub-header">Include new items:</h2>
+  <div class="table-responsive">`
+  $("table table-striped").append(newMenuManager);
+  for (let item of data) {
+    let name = item.name;
+    name = `<tbody>
+    <tr>
+      <td>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="">
+      </div>
+    </td>`
+    let category = item.category;
+    category = `<td>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="">
+    </div>
+    </td>`
+    let price = item.price;
+    price = `<td>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="">
+      </div>
+    </td>`
+    let available = item.available;
+    available = `<td>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="">
+      </div>
+    </td>`
+    let prepTime = item.prep_time;
+    prepTime = `<td>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="">
+      </div>
+    </td>`
+    let stock = item.stock;
+    stock = `<td>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="">
+      </div>
+    </td>
+    <td>
+        <button type="button" class="btn btn-default btn-sml add-cart-item">
+          <span class="glyphicon glyphicon-plus " aria-hidden="true"></span> ok
+          </button>
+    </td>
+
+    </tr>
+
+  </tbody>`
+  }
+}
+const renderMenuManager = function(data) {
+  let menuManager = `<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <h2 class="sub-header">Include new items:</h2>
+  <div class="table-responsive">`
+  $("table table-striped").append(menuManager);
+  for (let item of data) {
+    let name = item.name;
+    name = `<tbody>
+    <tr>
+      <td>
+        <div${item.name}</div>
+    </td>`
+    let category = item.category;
+    category = `<td>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="">
+    </div>
+    </td>`
+    let price = item.price;
+    price = `<td>
+      <div ${item.price}</div>
+    </td>`
+    let available = item.available;
+    available = `<td>
+      <div ${item.available}
+      </div>
+    </td>`
+    let prepTime = item.prep_time;
+    prepTime = `<td>
+      <div ${item.prep_time}
+      </div>
+    </td>`
+    let stock = item.stock;
+    stock = `<td>
+      <div ${item.stock}
+      </div>
+    </td>
+    <td>
+        <button type="button" class="btn btn-default btn-sml add-cart-item">
+          <span class="glyphicon glyphicon-plus " aria-hidden="true"></span> ok
+          </button>
+    </td>
+
+    </tr>
+
+  </tbody>`
+  }
+}
+>>>>>>> amanda
 
