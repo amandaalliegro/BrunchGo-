@@ -25,6 +25,7 @@ $(() => {
       createLocalDatabase(items);
       renderMenuRow(items, 'Mains', 'maindishes', 2)
     }).then(() => {
+      // RENDER BEVERAGES MENU ROW
       $.ajax({
         method: 'GET',
         url: '/api/menu/beverages'
