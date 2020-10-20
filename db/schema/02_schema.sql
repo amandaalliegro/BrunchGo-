@@ -13,7 +13,7 @@ CREATE TABLE restaurants (
 
 CREATE TABLE orders (
   id                  SERIAL PRIMARY KEY NOT NULL,
-  resturant_id        INTEGER REFERENCES restaurants(id) ON DELETE CASCADE,
+  restaurant_id        INTEGER REFERENCES restaurants(id) ON DELETE CASCADE,
   name                VARCHAR(255) NOT NULL,
   phone               VARCHAR (255) NOT NULL,
   place_order_datetime      TIMESTAMP NOT NULL,

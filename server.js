@@ -46,7 +46,7 @@ const ordersRoutes = require('./routes/orders')
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/menu", menuRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
-app.use('api/orders', ordersRoutes(db))
+app.use('/api/orders', ordersRoutes(db))
 // Note: mount other resources here, using the same pattern above
 
 

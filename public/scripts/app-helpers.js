@@ -50,6 +50,11 @@ const createLocalDatabase = function(items) {
 
 const createNewOrder = function(userid) {
   console.log(user_carts[userid])
+  $.ajax({
+    method :'POST',
+    url: '/api/orders/test',
+    data: user_carts[userid]
+  })
 }
 
 // Takes the req.session id and creates a new cart (an empty object) in local_db/local_db.js for that id

@@ -12,16 +12,17 @@ module.exports = (db) => {
 
   /*
   Workflow
-  1. Insert into order datatable
+  1. Insert into order data table
   2. Insert into order_items table
-  3. Calculate estimated time
-  4. render order completion page with order id and estimated time
+  4. render page to tell customer order received
   */
 
   // POST: for customer to place an order
-  router.post("/", (req, res) => {
+  router.post("/test", (req, res) => {
 
-    // Need to first destructure the data
+    const orderData = req.body;
+
+    // // Need to first destructure the data
     // {restaurantId, name, phone, tax, subtotal, total, etc } = req object
 
     // Set orderDatetime to current time
@@ -29,7 +30,7 @@ module.exports = (db) => {
 
     // 1. INSERT the data to order database
     db.query(
-      `INSERT INTO orders (resturant_id, name, phone, place_order_datetime, sub_total, tax, total, accept_order_datetime, complete_order_datetime)
+      `INSERT INTO orders (restaurant_id, name, phone, place_order_datetime, sub_total, tax, total, accept_order_datetime, complete_order_datetime)
     VALUES
     ($1, $2, $3, $4, $5, $6, $7, $8)
     RETURNING *
@@ -69,12 +70,12 @@ module.exports = (db) => {
 
       // Render page to notify customer the order is received
       res.render('order');
-      // Send message with Twilio
 
-    })
-    .catch(err => {
-      res.status(500).json({ error: err.message });
     });
+    // .catch(err => {
+    //   res.status(500).json({ error: err.message });
+    // });
+  // });
   });
   return router;
 }
