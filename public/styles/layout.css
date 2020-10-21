@@ -1,5 +1,6 @@
 body {
-  background-color: #fff;
+  background-color: #e0ccb0;
+  background-image: url("styles/wood.png");
   margin: 0;
   padding: 0;
 }
@@ -45,13 +46,13 @@ body h1 {
   text-align: center;
   color: orange;
   font-size: 1.5em;
-  background-color: white;
+  background-color: #e0ccb0;
 }
 
 .item-footer {
   display: flex;
   bottom: 0px;
-  background-color: white;
+  background-color: #e0ccb0 e;
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;

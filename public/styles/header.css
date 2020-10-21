@@ -1,4 +1,5 @@
 .jumbotron {
   background-image: url("header.jpeg");
   background-size: cover;
+  height: 400px;
 }
