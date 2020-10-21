@@ -65,28 +65,10 @@ app.get("/", (req, res) => {
     res.render("index");
   }
 });
-app.get("/login", (req, res) => {
-  if (req.session.user_id) {
-    res.render('index_login');
-  } else {
-    const newId = Math.round(Math.random() * 100000);
-    req.session.user_id = newId;
-    res.render('index_login');
-  }
-});
 
-app.post('/login', (req, res) => {
-  const {user_name, password} = req.body;
-  login(user_name, password)
-    .then(user => {
-      if (!user) {
-        res.send({error: "error"});
-        return;
-      }
-      res.send({user: {name: user.name, id: user.id}});
-    })
-    .catch(e => res.send(e));
-});
+
+
+
 
 app.get("/manager", (req, res) => {
   if (req.session.user_id) {
