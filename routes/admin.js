@@ -9,6 +9,7 @@ const e = require('express');
 const express = require('express');
 const { sendSMS } = require('../twilio');
 const router = express.Router();
+const bcrypt = require('bcrypt')
 
 module.exports = (db) => {
 
@@ -28,23 +29,21 @@ module.exports = (db) => {
   router.get("/login", (req, res) => {
 
     // direct to order page if already login
-    if (req.session.admin_id) {
-      return res.render("./admin/order");
+    if (req.session.admin) {
+      res.redirect("../manager");
     }
-    res.render("login");
+    res.render("index_login");
   });
 
   // POST login username and password
   router.post("/login", (req, res) => {
-    
-    if (req.session.adminLogin) {
-      return res.render('./admin/order')
-    }
+    console.log(req.body)
+
 
     const { username, password } = req.body;
 
     db.query(`SELECT * FROM manager
-    WHERE username = $1
+    WHERE user_name = $1;
     `, [username])
     .then(data => {
       console.log('data.rows is', data.rows);
@@ -52,14 +51,16 @@ module.exports = (db) => {
       console.log('result is', result);
       if (!result) {
         res.send('User does not exist.');
-      } else if (password !== result.password){
+
+
+      } else if (!bcrypt.compareSync(password, result.password)) {
         res.send('Incorrect password.');
       } else {
         // set cookie for user
-        // res.session.adminLogin = true
-        res.send('success');
+        req.session.admin = 'jamie_roll';
+        res.redirect("../manager");
       }
-    })
+    });
   });
 
   // POST accept order base on order_id
