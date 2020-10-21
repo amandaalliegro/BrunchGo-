@@ -11,14 +11,45 @@ const router = express.Router();
 
 module.exports = (db) => {
 
-  /*
-  Workflow
-  1. Insert into order data table
-  2. Insert into order_items table
-  4. render page to tell customer order received
-  */
+  // GET: for customer to check their order
+  // post
+  router.get("/", (req, res) => {
+
+    // if no order_id in session, redirect to menu
+    const orderId = req.session.order_id;
+    if (!orderId) {
+      return redirect("../");
+    }
+
+    // Query for the order_status
+    db.query(`
+    SELECT order_status
+    FROM orders
+    WHERE id = $1
+    `, [orderId])
+    // render specific page based on
+    .then(data => {
+      const orderStatus = data.rows[0].order_status;
+
+      // Pseudocode logic
+      if (orderStatus === 'received') {
+        return res.render(/* page "order received" */);
+      } else if (orderStatus === 'accepted') {
+        return res.render(/* page "order accepted" */); // Will need the estimated time
+      } else if (orderStatus === 'completed') {
+        return res.render(/* page "order completed" */);
+      } else if (orderStatus === 'denied') {
+        return res.render(/* page 'order denied */)
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ error: err.message })});
+
+  });
+
 
   // POST: for customer to place an order
+
   router.post("/", (req, res) => {
 
     // Set orderDatetime to current time
@@ -30,16 +61,26 @@ module.exports = (db) => {
     const currentDateTime = new Date().toISOString();
 
     db.query(
-      `INSERT INTO orders (restaurant_id, name, phone, place_order_datetime, sub_total, tax, total, accept_order_datetime, complete_order_datetime)
+      `INSERT INTO orders (restaurant_id, name, phone, place_order_datetime, sub_total, tax, total, order_status, accept_order_datetime, complete_order_datetime)
     VALUES
-    ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     RETURNING *
-    ;`, [restaurantId, name, phone, currentDateTime, subTotal, tax, total, null, null])
+    ;`, [restaurantId, name, phone, currentDateTime, subTotal, tax, total, 'received', null, null])
+
+    // Send SMS message to restaruant
     .then(data => {
-      sendSMS('6478730463', 'new order received!');
+      // currently using George's phone number
+      sendSMS('7783194360', 'new order received!');
       return data;
     })
-    .then(data => res.send(`the order_id is ${data.rows[0].id}`))
+    // Set cookie with order_id and redirect to /order page
+    .then(data => {
+      const orderId = data.rows[0].id;
+      // Set cookie on browser for order_id
+      req.session.order_id = orderId;
+      // Check the name of view
+      res.redirect('/');
+    })
     .catch(err => {
       res.status(500).json({ error: err.message })});
     });

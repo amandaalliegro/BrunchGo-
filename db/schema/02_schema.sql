@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS restaurants CASCADE;
 DROP TABLE IF EXISTS orders CASCADE;
 DROP TABLE IF EXISTS order_items CASCADE;
 DROP TABLE IF EXISTS items CASCADE;
-DROP TABLE IF EXISTS admin CASCADE;
+DROP TABLE IF EXISTS manager CASCADE;
 
 
 CREATE TABLE restaurants (
@@ -22,8 +22,10 @@ CREATE TABLE orders (
   sub_total           INTEGER NOT NULL,
   tax                 INTEGER NOT NULL,
   total               INTEGER NOT NULL,
+  status              VARCHAR(255) NOT NULL,
   accept_order_datetime TIMESTAMP,
   complete_order_datetime  TIMESTAMP
+
 );
 
 CREATE TABLE items (
@@ -46,10 +48,8 @@ CREATE TABLE order_items(
   specifications      TEXT
 );
 
-CREATE TABLE admin (
-  id                  SERIAL PRIMARY KEY NOT NULL,
-  username            VARCHAR(255) NOT NULL,
-  password            VARCHAR(255) NOT NULL
+CREATE TABLE manager (
+  id           SERIAL PRIMARY KEY NOT NULL,
+  user_name    VARCHAR(255) NOT NULL,
+  password     VARCHAR(255) NOT NULL
 );
-
-

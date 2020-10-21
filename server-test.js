@@ -1,7 +1,7 @@
 // load .env data into process.env
 require('dotenv').config();
 
-const { sendSMS } = require("./twilio");
+// const { sendSMS } = require("./twilio");
 
 // Web server config
 const PORT       = process.env.PORT || 8080;
