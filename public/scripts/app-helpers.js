@@ -38,19 +38,10 @@ const createLocalDatabase = function (items) {
   }
 };
 
-<<<<<<< HEAD
-const createNewOrder = function(userid) {
-  console.log(user_carts[userid])
-  $.ajax({
-    method :'POST',
-    url: '/api/orders/test',
-    data: user_carts[userid]
-=======
 const createNewOrder = function (userid) {
   $.ajax({
     method: 'POST',
     url: '/api/orders'
->>>>>>> master
   })
 }
 
@@ -120,19 +111,22 @@ const refreshCart = function () {
   if ($('.cart-items').children().length === 0) {
     $('.cart-footer').append(`
           <div class="row cart-row" id="order-total">Order Total: </div>
+          <div class="row cart-row">
+          <input type="text" class="cart-input" id="customerName" placeholder="Name"></input>
+          <input type="text" class="cart-input" id="customerPhone" placeholder="(000) 000-0000"></input>
+          </div>
           <div class="row cart-row" style="border: none">
               <div class="col-lg-12 col-sm-12 cart-checkout-button">
-              <button class="btn btn-success checkout-btn">Checkout</button>
+              <form action="/api/orders/user_order" method="GET">
+                 <input type="submit" style="display: none"><button class="btn btn-success checkout-btn">Checkout</button></input>
+                 </form>
               </div>
           </div>
-
   `);
-
-    $('.cart-checkout-button').click(() => {
-      getUserId().then((userid) => {
-        createNewOrder(userid);
-      })
-    })
+  $('.cart-input').click((e) => {
+    e.stopPropagation();
+});
+renderCheckoutButton()
   }
 
   getUserId().then((userid) => {

@@ -83,41 +83,73 @@ module.exports = (db) => {
   1. INSERT INTO orders table
   2. INSERT INTO order_item table
   3. send SMS to resturant ownder
+  4. redirect customer to confirmation page
   */
 
-  router.post("/", (req, res) => {
+  // POST: for customer to place an order
+  router.post("/confirmation", (req, res) => {
 
     // Set orderDatetime to current time
     // const placeOrderDatetime = Date.now();
 
-    const { restaurantId, name, phone, subTotal, tax, total } = req.body;
-
-    // 1. INSERT the data to order database
+    const { name, phone, sub_total, tax, total } = req.body;
+    // console.log(name, phone, sub_total, tax, total);
+    /* 1. INSERT the data to order database */
     const currentDateTime = new Date().toISOString();
 
+    // Currently only accepting order from one restaruant
+    const restaurantId = 100;
     db.query(
-      `INSERT INTO orders (restaurant_id, name, phone, place_order_datetime, sub_total, tax, total, order_status, accept_order_datetime, complete_order_datetime)
+      `INSERT INTO orders (restaurant_id, name, phone, place_order_datetime, sub_total, tax, total, order_status, accept_order_datetime, estimated_prep_time, complete_order_datetime)
     VALUES
-    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
     RETURNING *
-    ;`, [restaurantId, name, phone, currentDateTime, subTotal, tax, total, 'received', null, null])
+    ;`, [restaurantId, name, phone, currentDateTime, sub_total, tax, total, 'received', null, null, null])
+    /* 2 INSERT INTO order item table */
+    .then(data => {
+      //retrieve id from orders table
+      const orderId = data.rows[0].id;
+      const { order } = req.body;
+      console.log(orderId, order);
 
+      const orderLength = order.length;
+      let count = 0;
+      let queryString = 'INSERT INTO order_items (order_id, item_id, quantity) VALUES ';
+      for (let item of order) {
+        queryString += `(${orderId}, ${item.id}, ${item.quantity}) `;
+        if (count < orderLength - 1) {
+          queryString += ', ';
+        }
+        count++;
+      }
+      queryString += 'RETURNING * ;';
+
+      console.log(queryString);
+
+      return db.query(queryString);
+    })
     // Send SMS message to restaruant
     .then(data => {
       // currently using George's phone number
-      sendSMS('7783194360', 'new order received!');
+      sendSMS('6478730463', 'new order received!');
       return data;
     })
     // Set cookie with order_id and redirect to /order page
     .then(data => {
-      const orderId = data.rows[0].id;
-      // Set cookie on browser for order_id
-      req.session.order_id = orderId;
+      // const orderId = data.rows[0].order_id;
+      // // Set cookie on browser for order_id
+      // req.session.order_id = orderId;
       // Check the name of view
-      res.redirect('/');
+      res.send('message placed');
     })
     .catch(err => {
       res.status(500).json({ error: err.message })});
+
+
     });
+
+    router.get('/user_order', (req, res) => {
+      res.render('index_user_order')
+    })
   return router;
 };
