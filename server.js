@@ -150,7 +150,7 @@ app.get("/orderclient", (req, res) => {
     res.render('index_user_order');
   }
 });
-app.get("/orderaccepted", (req, res) => {
+app.post("/orderaccepted", (req, res) => {
   if (req.session.user_id) {
     res.render('index_user_accept');
   } else {
