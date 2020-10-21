@@ -41,18 +41,18 @@
 
     <div class="container">
 
-      <form id='login' class="form-signin" action="/login">
+      <form id='login' class="form-signin" action="/admin/login" method="POST">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputUserName" class="sr-only">User name</label>
-        <input type="user_name" id="inputUserName" class="form-control" placeholder="user name" required="" autofocus="">
+        <input type="user_name" name="username" id="username" class="form-control" placeholder="user name" required="" autofocus="">
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required="">
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <input type="submit"><button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button></input>
       </form>
 
     </div> <!-- /container -->
