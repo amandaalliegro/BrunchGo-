@@ -19,12 +19,12 @@ module.exports = (db) => {
   */
 
   // POST: for customer to place an order
-  router.post("/", (req, res) => {
+  router.post("/confirmation", (req, res) => {
 
     // Set orderDatetime to current time
     // const placeOrderDatetime = Date.now();
-
-    const { restaurantId, name, phone, subTotal, tax, total } = req.body;
+    console.log(req.body)
+    const { userid, name, phone, subTotal, tax, total } = req.body;
 
     // 1. INSERT the data to order database
     const currentDateTime = new Date().toISOString();
@@ -43,5 +43,11 @@ module.exports = (db) => {
     .catch(err => {
       res.status(500).json({ error: err.message })});
     });
+
+
+
+    router.get('/user_order', (req, res) => {
+      res.render('index_user_order')
+    })
   return router;
 };
