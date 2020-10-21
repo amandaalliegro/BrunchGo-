@@ -15,6 +15,23 @@ const renderCheckoutButton = function () {
     }
 
     getUserId().then((userid) => {
+      let totalPrice = 0;
+
+      for (const item in user_carts[userid]) {
+        const currentItem = user_carts[userid][item]
+
+        let price = currentItem.quantity * currentItem.price
+        totalPrice += price;
+      }
+
+      totalPrice = Number(totalPrice / 100);
+
+      newOrder.sub_total = totalPrice;
+      let tax = Number(totalPrice * 0.15);
+      newOrder.tax = tax
+
+      newOrder.total = totalPrice + tax;
+
       const usercart = user_carts[userid]
       newOrder.order = usercart;
 
@@ -26,11 +43,7 @@ const renderCheckoutButton = function () {
         method: "POST",
         url: '/api/orders/confirmation',
         data: newOrder,
-        dataType: 'json',
-        success: function(data) {
-          const k = data;
-          console.log(k)
-        }
+        dataType: 'json'
       });
     })
   })
