@@ -1,4 +1,5 @@
 const renderCheckoutButton = function () {
+  console.log('RENDERING')
   $('.checkout-btn').click((e) => {
     e.stopPropagation()
     const customerNameInput = $('body').find('#customerName')[0]
@@ -38,13 +39,16 @@ const renderCheckoutButton = function () {
       const newOrderid = Math.floor(Math.random() * 100000)
       newOrder.orderid = newOrderid;
       newOrder.userid = userid
+      console.log(newOrder)
 
       $.ajax({
         method: "POST",
         url: '/api/orders/confirmation',
         data: newOrder,
         dataType: 'json'
-      });
-    })
-  })
-}
+      }).then(() => {
+        console.log('done')
+      })
+    });
+  });
+};

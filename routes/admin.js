@@ -17,11 +17,11 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
 
     // if not logged in, direct to login page
-    if (!req.session.admin_id) {
+    if (!req.session.admin) {
       return res.render("./admin/login");
     } else {
     // Need to determin file placement
-      return res.render("./admin/order");
+      return res.render("../manager");
     }
   });
 
@@ -67,30 +67,69 @@ module.exports = (db) => {
   router.post("/order/accept/:order_id", (req, res) => {
     const orderId = req.params.order_id;
 
+    // need the prep time from the request body
+    // const { <variable name of estPrepTime> } = req.body;
 
-    const acceptOrderDatetime = new Date().toISOString();
-    console.log('the orderId is:', orderId);
+    const currentDatetime = new Date().toISOString();
 
     // Update order table with accept_order_datetime
     db.query(`UPDATE orders
-    SET accept_order_datetime = $1
-    WHERE id = $2
+    SET accept_order_datetime = $1, order_status = $2
+    WHERE id = $3
     RETURNING *;
-    `,[acceptOrderDatetime, orderId])
+    `,[currentDatetime, 'accepted', '<estPrepTime>',orderId])
     // Send SMS to customer to notify the order is accepted
     .then(data => {
       const {id, phone} = data.rows[0];
       sendSMS(phone, 'order accepted');
     })
-    .then(() => res.send(`Thank you for your order! Order ID: ${id}`))
+    .catch(err => {
+      res.status(500).json({ error: err.message })});
+
+
+    // .then(() => res.send(`Thank you for your order! Order ID: ${id}`))
   });
 
-  // POST complete order by
+  // POST complete order by restaruant
+  router.post("/order/complete/:order_id", (req, res) => {
+    const orderId = req.params.order_id;
+    const currentDatetime = new Date().toISOString();
 
+    // Update order table with complete_order_datetime
+    db.query(`UPDATE orders
+    SET complete_order_datetime = $1, order_status = $2
+    WHERE id = $3
+    RETURNING *;
+    `,[currentDatetime, 'completed', orderId])
+    // Send SMS to customer to notify the order is completed
+    .then(data => {
+      const {id, phone} = data.rows[0];
+      sendSMS(phone, 'order completed');
+    })
+    .catch(err => {
+      res.status(500).json({ error: err.message })});
+    });
+
+
+  // POST deny order by restaruant
+  router.post("/order/deny/:order_id", (req, res) => {
+    const orderId = req.params.order_id;
+    //const currentDatetime = new Date().toISOString();
+
+    // Update order table with complete_order_datetime
+    db.query(`UPDATE orders
+    SET order_status = $1
+    WHERE id = $2
+    RETURNING *;
+    `,['denied', orderId])
+    // Send SMS to customer to notify the order is completed
+    .then(data => {
+      const {id, phone} = data.rows[0];
+      sendSMS(phone, 'order denied');
+    })
+    .catch(err => {
+      res.status(500).json({ error: err.message })});
+    });
 
   return router;
-
-
-
-
-}
+};

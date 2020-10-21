@@ -26,6 +26,12 @@ function setCookie(cname, cvalue, exdays) {
 
 $(() => {
 
+  setInterval(() => {
+    $.get('/api/orders/trim_orders').then((data) => {
+      console.log(data)
+    })
+  }, 5000)
+
   // Render user cart if one does not already exist
   $.ajax({
     method: "GET",

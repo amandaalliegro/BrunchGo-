@@ -9,17 +9,23 @@ const getItemTotal = function (itemid) {
 // Adds an item to the user's cart (in user_carts).
 // If the item already exists in the cart, the item's quantity is increased by 1.
 const addCartItem = function (itemid) {
-  getUserId().then((userid) => {
-    // check if item exists
-    if (user_carts[userid][itemid]) {
-      user_carts[userid][itemid].quantity += 1;
-      // if item doesn't exist, create the item and set quantity to 1
-    } else {
-      user_carts[userid][itemid] = local_db[itemid];
-      user_carts[userid][itemid].quantity = 1;
-    }
-    return user_carts[userid][itemid].quantity;
+
+  $.post(`/cart/add/${itemid}`).then((data) => {
+    console.log(data.rows)
   })
+
+
+getUserId().then((userid) => {
+  // check if item exists
+  if (user_carts[userid][itemid]) {
+    user_carts[userid][itemid].quantity += 1;
+    // if item doesn't exist, create the item and set quantity to 1
+  } else {
+    user_carts[userid][itemid] = local_db[itemid];
+    user_carts[userid][itemid].quantity = 1;
+  }
+  return user_carts[userid][itemid].quantity;
+})
 
 };
 
@@ -77,7 +83,7 @@ const getUserId = function () {
   });
 };
 
-const getOrderQuantity = function() {
+const getOrderQuantity = function () {
   let totalQuantity = 0;
 
   return getUserId().then((userid) => {
@@ -92,7 +98,7 @@ const getOrderQuantity = function() {
   })
 }
 
-const getOrderTotal = function() {
+const getOrderTotal = function () {
   let totalPrice = 0;
 
   return getUserId().then((userid) => {
@@ -111,29 +117,26 @@ const refreshCart = function () {
   if ($('.cart-items').children().length === 0) {
     $('.cart-footer').append(`
           <div class="row cart-row" id="order-total">Order Total: </div>
-          <div class="row cart-row">
-          <input type="text" class="cart-input" id="customerName" placeholder="Name"></input>
-          <input type="text" class="cart-input" id="customerPhone" placeholder="(000) 000-0000"></input>
-          </div>
           <div class="row cart-row" style="border: none">
               <div class="col-lg-12 col-sm-12 cart-checkout-button">
               <form action="/api/orders/user_order" method="GET">
-                 <input type="submit" style="display: none"><button class="btn btn-success checkout-btn">Checkout</button></input>
+                 <input type="submit" style="display: none"><button class="btn btn-success ">Checkout</button></input>
                  </form>
               </div>
           </div>
   `);
-  $('.cart-input').click((e) => {
-    e.stopPropagation();
-});
-renderCheckoutButton()
+
+    $('.cart-input').click((e) => {
+      e.stopPropagation();
+    });
+    renderCheckoutButton()
   }
 
   getUserId().then((userid) => {
     $('.cart-items').empty()
 
     if (Object.keys(user_carts[userid]).length === 0) {
-    $('.cart-footer').empty();
+      $('.cart-footer').empty();
 
     }
 
@@ -190,6 +193,7 @@ const removeCartItem = function (itemid) {
       syncCounters()
 
     }
+    console.log(user_carts)
   })
 };
 
@@ -208,7 +212,7 @@ const renderCartPlusMinus = function () {
     // set the price of the cart ite
     const divId = $(this).closest('.cart-row')[0];
     const itemId = divId.id.substring(9);
-   removeCartItem(itemId)
+    removeCartItem(itemId)
     refreshCart();
   });
 }
@@ -231,6 +235,7 @@ const renderPlusMinusButtons = function () {
 
     // update cart item price
     addCartItem(itemId)
+
 
     refreshCart()
 
@@ -291,11 +296,11 @@ const renderMenuRow = function (data, title, id, order) {
 };
 
 const resetCounters = function () {
-// reset all counters
-const allCounters = $('body').find('.counter')
-for (let x = 0; x < allCounters.length; x++) {
-  allCounters[x].innerText = 0;
-}
+  // reset all counters
+  const allCounters = $('body').find('.counter')
+  for (let x = 0; x < allCounters.length; x++) {
+    allCounters[x].innerText = 0;
+  }
 }
 
 const syncCounters = function () {
@@ -318,7 +323,7 @@ const syncCounters = function () {
 const setItemQuantity = function (userid, itemid) {
   return user_carts[userid][itemid].quantity;
 };
-const renderNewMenuManager = function(data) {
+const renderNewMenuManager = function (data) {
   let newMenuManager = `<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
   <h2 class="sub-header">Include new items:</h2>
   <div class="table-responsive">`
@@ -373,7 +378,7 @@ const renderNewMenuManager = function(data) {
   </tbody>`
   }
 }
-const renderMenuManager = function(data) {
+const renderMenuManager = function (data) {
   let menuManager = `<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
   <h2 class="sub-header">Include new items:</h2>
   <div class="table-responsive">`

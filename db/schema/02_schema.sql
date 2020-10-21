@@ -15,14 +15,17 @@ CREATE TABLE restaurants (
 
 CREATE TABLE orders (
   id                  SERIAL PRIMARY KEY NOT NULL,
+  userid              INTEGER NOT NULL,
   restaurant_id        INTEGER REFERENCES restaurants(id) ON DELETE CASCADE,
   name                VARCHAR(255) NOT NULL,
   phone               VARCHAR (255) NOT NULL,
   place_order_datetime      TIMESTAMP NOT NULL,
-  sub_total           INTEGER NOT NULL,
-  tax                 INTEGER NOT NULL,
-  total               INTEGER NOT NULL,
-  accept_order_datetime TIMESTAMP,
+  sub_total           NUMERIC NOT NULL,
+  tax                 NUMERIC NOT NULL,
+  total               NUMERIC NOT NULL,
+  order_status              VARCHAR(255) NOT NULL,
+  accept_order_datetime   TIMESTAMP,
+  estimated_prep_time     INTEGER,
   complete_order_datetime  TIMESTAMP
 );
 
@@ -42,8 +45,7 @@ CREATE TABLE order_items(
   id                  SERIAL PRIMARY KEY NOT NULL,
   order_id            INTEGER REFERENCES orders(id) ON DELETE CASCADE,
   item_id             INTEGER REFERENCES items(id) ON DELETE CASCADE,
-  quantity            INTEGER NOT NULL,
-  specifications      TEXT
+  quantity            INTEGER NOT NULL
 );
 
 CREATE TABLE manager (
