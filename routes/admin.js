@@ -76,6 +76,7 @@ module.exports = (db) => {
     WHERE id = $2
     RETURNING *;
     `,[acceptOrderDatetime, orderId])
+    // Send SMS to customer to notify the order is accepted
     .then(data => {
       const {id, phone} = data.rows[0];
       sendSMS(phone, 'order accepted');
