@@ -114,6 +114,15 @@ app.get("/orderclient", (req, res) => {
     res.render('index_user_order');
   }
 });
+app.get("/orderaccepted", (req, res) => {
+  if (req.session.user_id) {
+    res.render('index_user_accept');
+  } else {
+    const newId = Math.round(Math.random() * 100000);
+    req.session.user_id = newId;
+    res.render('index_user_accept');
+  }
+});
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
