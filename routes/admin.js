@@ -36,7 +36,7 @@ module.exports = (db) => {
 
   // POST login username and password
   router.post("/login", (req, res) => {
-
+    
     if (req.session.adminLogin) {
       return res.render('./admin/order')
     }
@@ -44,7 +44,7 @@ module.exports = (db) => {
     const { username, password } = req.body;
 
     db.query(`SELECT * FROM manager
-    WHERE username = $1;
+    WHERE username = $1
     `, [username])
     .then(data => {
       console.log('data.rows is', data.rows);
