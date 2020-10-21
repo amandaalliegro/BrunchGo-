@@ -10,9 +10,10 @@ $(() => {
             <thead>
               <tr>
                 <th>Order id</th>
+                <th>User id</th>
                 <th>Customer Name</td>
                 <th>Items ordered</th>
-                <th>Time expectation</th>
+                <th>Phone Number</th>
                 <th>Total</th>
                 <th>Accept</th>
                 <th>Finish</th>
@@ -41,10 +42,11 @@ $(() => {
         const $divToInsert = `
         <tr>
           <td>${item.id}</td>
+          <td>${item.userid}</td>
           <td>${item.name}</td>
           <td id="${item.id}"class="items-ordered">${itemsDiv}</td>
-          <td>ipsum</td>
-          <td>$${item.total.toFixed(2)}</td>
+          <td>${item.phone}</td>
+          <td>$${item.total}</td>
           <td>
           <form action="/orderaccepted" method="POST">
           <input type="submit" style="display: none" value="${item.id}" name="orderid">

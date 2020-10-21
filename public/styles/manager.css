@@ -1,3 +1,40 @@
 .manager-table > row {
+<<<<<<< HEAD
   max-height: 200px;
+=======
+  background-color: #c9aa70;
+  max-height: 200px;
+}
+
+.img-responsive, .thumbnail > img, .thumbnail a > img, .carousel-inner > .item > img, .carousel-inner > .item > a > img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.img {
+  background-image: url("header.jpeg");
+}
+
+.navbar > .navbar-default {
+  background-color: #c9aa70;
+  border-color: #c9aa70;
+  color: #6d4700;
+}
+
+.container-fluid1 {
+  background-color: #c9aa70;
+  border-color: #c9aa70;
+  color: #6d4700;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #c9aa70;
+  color: #6d4700;
+  text-align: left;
+>>>>>>> c24358df694b05f422c2460022c44d8a7da36dce
 }

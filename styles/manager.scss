@@ -1,3 +1,33 @@
 .manager-table > row {
+  background-color: rgb(201, 170, 112);
   max-height: 200px;
+}
+.img-responsive, .thumbnail>img, .thumbnail a>img, .carousel-inner>.item>img, .carousel-inner>.item>a>img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.img {
+  background-image: url("header.jpeg");
+}
+
+.navbar>.navbar-default{
+  background-color: rgb(201, 170, 112);
+  border-color: rgb(201, 170, 112);
+  color: rgb(109, 71, 0);
+}
+.container-fluid1 {
+  background-color: rgb(201, 170, 112);
+  border-color: rgb(201, 170, 112);
+  color: rgb(109, 71, 0);
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(201, 170, 112);
+  color: rgb(109, 71, 0);
+  text-align: left;
 }

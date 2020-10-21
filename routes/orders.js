@@ -62,21 +62,19 @@ module.exports = (db) => {
   router.post("/confirmation", (req, res) => {
 
     // Set orderDatetime to current time
-    // const placeOrderDatetime = Date.now();
-
     const { name, phone, sub_total, tax, total } = req.body;
     // console.log(name, phone, sub_total, tax, total);
     /* 1. INSERT the data to order database */
     const currentDateTime = new Date().toISOString();
-    res.send('ok')
+
     // Currently only accepting order from one restaruant
     const restaurantId = 100;
     db.query(
-      `INSERT INTO orders (restaurant_id, name, phone, place_order_datetime, sub_total, tax, total, order_status, accept_order_datetime, estimated_prep_time, complete_order_datetime)
+      `INSERT INTO orders (restaurant_id, userid, name, phone, place_order_datetime, sub_total, tax, total, order_status, accept_order_datetime, estimated_prep_time, complete_order_datetime)
     VALUES
-    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
     RETURNING *
-    ;`, [restaurantId, name, phone, currentDateTime, sub_total, tax, total, 'received', null, null, null])
+    ;`, [restaurantId, req.session.user_id, name, phone, currentDateTime, sub_total, tax, total, 'received', null, null, null])
       /* 2 INSERT INTO order item table */
       .then(data => {
         //retrieve id from orders table
@@ -122,5 +120,35 @@ module.exports = (db) => {
   router.get('/user_order', (req, res) => {
     res.render('order_confirmation')
   })
+  router.get('/trim_orders', (req, res) => {
+    let currentDate = new Date(Date.now() - 10*60000).toISOString();
+    const modified = currentDate.replace('T', ' ').replace('Z', '')
+    console.log(modified)
+    db.query(`
+    DELETE FROM orders
+    WHERE place_order_datetime < timestamp '${modified}'
+
+    RETURNING *;
+    `).then((data) => {
+      res.send(data.rows)
+    })
+  })
+  router.get('/:userid', (req, res) => {
+    console.log(req.session.user_id)
+    db.query(`
+    SELECT DISTINCT (items.*), order_items.quantity, orders.place_order_datetime, orders.userid, orders.sub_total, orders.tax, orders.total
+FROM orders
+JOIN order_items ON order_items.order_id = orders.id
+JOIN items ON items.id = order_items.item_id
+WHERE orders.userid = ${req.session.user_id}
+GROUP BY order_items.quantity, items.id, orders.place_order_datetime, orders.userid, orders.sub_total, orders.tax, orders.total
+ORDER BY orders.place_order_datetime;
+
+    `).then((data) => {
+      res.send(data.rows)
+    })
+  })
+
+
   return router;
 };
