@@ -116,17 +116,29 @@ body {
 }
 
 .footer {
-  position: fixed;
-  left: 0;
+  position: bottom;
+  left: 8px;
   bottom: 0;
   width: 100%;
   background-color: rgb(201, 170, 112);
   color: rgb(109, 71, 0);
   text-align: left;
   float: left;
-
+  padding-bottom: 4%;
+  justify-content: space-between !important;
   font-size: 15px;
   line-height: 20px;
-  height: 20px;
+  height: 40px;
 }
+.navhome {
+  background-color: rgb(201, 170, 112);
+  border-color: rgb(201, 170, 112);
+  color: rgb(109, 71, 0);
+}
+.btn-secondary{
+  background-color: rgb(201, 170, 112) !important;
+  border-color: rgb(201, 170, 112) !important;
+  color: rgb(109, 71, 0) !important;
+}
+
 
