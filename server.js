@@ -11,6 +11,8 @@ const app        = express();
 const morgan     = require('morgan');
 const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
+const { sendSMS } = require('./twilio');
+const twilio = require('twilio');
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -104,6 +106,16 @@ app.get("/userid", (req, res) => {
   res.send(userid);
 });
 
+
+app.get("/orderclient", (req, res) => {
+  if (req.session.user_id) {
+    res.render('index_user_order');
+  } else {
+    const newId = Math.round(Math.random() * 100000);
+    req.session.user_id = newId;
+    res.render('index_user_order');
+  }
+});
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
