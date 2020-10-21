@@ -68,7 +68,43 @@ app.get("/", (req, res) => {
 
 
 
+app.get('/manager/orders', (req, res) => {
+  const returnObj = []
 
+  const orderids = [];
+
+
+  db.query(`
+    SELECT * FROM orders;
+  `).then((data) => {
+res.send(data.rows)
+  }).then(() => {
+    for (const item in returnObj[0]) {
+      orderids.push(returnObj[0][item].id)
+    }
+  }).then(() => {
+    db.query(`
+    SELECT * FROM orders;
+    `)
+  }).then((data)=> {
+    console.log(data)
+  })
+
+
+})
+
+app.get('/manager/orders/:orderid', (req, res) => {
+  db.query(`
+  SELECT items.name, order_items.quantity
+  FROM items
+  JOIN order_items ON order_items.item_id = items.id
+  WHERE order_items.order_id = ${req.params.orderid};
+
+  `).then((data) => {
+    res.send(data.rows)
+  });
+
+})
 
 app.get("/manager", (req, res) => {
   if (req.session.user_id) {
