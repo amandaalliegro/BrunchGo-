@@ -5,6 +5,35 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
+// { orderid: '8656',
+//   userid: '83508',
+//   name: '',
+//   phone: '',
+//   sub_total: '36',
+//   tax: '5.3999999999999995',
+//   total: '41.4',
+//   order:
+//    [ { id: '8',
+//        name: 'French Fries',
+//        category: 'Appetizers',
+//        price: '1000',
+//        available: 'true',
+//        prep_time: '360',
+//        image: './styles/french_fries.jpeg',
+//        stock: '10',
+//        quantity: '2' },
+//      { id: '9',
+//        name: 'Green Salad',
+//        category: 'Appetizers',
+//        price: '800',
+//        available: 'true',
+//        prep_time: '360',
+//        image: './styles/green_salad.jpeg',
+//        stock: '10',
+//        quantity: '2' } ] }
+
+
+
 const express = require('express');
 const { sendSMS } = require('../twilio');
 const router = express.Router();
@@ -13,7 +42,7 @@ module.exports = (db) => {
 
   // GET: for customer to check their order
   // post
-  router.get("/", (req, res) => {
+  router.get("/confirmation", (req, res) => {
 
     // if no order_id in session, redirect to menu
     const orderId = req.session.order_id;
@@ -49,6 +78,12 @@ module.exports = (db) => {
 
 
   // POST: for customer to place an order
+  /*
+  Workflow
+  1. INSERT INTO orders table
+  2. INSERT INTO order_item table
+  3. send SMS to resturant ownder
+  */
 
   router.post("/", (req, res) => {
 
