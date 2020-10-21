@@ -10,18 +10,19 @@
 </head>
 
 <body>
-  <div class="jumbotron">
-    <div class="container">
-      <h1>Brunch<b>Go!</b></h1>
-      <p>
-      </p>
-      <p><a class="btn btn-primary btn-lg" href="#" role="button">Home Page »</a></p>
-    </div>
-  </div>
-    <div class='container-fluid'>
+  <%- include ./partials/_navbar_plain.ejs %>
+  <%- include ./partials/_banner.ejs %>
+    <div class='container' style="width: 750px">
+      <div class="panel panel-default" style="padding: 10px">
+        <div class="container" style="height: 300px;">
+
+
+
 
       <h2>Thank you! Your order is being processed!</h2>
       <h3>You will receive a SMS as soon as your order is accepted.</h3>
+    </div>
+    </div>
     </div>
   </div>
 </body>

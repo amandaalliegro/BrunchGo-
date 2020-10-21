@@ -1,6 +1,7 @@
 div.cart {
   min-width: 650px;
   padding: 30px;
+  margin-top: 15px;
 }
 
 div.cart > .row {

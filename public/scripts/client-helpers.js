@@ -45,6 +45,6 @@ const renderCheckoutButton = function () {
         data: newOrder,
         dataType: 'json'
       });
-    })
-  })
-}
+    });
+  });
+};

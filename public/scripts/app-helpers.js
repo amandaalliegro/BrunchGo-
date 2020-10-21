@@ -123,6 +123,7 @@ const refreshCart = function () {
               </div>
           </div>
   `);
+
   $('.cart-input').click((e) => {
     e.stopPropagation();
 });

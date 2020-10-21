@@ -27,23 +27,24 @@ module.exports = (db) => {
     FROM orders
     WHERE id = $1
     `, [orderId])
-    // render specific page based on
-    .then(data => {
-      const orderStatus = data.rows[0].order_status;
+      // render specific page based on
+      .then(data => {
+        const orderStatus = data.rows[0].order_status;
 
-      // Pseudocode logic
-      if (orderStatus === 'received') {
-        return res.render(/* page "order received" */);
-      } else if (orderStatus === 'accepted') {
-        return res.render(/* page "order accepted" */); // Will need the estimated time
-      } else if (orderStatus === 'completed') {
-        return res.render(/* page "order completed" */);
-      } else if (orderStatus === 'denied') {
-        return res.render(/* page 'order denied */)
-      }
-    })
-    .catch(err => {
-      res.status(500).json({ error: err.message })});
+        // Pseudocode logic
+        if (orderStatus === 'received') {
+          return res.render(/* page "order received" */);
+        } else if (orderStatus === 'accepted') {
+          return res.render(/* page "order accepted" */); // Will need the estimated time
+        } else if (orderStatus === 'completed') {
+          return res.render(/* page "order completed" */);
+        } else if (orderStatus === 'denied') {
+          return res.render(/* page 'order denied */)
+        }
+      })
+      .catch(err => {
+        res.status(500).json({ error: err.message })
+      });
 
   });
 
@@ -67,7 +68,7 @@ module.exports = (db) => {
     // console.log(name, phone, sub_total, tax, total);
     /* 1. INSERT the data to order database */
     const currentDateTime = new Date().toISOString();
-
+    res.send('ok')
     // Currently only accepting order from one restaruant
     const restaurantId = 100;
     db.query(
@@ -76,49 +77,50 @@ module.exports = (db) => {
     ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
     RETURNING *
     ;`, [restaurantId, name, phone, currentDateTime, sub_total, tax, total, 'received', null, null, null])
-    /* 2 INSERT INTO order item table */
-    .then(data => {
-      //retrieve id from orders table
-      const orderId = data.rows[0].id;
-      const { order } = req.body;
-      console.log(orderId, order);
+      /* 2 INSERT INTO order item table */
+      .then(data => {
+        //retrieve id from orders table
+        const orderId = data.rows[0].id;
+        const { order } = req.body;
+        console.log(orderId, order);
 
-      const orderLength = order.length;
-      let count = 0;
-      let queryString = 'INSERT INTO order_items (order_id, item_id, quantity) VALUES ';
-      for (let item of order) {
-        queryString += `(${orderId}, ${item.id}, ${item.quantity}) `;
-        if (count < orderLength - 1) {
-          queryString += ', ';
+        const orderLength = order.length;
+        let count = 0;
+        let queryString = 'INSERT INTO order_items (order_id, item_id, quantity) VALUES ';
+        for (let item of order) {
+          queryString += `(${orderId}, ${item.id}, ${item.quantity}) `;
+          if (count < orderLength - 1) {
+            queryString += ', ';
+          }
+          count++;
         }
-        count++;
-      }
-      queryString += 'RETURNING * ;';
+        queryString += 'RETURNING * ;';
 
-      console.log(queryString);
+        console.log(queryString);
 
-      return db.query(queryString);
-    })
-    // Send SMS message to restaruant
-    .then(data => {
-      // currently using George's phone number
-      sendSMS('7783194360', 'new order received!');
-      return data;
-    })
-    // Set cookie with order_id and redirect to /order page
-    .then(data => {
-      // const orderId = data.rows[0].order_id;
-      // // Set cookie on browser for order_id
-      // req.session.order_id = orderId;
-      // Check the name of view
-      res.send('message placed');
-    })
-    .catch(err => {
-      res.status(500).json({ error: err.message })});
-    });
+        return db.query(queryString);
+      })
+      // Send SMS message to restaruant
+      .then(data => {
+        // currently using George's phone number
+        sendSMS('7783194360', 'new order received!');
+        return data;
+      })
+      // Set cookie with order_id and redirect to /order page
+      .then(data => {
+        // const orderId = data.rows[0].order_id;
+        // // Set cookie on browser for order_id
+        // req.session.order_id = orderId;
+        // Check the name of view
+        res.send('message placed');
+      })
+      .catch(err => {
+        res.status(500).json({ error: err.message })
+      });
+  });
 
-    router.get('/user_order', (req, res) => {
-      res.render('index_user_order')
-    })
+  router.get('/user_order', (req, res) => {
+    res.render('order_confirmation')
+  })
   return router;
 };
