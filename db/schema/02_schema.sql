@@ -2,18 +2,20 @@ DROP TABLE IF EXISTS restaurants CASCADE;
 DROP TABLE IF EXISTS orders CASCADE;
 DROP TABLE IF EXISTS order_items CASCADE;
 DROP TABLE IF EXISTS items CASCADE;
+DROP TABLE IF EXISTS admin CASCADE;
+
 
 CREATE TABLE restaurants (
   id         SERIAL PRIMARY KEY NOT NULL,
   owner      VARCHAR(255) NOT NULL,
   address    VARCHAR(255) NOT NULL,
   phone      INTEGER NOT NULL,
-  opened       BOOLEAN DEFAULT false
-);
+  opened     BOOLEAN DEFAULT false
+  );
 
 CREATE TABLE orders (
   id                  SERIAL PRIMARY KEY NOT NULL,
-  resturant_id        INTEGER REFERENCES restaurants(id) ON DELETE CASCADE,
+  restaurant_id        INTEGER REFERENCES restaurants(id) ON DELETE CASCADE,
   name                VARCHAR(255) NOT NULL,
   phone               VARCHAR (255) NOT NULL,
   place_order_datetime      TIMESTAMP NOT NULL,

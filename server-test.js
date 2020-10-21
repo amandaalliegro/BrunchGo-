@@ -1,7 +1,7 @@
 // load .env data into process.env
 require('dotenv').config();
 
-const { sendSMS } = require("./helpers");
+const { sendSMS } = require("./twilio");
 
 // Web server config
 const PORT       = process.env.PORT || 8080;
@@ -51,12 +51,18 @@ app.use(cookieSession({
 // Note: Feel free to replace the example routes below with your own
 const menuRoutes = require("./routes/menu");
 const widgetsRoutes = require("./routes/widgets");
+const ordersTestRoutes = require("./routes/orders-test");
+const adminRoutes = require("./routes/admin");
+
 const { reapIntervalMillis } = require('pg/lib/defaults');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/menu", menuRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
+app.use("/api/orders_test", ordersTestRoutes(db));
+app.use("/admin", adminRoutes(db));
+
 // Note: mount other resources here, using the same pattern above
 
 
@@ -76,16 +82,16 @@ app.get("/", (req, res) => {
 });
 
 
-// test the POST method for sending SMS message
-app.post('/test', (req, res) => {
+// // test the POST method for sending SMS message
+// app.post('/test', (req, res) => {
 
-  const { phone, message } = req.body;
-  // console.log(typeof req.body);
-  // const {phone, message} = req.body;
-  sendSMS(phone, message);
-  res.send('SMS message sent');
+//   const { phone, message } = req.body;
+//   // console.log(typeof req.body);
+//   // const {phone, message} = req.body;
+//   sendSMS(phone, message);
+//   res.send('SMS message sent');
 
-});
+// });
 
 // Returns the user's cookie so it can be used to create a local entry with the user's menu selections
 app.get("/userid", (req, res) => {

@@ -45,3 +45,42 @@ module.exports = (db) => {
     });
   return router;
 };
+
+
+
+    // // 2. INSERT the data into order_items database
+    // .then(data => {
+    //   // Get orderId from previous query
+    //   const orderId = data.rows[0].id;
+
+    //   // need to destructure the order based on the req parameter
+    //   // ideally, the format is {item_id: {quantity, specification}}
+    //   cartItems = {};
+    //   let queryString = 'INSERT INTO order_items (order_id, item_id, quantity, specification) VALUES ';
+
+    //   // loop through keys
+    //   for (const key in cartItems) {
+    //     // need to deconstruct { quantity, specification } = cartItems;
+    //     queryString += `(${orderId}, ${cartItems[key].quantity}, $${cartItems[key].specifications}), `;
+    //   }
+    //   queryString += 'RETURNING * LIMIT 1;';
+    //   return db.query(queryString);
+    // })
+
+    // // Calculate estimated preparation time
+    // .then(data => {
+    //   const orderId = data.rows[0].order_id;
+
+    //   return db.query(`SELECT oi.order_id, SUM(oi.quantity * preparation_time) as estimated_time
+    //   FROM order_items as oi
+    //   JOIN items ON items.id = oi.item_id
+    //   WHERE oi.order_id = $1
+    //   GROUP BY oi.order_id`, [orderId]);
+    // })
+    // // 4. Return order completion page (need to create)
+    // .then(data => {
+
+    //   // Render page to notify customer the order is received
+    //   res.render('order');
+
+    // });
