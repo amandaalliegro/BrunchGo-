@@ -56,8 +56,6 @@ module.exports = (db) => {
     .then(data => res.send(`the order_id is ${data.rows[0].id}`))
     .catch(err => {
       res.status(500).json({ error: err.message })});
-
-
     });
 
     router.get('/user_order', (req, res) => {

@@ -35,3 +35,12 @@ VALUES
 INSERT INTO manager (id, user_name, password)
 VALUES
 (54321, 'jamie_roll', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
+
+INSERT INTO orders (restaurant_id, name, phone, place_order_datetime, sub_total, tax, total)
+VALUES(100, 'Erik', '3278424', '1000-01-01 00:00:00', 40, 15, 55);
+
+
+INSERT INTO order_items (order_id, item_id, quantity, specifications)
+VALUES(1, 6, 3, NULL),
+(1, 4, 2, NULL),
+(1, 5, 5, NULL);

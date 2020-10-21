@@ -1,0 +1,4 @@
+.manager-table > tr {
+  max-height: 100px;
+  overflow-y: hidden;
+}
