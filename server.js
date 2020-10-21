@@ -123,6 +123,16 @@ app.get("/orderaccepted", (req, res) => {
     res.render('index_user_accept');
   }
 });
+app.get("/orderdenied", (req, res) => {
+  if (req.session.user_id) {
+    res.render('index_user_denied');
+  } else {
+    const newId = Math.round(Math.random() * 100000);
+    req.session.user_id = newId;
+    res.render('index_user_denied');
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
