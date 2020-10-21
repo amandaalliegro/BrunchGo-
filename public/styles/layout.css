@@ -9,6 +9,47 @@ body h1 {
   color: #244751;
 }
 
+.container-fluid {
+  background-color: #fff;
+  border-color: #fff;
+  color: #6d4700;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+  background-color: #c9aa70;
+  border-color: #c9aa70;
+  color: #6d4700;
+}
+
+.brand {
+  background-color: #c9aa70;
+  border-color: #c9aa70;
+  color: #6d4700;
+  float: left;
+  padding: 15px;
+  font-size: 18px;
+  line-height: 20px;
+  height: 50px;
+}
+
+.navbar-header1 {
+  background-color: #c9aa70;
+  border-color: #c9aa70;
+  color: #6d4700;
+}
+
+.navbar {
+  position: fixed;
+  min-height: 50px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+}
+
+.navbar navbar-default {
+  background-color: #c9aa70;
+  border-color: #c9aa70;
+}
+
 .main-container {
   border: 2px red solid;
   width: 80%;
@@ -46,13 +87,13 @@ body h1 {
   text-align: center;
   color: orange;
   font-size: 1.5em;
-  background-color: #e0ccb0;
+  background-color: #fff;
 }
 
 .item-footer {
   display: flex;
   bottom: 0px;
-  background-color: #e0ccb0 e;
+  background-color: #fff;
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
@@ -72,4 +113,18 @@ body h1 {
 
 .item-description {
   width: 100%;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #c9aa70;
+  color: #6d4700;
+  text-align: left;
+  float: left;
+  font-size: 15px;
+  line-height: 20px;
+  height: 20px;
 }
