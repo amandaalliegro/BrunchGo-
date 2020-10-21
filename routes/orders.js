@@ -44,7 +44,7 @@ module.exports = (db) => {
 
     let restaurantId = 100;
     db.query(
-      `INSERT INTO orders (restaurant_id, name, phone, place_order_datetime, sub_total, tax, total, accept_order_datetime, complete_order_datetime)
+      `INSERT INTO orders (restaurant_id, userid, name, phone, place_order_datetime, sub_total, tax, total, accept_order_datetime, complete_order_datetime)
     VALUES
     ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     RETURNING *
