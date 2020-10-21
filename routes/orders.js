@@ -5,35 +5,6 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
-// { orderid: '8656',
-//   userid: '83508',
-//   name: '',
-//   phone: '',
-//   sub_total: '36',
-//   tax: '5.3999999999999995',
-//   total: '41.4',
-//   order:
-//    [ { id: '8',
-//        name: 'French Fries',
-//        category: 'Appetizers',
-//        price: '1000',
-//        available: 'true',
-//        prep_time: '360',
-//        image: './styles/french_fries.jpeg',
-//        stock: '10',
-//        quantity: '2' },
-//      { id: '9',
-//        name: 'Green Salad',
-//        category: 'Appetizers',
-//        price: '800',
-//        available: 'true',
-//        prep_time: '360',
-//        image: './styles/green_salad.jpeg',
-//        stock: '10',
-//        quantity: '2' } ] }
-
-
-
 const express = require('express');
 const { sendSMS } = require('../twilio');
 const router = express.Router();
@@ -131,7 +102,7 @@ module.exports = (db) => {
     // Send SMS message to restaruant
     .then(data => {
       // currently using George's phone number
-      sendSMS('6478730463', 'new order received!');
+      sendSMS('7783194360', 'new order received!');
       return data;
     })
     // Set cookie with order_id and redirect to /order page
