@@ -10,7 +10,7 @@ const sass = require("node-sass-middleware");
 const app = express();
 const morgan = require('morgan');
 const cookieSession = require('cookie-session');
-const { sendSMS } = require('./twilio');
+const { sendSMS } = require('../../../twilio');
 
 // PG database client/connection setup
 const { Pool } = require('pg');
