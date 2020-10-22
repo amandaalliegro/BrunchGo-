@@ -80,24 +80,7 @@ const refreshCart = function () {
       }
       console.log($('.cart-footer').children().length)
       console.log($('.cart-items').children().length)
-      if ($('.cart-items').children().length > 0 && $('.cart-footer').children().length === 0) {
-        $('#empty-cart-msg').remove();
-        $('.cart-footer').append(`
-              <div class="row cart-row" id="order-total">Order Total: </div>
-              <div class="row cart-row" style="border: none">
-                  <div class="col-lg-12 col-sm-12 cart-checkout-button">
-                  <form action="/api/orders/user_order" method="GET">
-                     <input type="submit" style="display: none"><button class="btn btn-success">Checkout</button></input>
-                     </form>
-                  </div>
-              </div>
-      `);
-
-        $('.cart-input').click((e) => {
-          e.stopPropagation();
-        });
-        renderCheckoutButton()
-      } else if ($('.cart-items').children().length === 0) {
+      if ($('.cart-items').children().length === 0) {
         $('.cart-footer').empty()
         $('.cart').append(`
         <div class="alert alert-info" role="alert" id="empty-cart-msg">Cart empty</div>

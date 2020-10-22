@@ -14,32 +14,38 @@ module.exports = (db) => {
   // GET: for customer to check their order
   // post
   router.get("/confirmation", (req, res) => {
-
+    // !!Manually set orderId
+    const orderId = 4;
     // if no order_id in session, redirect to menu
-    const orderId = req.session.order_id;
+    // const orderId = req.session.order_id;
     if (!orderId) {
       return redirect("../");
     }
 
     // Query for the order_status
     db.query(`
-    SELECT order_status
+    SELECT *
     FROM orders
     WHERE id = $1
     `, [orderId])
       // render specific page based on
       .then(data => {
         const orderStatus = data.rows[0].order_status;
+        const orderId = data.rows[0].id;
 
+        console.log(orderStatus, orderId);
         // Pseudocode logic
         if (orderStatus === 'received') {
-          return res.render(/* page "order received" */);
+          return res.render('index_user_order', { orderId });
         } else if (orderStatus === 'accepted') {
-          return res.render(/* page "order accepted" */); // Will need the estimated time
+          const acceptedOrderDatetime = data.rows[0].accept_order_datetime;
+          const estPrepTime = data.rows[0].estimated_prep_time;
+          const estCompletionTime = new Date(acceptedOrderDatetime.getTime() + estPrepTime * 60000);
+          return res.render('index_user_accepted', {orderId, estCompletionTime});
         } else if (orderStatus === 'completed') {
-          return res.render(/* page "order completed" */);
+          return res.render('index_user_completed', {orderId});
         } else if (orderStatus === 'denied') {
-          return res.render(/* page 'order denied */)
+          return res.render('index_user_denied', {orderId});
         }
       })
       .catch(err => {
@@ -59,14 +65,14 @@ module.exports = (db) => {
   */
 
   // POST: for customer to place an order
-  router.post("/confirmation", (req, res) => {
+  router.post("/new", (req, res) => {
 
     // Set orderDatetime to current time
     const { name, phone, subtotal, tax, total } = req.body;
     console.log(req.body)
     // console.log(name, phone, sub_total, tax, total);
     /* 1. INSERT the data to order database */
-    const currentDateTime = new Date().toISOString();
+    const currentDateTime = new Date().toLocaleString();
 
     // Currently only accepting order from one restaruant
     const restaurantId = 100;
@@ -117,11 +123,11 @@ module.exports = (db) => {
       })
       // Set cookie with order_id and redirect to /order page
       .then(data => {
-        // const orderId = data.rows[0].order_id;
-        // // Set cookie on browser for order_id
-        // req.session.order_id = orderId;
+        const orderId = data.rows[0].order_id;
+        // Set cookie on browser for order_id
+        req.session.order_id = orderId;
         // Check the name of view
-
+        res.redirect('/confirmation');
       })
       .catch(err => {
         res.status(500).json({ error: err.message })
