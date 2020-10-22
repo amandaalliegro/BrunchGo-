@@ -16,17 +16,17 @@ module.exports = (db) => {
     const userid = req.session.user_id;
 
 
-    let currentDate = new Date(Date.now() - 10*60000).toISOString();
-    const timestamp = currentDate.replace('T', ' ').replace('Z', '')
+    let currentDate = new Date(Date.now() - 10 * 60000).toISOString();
+    const timestamp = currentDate.replace('T', ' ').replace('Z', '');
 
     db.query(`
     INSERT INTO carts (id, created)
     VALUES(${userid}, '${timestamp}')
     ON CONFLICT DO NOTHING;
     `).then(() => {
-      res.sendStatus(200)
-    })
-  })
+      res.sendStatus(200);
+    });
+  });
 
   router.post('/add', (req, res) => {
     const userid = req.session.user_id;
@@ -35,9 +35,9 @@ module.exports = (db) => {
     INSERT INTO cart_items(item_id, cart_id)
     VALUES(${itemid}, ${userid});
     `).then(() => {
-      res.sendStatus(200)
-    })
-  })
+      res.sendStatus(200);
+    });
+  });
 
   router.post('/remove', (req, res) => {
     const userid = req.session.user_id;
@@ -50,8 +50,8 @@ module.exports = (db) => {
       LIMIT 1
       );
     `).then(() => {
-      res.sendStatus(200)
-    })
+      res.sendStatus(200);
+    });
   });
 
   router.get('/all-cart-items', (req, res) => {
@@ -59,9 +59,9 @@ module.exports = (db) => {
     SELECT * FROM cart_items
     WHERE cart_items.cart_id = ${req.session.user_id};
     `).then((data)=> {
-      res.send(data.rows)
-    })
-  })
+      res.send(data.rows);
+    });
+  });
 
   router.get('/show', (req, res) => {
     db.query(`
@@ -72,14 +72,14 @@ module.exports = (db) => {
     WHERE carts.id = ${req.session.user_id}
     GROUP BY items.id;
     `).then((data) => {
-      res.send(data.rows)
-    })
-  })
+      res.send(data.rows);
+    });
+  });
 
   router.get('/finalize', (req, res) => {
 
-    res.render('order_confirmation')
-  })
+    res.render('order_confirmation');
+  });
 
   router.get('/', (req, res) => {
     const userid = req.session.user_id;
@@ -92,22 +92,22 @@ module.exports = (db) => {
     WHERE carts.id = ${userid}
     GROUP BY items.id;
     `).then((data) => {
-      res.send(data.rows)
-    })
-  })
+      res.send(data.rows);
+    });
+  });
 
   router.get('/trim', (req, res) => {
-    let currentDate = new Date(Date.now() - 10*60000).toISOString();
-    const modified = currentDate.replace('T', ' ').replace('Z', '')
+    let currentDate = new Date(Date.now() - 10 * 60000).toISOString();
+    const modified = currentDate.replace('T', ' ').replace('Z', '');
 
     db.query(`
     DELETE FROM carts
     WHERE created < timestamp '${modified}'
     RETURNING *;
     `).then((data) => {
-      res.send(data.rows)
-    })
-  })
+      res.send(data.rows);
+    });
+  });
 
   return router;
 };

@@ -8,7 +8,7 @@
 const express = require('express');
 const { sendSMS } = require('../twilio');
 const router = express.Router();
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 
 module.exports = (db) => {
 
@@ -28,7 +28,7 @@ module.exports = (db) => {
   router.get("/login", (req, res) => {
 
     // direct to order page if already login
-    if (req.session.admin) {
+    if (req.session.adminLogin) {
       res.redirect("../manager");
     }
     res.render("index_login");
@@ -36,30 +36,28 @@ module.exports = (db) => {
 
   // POST login username and password
   router.post("/login", (req, res) => {
-    console.log(req.body)
+    console.log(req.body);
 
 
     const { username, password } = req.body;
-
     db.query(`SELECT * FROM manager
     WHERE user_name = $1;
     `, [username])
-    .then(data => {
-      console.log('data.rows is', data.rows);
-      const result = data.rows[0];
-      console.log('result is', result);
-      if (!result) {
-        res.send('User does not exist.');
-
-
-      } else if (!bcrypt.compareSync(password, result.password)) {
-        res.send('Incorrect password.');
-      } else {
+      .then(data => {
+        console.log(data)
+        console.log('data.rows is', data.rows);
+        const result = data.rows[0];
+        console.log('result is', result);
+        if (!result) {
+          res.send('User does not exist.');
+        } else if (!bcrypt.compareSync(password, result.password)) {
+          res.send('Incorrect password.');
+        } else {
         // set cookie for user
-        req.session.admin = 'jamie_roll';
-        res.redirect("../manager");
-      }
-    });
+          req.session.adminLogin = 'jamie_roll';
+          res.redirect("../manager");
+        }
+      });
   });
 
   // POST accept order base on order_id

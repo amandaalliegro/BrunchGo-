@@ -49,7 +49,7 @@ module.exports = (db) => {
         }
       })
       .catch(err => {
-        res.status(500).json({ error: err.message })
+        res.status(500).json({ error: err.message });
       });
 
   });
@@ -132,18 +132,16 @@ module.exports = (db) => {
 
         // Check the name of view
       })
-      // .catch(err => {
-      //   res.status(500).json({ error: err.message })
-      // });
+
   });
 
   router.get('/user_order', (req, res) => {
-    res.render('order_confirmation')
-  })
+    res.render('order_confirmation');
+  });
 
   router.get('/pending', (req, res) => {
-    res.render('index_user_order')
-  })
+    res.render('index_user_order');
+  });
 
 
   return router;

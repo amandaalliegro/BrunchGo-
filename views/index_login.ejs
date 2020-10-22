@@ -1,27 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <title>BrunchGo!</title>
-
   <base href="/">
-
+<!-- CSS imported -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-
-
+<!-- CSS styles -->
   <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="/styles/menu.css" type="text/css" />
   <link rel="stylesheet" href="/styles/header.css" type="text/css" />
   <link rel="stylesheet" href="/styles/cart.css" type="text/css" />
   <link rel="stylesheet" href="/styles/navbar.css" type="text/css" />
-
-  <!-- Bootstrap 3.1.1 -->
+<!-- Bootstrap 3.1.1 -->
   <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-  <!-- Font awesome -->
-
-
+<!-- Font awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<!-- JavaScripts -->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app-helpers.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
@@ -33,22 +29,16 @@
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
-
 </head>
 
-
+<%- include ./partials/_head.ejs %>
   <body>
-
+    <!-- Logo -->
     <div class="container-logo" >
-
       <img src='styles/brunch.png' alt='BrunchGo'>
-
     </div>
-
-
+    <!-- login form -->
     <div class="container-login">
-
       <form id='login' class="form-signin" action="/admin/login" method="POST">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputUserName" class="sr-only">User name</label>
@@ -62,18 +52,11 @@
         </div>
         <input type="submit"><button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button></input>
       </form>
-
-    </div> <!-- /container -->
-
-
+    </div>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-
-
-</body>
-
-
-
+  </body>
+<!-- Footer with hyperlink to the home page -->
 <div class='footer-login'>
   <p>Brunch<b>Go!</b> <a href="/" target="_blank"><B>HOME</B></a></p>
 </div>
