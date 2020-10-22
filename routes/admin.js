@@ -29,7 +29,7 @@ module.exports = (db) => {
   router.get("/login", (req, res) => {
 
     // direct to order page if already login
-    if (req.session.admin) {
+    if (req.session.adminLogin) {
       res.redirect("../manager");
     }
     res.render("index_login");
@@ -37,34 +37,33 @@ module.exports = (db) => {
 
   // POST login username and password
   router.post("/login", (req, res) => {
-    console.log(req.body)
+    console.log(req.body);
 
 
     const { username, password } = req.body;
-
     db.query(`SELECT * FROM manager
     WHERE user_name = $1;
     `, [username])
-    .then(data => {
-      console.log('data.rows is', data.rows);
-      const result = data.rows[0];
-      console.log('result is', result);
-      if (!result) {
-        res.send('User does not exist.');
-
-
-      } else if (!bcrypt.compareSync(password, result.password)) {
-        res.send('Incorrect password.');
-      } else {
+      .then(data => {
+        console.log(data)
+        console.log('data.rows is', data.rows);
+        const result = data.rows[0];
+        console.log('result is', result);
+        if (!result) {
+          res.send('User does not exist.');
+        } else if (!bcrypt.compareSync(password, result.password)) {
+          res.send('Incorrect password.');
+        } else {
         // set cookie for user
-        req.session.admin = 'jamie_roll';
-        res.redirect("../manager");
-      }
-    });
+          req.session.adminLogin = 'jamie_roll';
+          res.redirect("../manager");
+        }
+      });
   });
 
   // POST accept order base on order_id
   router.post("/order/accept/:order_id", (req, res) => {
+    console.log(req.body.ordertime)
     const orderId = req.params.order_id;
     const {ordertime } = req.body;
 
@@ -94,7 +93,6 @@ module.exports = (db) => {
 
   // POST complete order by restaruant
   router.post("/order/complete/:order_id", (req, res) => {
-    const orderId = req.params.order_id;
     const currentDatetime = new Date().toISOString();
 
     // Update order table with complete_order_datetime
@@ -102,7 +100,7 @@ module.exports = (db) => {
     SET complete_order_datetime = $1, order_status = $2
     WHERE id = $3
     RETURNING *;
-    `,[currentDatetime, 'completed', orderId])
+    `,[currentDatetime, 'completed', req.params.order_id])
     // Send SMS to customer to notify the order is completed
     .then(data => {
       const {id, phone} = data.rows[0];
@@ -137,6 +135,14 @@ module.exports = (db) => {
     })
     .catch(err => {
       res.status(500).json({ error: err.message })});
+    });
+
+    router.post('/logout', (req, res) => {
+        res.clearCookie("session");
+        res.clearCookie("session.sig");
+        res.redirect('/admin/login');
+
+
     });
 
   return router;

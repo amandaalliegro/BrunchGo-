@@ -1,43 +1,81 @@
+const checkPhone = function (phone) {
+
+  if (!phone) {
+    return 'Please enter a valid phone number';
+  } else if (phone.length < 10) {
+    return 'Please enter a valid phone number'
+  } else if (phone.length > 10) {
+    return 'Please enter a valid phone number'
+  } else {
+    return null;
+  }
+
+}
+
+const checkName = function (name) {
+
+  if (!name) {
+    return 'Please enter your name';
+  } else if (name.length < 2) {
+    return 'Name too short'
+  } else {
+    return null;
+  }
+
+
+}
 const renderCheckoutButton = function () {
   $('.checkout-btn').click((e) => {
-    e.stopPropagation()
+
     const customerNameInput = $('body').find('#customerName')[0]
     const customerName = $(customerNameInput).val();
-
     const customerPhoneInput = $('body').find('#customerPhone')[0]
     const customerPhone = $(customerPhoneInput).val();
- 
-    let subtotal;
-    let tax;
-    let total;
-    getOrderTotal().then((totalPrice) => {
-      subtotal = totalPrice;
-      tax = totalPrice * 0.15;
-      total = Number(totalPrice) + Number(tax);
-    }).then(() => {
 
-      $.get('/cart/show').then((data) => {
-        console.log(data)
-      
-  
-    const newOrder = {
-      name: customerName,
-      phone: customerPhone,
-      subtotal,
-      tax,
-      total,
-      order: data
-    };
+    if (checkPhone(customerPhone)) {
+      $('.errors').empty()
+      let error = checkPhone(customerPhone)
+      $('.errors').prepend(`<div class="alert alert-danger" role="alert" id="empty-cart-msg">${error}</div>`)
+    } else if (checkName(customerName)) {
+      $('.errors').empty()
+      let nameError = checkName(customerName)
+      $('.errors').prepend(`<div class="alert alert-danger" role="alert" id="empty-cart-msg">${nameError}</div>`)
+    } else {
 
-    $.ajax({
-        method: "POST",
-        url: '/api/orders/confirmation',
-        data: newOrder,
-        dataType: 'json'
+      $('.errors').empty()
+      let subtotal;
+      let tax;
+      let total;
+      getOrderTotal().then((totalPrice) => {
+        subtotal = Number(totalPrice);
+        tax = totalPrice * 0.15;
+        total = Number(totalPrice) + Number(tax);
+
+
       }).then(() => {
-        console.log('done')
-      })
-       })
-       })
-  });
+        $.get('/cart/show').then((data) => {
+
+          const newOrder = {
+            name: customerName,
+            phone: customerPhone,
+            subtotal,
+            tax,
+            total,
+            order: data
+          };
+          console.log(newOrder)
+          $.ajax({
+            method: "POST",
+            url: '/api/orders/new',
+            data: newOrder,
+            dataType: 'json'
+          }).then((data) => {
+
+            window.location.href = "api/orders/pending"
+            console.log(data)
+          });
+        });
+      });
+    };
+  })
 };
