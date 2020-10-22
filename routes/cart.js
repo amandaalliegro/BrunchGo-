@@ -55,6 +55,15 @@ module.exports = (db) => {
     })
   });
 
+  router.get('/all-cart-items', (req, res) => {
+    db.query(`
+    SELECT * FROM cart_items
+    WHERE cart_items.cart_id = ${req.session.user_id};
+    `).then((data)=> {
+      res.send(data.rows)
+    })
+  })
+
   router.get('/show', (req, res) => {
     db.query(`
     SELECT COUNT(cart_items.item_id) AS quantity, items.*

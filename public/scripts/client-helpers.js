@@ -1,5 +1,4 @@
 const renderCheckoutButton = function () {
-  console.log('RENDERING')
   $('.checkout-btn').click((e) => {
     e.stopPropagation()
     const customerNameInput = $('body').find('#customerName')[0]
@@ -7,22 +6,27 @@ const renderCheckoutButton = function () {
 
     const customerPhoneInput = $('body').find('#customerPhone')[0]
     const customerPhone = $(customerPhoneInput).val();
-
-    console.log(customerPhone);
-    console.log(customerName)
-
+ 
+    let subtotal;
+    let tax;
+    let total;
     getOrderTotal().then((totalPrice) => {
-      let subtotal = totalPrice;
-      let tax = totalPrice * 0.15;
-      let total = totalPrice + tax;
-    })
+      subtotal = totalPrice;
+      tax = totalPrice * 0.15;
+      total = Number(totalPrice) + Number(tax);
+    }).then(() => {
 
+      $.get('/cart/show').then((data) => {
+        console.log(data)
+      
+  
     const newOrder = {
       name: customerName,
       phone: customerPhone,
       subtotal,
       tax,
-      total
+      total,
+      order: data
     };
 
     $.ajax({
@@ -33,5 +37,7 @@ const renderCheckoutButton = function () {
       }).then(() => {
         console.log('done')
       })
+       })
+       })
   });
 };

@@ -59,14 +59,14 @@ $(() => {
           <div class="row cart-row" style="border: none">
 
               <div class="col-lg-12 col-sm-12 cart-checkout-button">
-
+                <form action="/api/orders/pending" method="GET">
                  <input type="submit" style="display: none"><button style="height: 100px" class="btn btn-success checkout-btn">Confirm Order</button></input>
                  </form>
               </div>
               </div>
           </div>
         `)
-        // <form action="/api/orders/user_order" method="GET">
+        
         renderCheckoutButton()
       })
     })

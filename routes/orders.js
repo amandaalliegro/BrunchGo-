@@ -62,7 +62,8 @@ module.exports = (db) => {
   router.post("/confirmation", (req, res) => {
 
     // Set orderDatetime to current time
-    const { name, phone, sub_total, tax, total } = req.body;
+    const { name, phone, subtotal, tax, total } = req.body;
+    console.log(req.body)
     // console.log(name, phone, sub_total, tax, total);
     /* 1. INSERT the data to order database */
     const currentDateTime = new Date().toISOString();
@@ -74,7 +75,7 @@ module.exports = (db) => {
     VALUES
     ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
     RETURNING *
-    ;`, [restaurantId, req.session.user_id, name, phone, currentDateTime, sub_total, tax, total, 'received', null, null, null])
+    ;`, [restaurantId, req.session.user_id, name, phone, currentDateTime, subtotal, tax, total, 'received', null, null, null])
       /* 2 INSERT INTO order item table */
       .then(data => {
         //retrieve id from orders table
@@ -117,7 +118,13 @@ module.exports = (db) => {
       });
   });
 
- 
+  router.get('/user_order', (req, res) => {
+    res.render('order_confirmation')
+  })
+
+  router.get('/pending', (req, res) => {
+    res.render('index_user_order')
+  })
 
 
   return router;
