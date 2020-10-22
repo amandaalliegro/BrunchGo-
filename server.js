@@ -44,7 +44,7 @@ const widgetsRoutes = require("./routes/widgets");
 const ordersRoutes = require('./routes/orders');
 const adminRoutes = require('./routes/admin');
 const cartRoutes = require('./routes/cart');
-const loginRoutes = require('./routes/login_route')
+
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -53,7 +53,8 @@ app.use("/api/widgets", widgetsRoutes(db));
 app.use('/api/orders', ordersRoutes(db));
 app.use("/admin", adminRoutes(db));
 app.use("/cart", cartRoutes(db));
-app.use("/login", loginRoutes(db));
+
+
 // Note: mount other resources here, using the same pattern above
 
 
@@ -130,24 +131,6 @@ app.get("/manager", (req, res) => {
   }
 });
 
-app.get("/update", (req, res) => {
-  if (req.session.user_id) {
-    res.render('index_menu_update');
-  } else {
-    const newId = Math.round(Math.random() * 100000);
-    req.session.user_id = newId;
-    res.render('index_menu_update');
-  }
-});
-
-app.post("/update", (req, res) => {
-  console.log(req.body);
-  db.query(`
-  INSERT INTO items (id, name, category, price, available, prep_time, image, stock)
-  VALUES(1000000, '${req.body.name}', '${req.body.category}', ${req.body.price}, ${req.body.available}, ${req.body.prep_time}, '${req.body.image}', ${req.body.stock});
-  `);
-  res.send('ok');
-});
 
 // Returns the user's cookie so it can be used to create a local entry with the user's menu selections
 app.get("/userid", (req, res) => {
