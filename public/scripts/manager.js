@@ -50,8 +50,8 @@ $(() => {
           <td>$${item.total}</td>
           <td>${item.order_status}</td>
           <td>
-          <form action="/orderaccepted" method="POST">
-          <input type="submit" style="display: none" value="${item.id}" name="orderid">
+          <form action="/admin/order/accept/${item.id}" method="POST">
+          <input type="submit" style="display: none" name="orderid">
           <button type="button" class="btn btn-default btn-sm add-cart-item">
             <span class="glyphicon glyphicon-play " aria-hidden="true"></span> Accept
             </button>
