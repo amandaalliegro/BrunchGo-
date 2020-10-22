@@ -38,11 +38,9 @@ BrunchGo! Is a full stack web application for ordering meals from a restaurant f
 - #/ Uncomment and set to true for Heroku
 - #/ DB_SSL=true if heroku
 - DB_PORT=5432
-
-Add Twilio account info:
-- ACCOUNTSID= (...)
-- AUTHTOKEN= (...)
-- OWNERPHONE= (...)
+- ACCOUNTSID= 'Twilio Account Sid'
+- AUTHTOKEN='Twilio Auth Token'
+- OWNERPHONE='Restaurant Phone Number'
 3. Install dependencies: `npm i`
 4. Fix to binaries for sass: `npm rebuild node-sass`
 5. Reset database: `npm run db:reset`
