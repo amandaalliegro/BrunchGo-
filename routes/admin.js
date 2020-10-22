@@ -5,11 +5,10 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
-const e = require('express');
 const express = require('express');
 const { sendSMS } = require('../twilio');
 const router = express.Router();
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 
 module.exports = (db) => {
 
@@ -37,7 +36,7 @@ module.exports = (db) => {
 
   // POST login username and password
   router.post("/login", (req, res) => {
-    console.log(req.body)
+    console.log(req.body);
 
 
     const { username, password } = req.body;
@@ -45,27 +44,28 @@ module.exports = (db) => {
     db.query(`SELECT * FROM manager
     WHERE user_name = $1;
     `, [username])
-    .then(data => {
-      console.log('data.rows is', data.rows);
-      const result = data.rows[0];
-      console.log('result is', result);
-      if (!result) {
-        res.send('User does not exist.');
+      .then(data => {
+        console.log('data.rows is', data.rows);
+        const result = data.rows[0];
+        console.log('result is', result);
+        if (!result) {
+          res.send('User does not exist.');
 
 
-      } else if (!bcrypt.compareSync(password, result.password)) {
-        res.send('Incorrect password.');
-      } else {
+        } else if (!bcrypt.compareSync(password, result.password)) {
+          res.send('Incorrect password.');
+        } else {
         // set cookie for user
-        req.session.admin = 'jamie_roll';
-        res.redirect("../manager");
-      }
-    });
+          req.session.admin = 'jamie_roll';
+          res.redirect("../manager");
+        }
+      });
   });
 
   // POST accept order base on order_id
   router.post("/order/accept/:order_id", (req, res) => {
     const orderId = req.params.order_id;
+    console.log('orderId:', orderId);
 
     // need the prep time from the request body
     // const { <variable name of estPrepTime> } = req.body;
@@ -74,25 +74,37 @@ module.exports = (db) => {
 
     // Update order table with accept_order_datetime
     db.query(`UPDATE orders
-    SET accept_order_datetime = $1, order_status = $2
-    WHERE id = $3
+    SET accept_order_datetime = $1, order_status = $2, estimated_prep_time = $3
+    WHERE id = $4
     RETURNING *;
-    `,[currentDatetime, 'accepted', '<estPrepTime>',orderId])
+    `,[currentDatetime, 'accepted', null, orderId])
     // Send SMS to customer to notify the order is accepted
+<<<<<<< HEAD
+      .then(data => {
+        const {id, phone} = data.rows[0];
+        sendSMS(phone, 'order accepted');
+      })
+      .catch(err => {
+        res.status(500).json({ error: err.message });
+      });
+=======
     .then(data => {
+
       const {id, phone} = data.rows[0];
       sendSMS(phone, 'order accepted');
+      res.sendStatus(200)
     })
+    .then(data =>
+      res.send('db updated; SMS sent'))
     .catch(err => {
       res.status(500).json({ error: err.message })});
-
+>>>>>>> edd98238dc8cd8227cdd37c24cf7b598ae935a35
 
     // .then(() => res.send(`Thank you for your order! Order ID: ${id}`))
   });
 
   // POST complete order by restaruant
   router.post("/order/complete/:order_id", (req, res) => {
-    const orderId = req.params.order_id;
     const currentDatetime = new Date().toISOString();
 
     // Update order table with complete_order_datetime
@@ -100,15 +112,30 @@ module.exports = (db) => {
     SET complete_order_datetime = $1, order_status = $2
     WHERE id = $3
     RETURNING *;
-    `,[currentDatetime, 'completed', orderId])
+    `,[currentDatetime, 'completed', req.params.order_id])
     // Send SMS to customer to notify the order is completed
+<<<<<<< HEAD
+      .then(data => {
+        const {id, phone} = data.rows[0];
+        sendSMS(phone, 'order completed');
+      })
+      .catch(err => {
+        res.status(500).json({ error: err.message });
+      });
+  });
+=======
     .then(data => {
       const {id, phone} = data.rows[0];
       sendSMS(phone, 'order completed');
+      res.sendStatus(200)
+    })
+    .then(() => {
+      res.send('db updated, SMS sent');
     })
     .catch(err => {
       res.status(500).json({ error: err.message })});
     });
+>>>>>>> edd98238dc8cd8227cdd37c24cf7b598ae935a35
 
 
   // POST deny order by restaruant
@@ -123,13 +150,28 @@ module.exports = (db) => {
     RETURNING *;
     `,['denied', orderId])
     // Send SMS to customer to notify the order is completed
+<<<<<<< HEAD
+      .then(data => {
+        const {id, phone} = data.rows[0];
+        sendSMS(phone, 'order denied');
+      })
+      .catch(err => {
+        res.status(500).json({ error: err.message });
+      });
+  });
+=======
     .then(data => {
       const {id, phone} = data.rows[0];
       sendSMS(phone, 'order denied');
+      res.sendStatus(200)
+    })
+    .then(() => {
+      res.send('db updated, SMS sent');
     })
     .catch(err => {
       res.status(500).json({ error: err.message })});
     });
+>>>>>>> edd98238dc8cd8227cdd37c24cf7b598ae935a35
 
   return router;
 };

@@ -20,14 +20,14 @@ CREATE TABLE orders (
   restaurant_id        INTEGER REFERENCES restaurants(id) ON DELETE CASCADE,
   name                VARCHAR(255) NOT NULL,
   phone               VARCHAR (255) NOT NULL,
-  place_order_datetime      TIMESTAMP NOT NULL,
+  place_order_datetime      TIMESTAMPTZ NOT NULL,
   sub_total           NUMERIC NOT NULL,
   tax                 NUMERIC NOT NULL,
   total               NUMERIC NOT NULL,
   order_status            VARCHAR(255) NOT NULL,
-  accept_order_datetime   TIMESTAMP,
+  accept_order_datetime   TIMESTAMPTZ,
   estimated_prep_time     INTEGER,
-  complete_order_datetime  TIMESTAMP
+  complete_order_datetime  TIMESTAMPTZ
 );
 
 CREATE TABLE items (
