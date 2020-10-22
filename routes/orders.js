@@ -65,7 +65,7 @@ module.exports = (db) => {
   */
 
   // POST: for customer to place an order
-  router.post("/confirmation", (req, res) => {
+  router.post("/new", (req, res) => {
 
     // Set orderDatetime to current time
     const { name, phone, subtotal, tax, total } = req.body;
