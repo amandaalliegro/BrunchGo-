@@ -10,7 +10,7 @@ const sass = require("node-sass-middleware");
 const app = express();
 const morgan = require('morgan');
 const cookieSession = require('cookie-session');
-const { sendSMS } = require('../../../twilio');
+const { sendSMS } = require('./twilio');
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -116,7 +116,6 @@ app.get('/manager/orders/:orderid', (req, res) => {
   FROM items
   JOIN order_items ON order_items.item_id = items.id
   WHERE order_items.order_id = ${req.params.orderid};
-
   `).then((data) => {
     res.send(data.rows);
   });
