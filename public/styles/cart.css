@@ -2,11 +2,17 @@ div.cart {
   min-width: 650px;
   padding: 30px;
   margin-top: 15px;
+  max-height: 75vh;
 }
 
 div.cart > .row {
   border: none;
   border-bottom: 1px solid gray;
+}
+
+.cart-items {
+  max-height: 500px;
+  overflow-y: scroll;
 }
 
 .cart-row {
