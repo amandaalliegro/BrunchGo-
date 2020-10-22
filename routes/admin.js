@@ -79,7 +79,7 @@ module.exports = (db) => {
     `,[currentDatetime, 'accepted', null, orderId])
     // Send SMS to customer to notify the order is accepted
     .then(data => {
-
+      console.log(data)
       const {id, phone} = data.rows[0];
       sendSMS(phone, 'order accepted');
 
@@ -129,6 +129,7 @@ module.exports = (db) => {
     `,['denied', orderId])
     // Send SMS to customer to notify the order is completed
     .then(data => {
+      // console.log(data)
       const {id, phone} = data.rows[0];
       sendSMS(phone, 'order denied');
       res.sendStatus(200)

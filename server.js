@@ -91,8 +91,12 @@ app.get('/manager/orders', (req, res) => {
 
   db.query(`
     SELECT * FROM orders
-    WHERE order_status = 'received'
-    ORDER BY place_order_datetime DESC;
+    order by (case order_status
+      when 'received' then 1
+      when 'accepted' then 2
+      when 'denied' then 3
+      when 'completed' then 4
+      end)
   `).then((data) => {
     res.send(data.rows)
   }).then(() => {
@@ -102,6 +106,12 @@ app.get('/manager/orders', (req, res) => {
   }).then(() => {
     db.query(`
     SELECT * FROM orders;
+    order by (case state
+      when 'received' then 1
+      when 'accepted' then 2
+      when 'denied' then 3
+      when 'completed' then 4
+      end)
     `);
   }).then((data) => {
   });
