@@ -18,14 +18,25 @@ GET: '/userid'
 
 ### MOUNTED ON api/orders
 
-- POST: /neworder
-  - a new order is created in the SQL databse with an id that is different from the user's cookie 
-    - redirect to GET /:orderid
+- POST: /new
+  - Creates a new order with status "received"
 
-- GET: /:orderid
+- GET /confirmation 
+  - renders the api/orders/pending page according to the status of the order
+    - 'received'
+    - 'accepted'
+    - 'denied'
+    - 'completed'
+
+<!-- - GET: /:orderid
   - page with completed order and order summary with all order items
-  - Show's the users order id
+  - Show's the users order id -->
 
+  ### MOUNTED ON /admin
+
+- GET /admin (formerly /manager)
+  - check for admin cookie; if admin cookie exists, shows the /admin page with all user orders
+  - if no admin cookie, redirect to admin/login
 
 - GET: /admin/login
   - login page
@@ -35,14 +46,19 @@ GET: '/userid'
     - if success: render manages page
     - if fail: login fail
 
-- GET: /admin/orders
-  - if not logined, access denind or render index
-  - if logged in, render orders 
-
 - POST: /admin/orders/accept/:order_id (accept order button)
-  - update row on order table (set order_accepted_timedate)
+  - update row on order table
+    - order_accepted_timedate
+    - order_status: 'accepted'
   - send sms message to customer with expected delivery time
 
-- POST: /admin/orders/completed/:order_id (complete order button)
-  - update row on order table (set completed_timedate)
+- POST: /admin/orders/deny/:order_id (deny order button)
+  - updates row on order table
+    -order_status: 'denied'
+  
+- POST: /admin/orders/complete/:order_id (complete order button)
+  - update row on order table 
+    - complete_order_datetime
+    - order_status
   - send sms message to customer for order is ready
+

@@ -39,7 +39,6 @@ module.exports = (db) => {
     })
   })
 
-
   router.post('/remove', (req, res) => {
     const userid = req.session.user_id;
     const itemid = Number(req.body.id);
