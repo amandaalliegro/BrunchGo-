@@ -79,14 +79,15 @@ module.exports = (db) => {
       /* 2 INSERT INTO order item table */
       .then(data => {
         //retrieve id from orders table
+
         const orderId = data.rows[0].id;
         const { order } = req.body;
-        console.log(orderId, order);
 
         const orderLength = order.length;
         let count = 0;
         let queryString = 'INSERT INTO order_items (order_id, item_id, quantity) VALUES ';
         for (let item of order) {
+          console.log(item)
           queryString += `(${orderId}, ${item.id}, ${item.quantity}) `;
           if (count < orderLength - 1) {
             queryString += ', ';
@@ -97,14 +98,22 @@ module.exports = (db) => {
 
         console.log(queryString);
 
-        return data
-      })
+        return queryString
       // Send SMS message to restaruant
-      .then(data => {
-        // currently using George's phone number
-        sendSMS('7783194360', 'new order received!');
+      }).then(queryString => {
+        db.query(`${queryString}`).then((data) => {
+          sendSMS('7783194360', 'new order received!');
         res.send(data)
-        return data;
+
+        }).then(()=> {
+          db.query(`
+          DELETE FROM carts
+          WHERE id = ${req.session.user_id};
+          `).then((data) =>{
+            console.log(data)
+          })
+        })
+        // currently using George's phone number
       })
       // Set cookie with order_id and redirect to /order page
       .then(data => {

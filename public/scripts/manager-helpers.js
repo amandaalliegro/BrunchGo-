@@ -10,7 +10,7 @@ const refreshManagerOrders = function () {
             <thead>
               <tr>
                 <th>Order id</th>
-                <th>Order placed<th>
+                <th>Order placed</th>
                 <th>User id</th>
                 <th>Customer Name</td>
                 <th>Items ordered</th>
