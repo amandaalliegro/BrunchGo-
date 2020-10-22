@@ -46,6 +46,7 @@ $(() => {
 
         <div class="container" style="width: 600px">
         <div class="row cart-row">
+        <div class="errors"></div>
           <input type="text" class="cart-input" id="customerName" placeholder="Name"></input>
           <input type="text" class="cart-input" id="customerPhone" placeholder="(000) 000-0000"></input>
           </div>
@@ -59,14 +60,11 @@ $(() => {
           <div class="row cart-row" style="border: none">
 
               <div class="col-lg-12 col-sm-12 cart-checkout-button">
-                <form action="/api/orders/pending" method="GET">
-                 <input type="submit" style="display: none"><button style="height: 100px" class="btn btn-success checkout-btn">Confirm Order</button></input>
-                 </form>
+                 <button style="height: 100px" class="btn btn-success checkout-btn">Confirm Order</button>
               </div>
               </div>
           </div>
         `)
-        
         renderCheckoutButton()
       })
     })

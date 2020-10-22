@@ -97,12 +97,13 @@ module.exports = (db) => {
 
         console.log(queryString);
 
-        return db.query(queryString);
+        return data
       })
       // Send SMS message to restaruant
       .then(data => {
         // currently using George's phone number
         sendSMS('7783194360', 'new order received!');
+        res.send(data)
         return data;
       })
       // Set cookie with order_id and redirect to /order page
@@ -111,7 +112,7 @@ module.exports = (db) => {
         // // Set cookie on browser for order_id
         // req.session.order_id = orderId;
         // Check the name of view
-        res.send('message placed');
+
       })
       .catch(err => {
         res.status(500).json({ error: err.message })

@@ -65,7 +65,6 @@ module.exports = (db) => {
 
   // POST accept order base on order_id
   router.post("/order/accept/:order_id", (req, res) => {
-    const orderId = req.params.order_id;
 
     // need the prep time from the request body
     // const { <variable name of estPrepTime> } = req.body;
@@ -77,11 +76,13 @@ module.exports = (db) => {
     SET accept_order_datetime = $1, order_status = $2
     WHERE id = $3
     RETURNING *;
-    `,[currentDatetime, 'accepted', '<estPrepTime>',orderId])
+    `,[currentDatetime, 'accepted', req.params.order_id])
     // Send SMS to customer to notify the order is accepted
     .then(data => {
+
       const {id, phone} = data.rows[0];
       sendSMS(phone, 'order accepted');
+      res.sendStatus(200)
     })
     .catch(err => {
       res.status(500).json({ error: err.message })});
@@ -92,7 +93,6 @@ module.exports = (db) => {
 
   // POST complete order by restaruant
   router.post("/order/complete/:order_id", (req, res) => {
-    const orderId = req.params.order_id;
     const currentDatetime = new Date().toISOString();
 
     // Update order table with complete_order_datetime
@@ -100,11 +100,12 @@ module.exports = (db) => {
     SET complete_order_datetime = $1, order_status = $2
     WHERE id = $3
     RETURNING *;
-    `,[currentDatetime, 'completed', orderId])
+    `,[currentDatetime, 'completed', req.params.order_id])
     // Send SMS to customer to notify the order is completed
     .then(data => {
       const {id, phone} = data.rows[0];
       sendSMS(phone, 'order completed');
+      res.sendStatus(200)
     })
     .catch(err => {
       res.status(500).json({ error: err.message })});
@@ -126,6 +127,7 @@ module.exports = (db) => {
     .then(data => {
       const {id, phone} = data.rows[0];
       sendSMS(phone, 'order denied');
+      res.sendStatus(200)
     })
     .catch(err => {
       res.status(500).json({ error: err.message })});
