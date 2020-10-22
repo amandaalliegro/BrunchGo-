@@ -1,35 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <title>BrunchGo!</title>
-
   <%- include ./partials/_head.ejs %>
-
-
 </head>
-
 <body>
   <%- include ./partials/_navbar_plain.ejs %>
   <%- include ./partials/_banner.ejs %>
-
-
+  <!-- SMS container -->
     <div class='container' style="width: 750px">
       <div class="panel panel-default" style="padding: 10px">
         <div class="container" style="height: 600px;">
-
-
-
-  <img src='styles/Sms.png' style='justify-content: center;' alt='sms'>
-  <h2>Thank you! We have received your order.</h2>
-      <h3>You will receive a SMS as soon as your order is accepted.</h3>
-      <h4>Order #<%= orderId %></h4>
-
+          <img src='styles/Sms.png' style='justify-content: center;' alt='sms'>
+          <h2>Thank you! We have received your order.</h2>
+          <h3>You will receive a SMS as soon as your order is accepted.</h3>
+          <h4>Order #<%= orderId %></h4>
+        </div>
+      </div>
     </div>
-    </div>
-    </div>
-  </div>
 </body>
-<div class='footer'>
-  <p>Brunch<b>Go!</b></p>
+<!-- Footer with hyperlink to the home page -->
+<div class='footer-login'>
+  <p>Brunch<b>Go!</b> <a href="/" target="_blank"><B>HOME</B></a></p>
 </div>
