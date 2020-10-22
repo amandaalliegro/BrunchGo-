@@ -8,40 +8,24 @@ const renderCheckoutButton = function () {
     const customerPhoneInput = $('body').find('#customerPhone')[0]
     const customerPhone = $(customerPhoneInput).val();
 
+    console.log(customerPhone);
+    console.log(customerName)
+
+    getOrderTotal().then((totalPrice) => {
+      let subtotal = totalPrice;
+      let tax = totalPrice * 0.15;
+      let total = totalPrice + tax;
+    })
+
     const newOrder = {
-      orderid: '',
-      userid: '',
       name: customerName,
-      phone: customerPhone
-    }
+      phone: customerPhone,
+      subtotal,
+      tax,
+      total
+    };
 
-    getUserId().then((userid) => {
-      let totalPrice = 0;
-
-      for (const item in user_carts[userid]) {
-        const currentItem = user_carts[userid][item]
-
-        let price = currentItem.quantity * currentItem.price
-        totalPrice += price;
-      }
-
-      totalPrice = Number(totalPrice / 100);
-
-      newOrder.sub_total = totalPrice;
-      let tax = Number(totalPrice * 0.15);
-      newOrder.tax = tax
-
-      newOrder.total = totalPrice + tax;
-
-      const usercart = user_carts[userid]
-      newOrder.order = usercart;
-
-      const newOrderid = Math.floor(Math.random() * 100000)
-      newOrder.orderid = newOrderid;
-      newOrder.userid = userid
-      console.log(newOrder)
-
-      $.ajax({
+    $.ajax({
         method: "POST",
         url: '/api/orders/confirmation',
         data: newOrder,
@@ -49,6 +33,5 @@ const renderCheckoutButton = function () {
       }).then(() => {
         console.log('done')
       })
-    });
   });
 };

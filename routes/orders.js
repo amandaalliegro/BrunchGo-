@@ -117,37 +117,7 @@ module.exports = (db) => {
       });
   });
 
-  router.get('/user_order', (req, res) => {
-    res.render('order_confirmation')
-  })
-  router.get('/trim_orders', (req, res) => {
-    let currentDate = new Date(Date.now() - 10*60000).toISOString();
-    const modified = currentDate.replace('T', ' ').replace('Z', '')
-    console.log(modified)
-    db.query(`
-    DELETE FROM orders
-    WHERE place_order_datetime < timestamp '${modified}'
-
-    RETURNING *;
-    `).then((data) => {
-      res.send(data.rows)
-    })
-  })
-  router.get('/:userid', (req, res) => {
-    console.log(req.session.user_id)
-    db.query(`
-    SELECT DISTINCT (items.*), order_items.quantity, orders.place_order_datetime, orders.userid, orders.sub_total, orders.tax, orders.total
-FROM orders
-JOIN order_items ON order_items.order_id = orders.id
-JOIN items ON items.id = order_items.item_id
-WHERE orders.userid = ${req.session.user_id}
-GROUP BY order_items.quantity, items.id, orders.place_order_datetime, orders.userid, orders.sub_total, orders.tax, orders.total
-ORDER BY orders.place_order_datetime;
-
-    `).then((data) => {
-      res.send(data.rows)
-    })
-  })
+ 
 
 
   return router;

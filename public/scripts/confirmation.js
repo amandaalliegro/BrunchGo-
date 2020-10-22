@@ -1,16 +1,22 @@
 $(() => {
-  console.log(user_carts)
+
   getUserId().then((userid) => {
+      let subtotal;
+      let tax;
+      let total;
+      getOrderTotal().then((totalPrice) => {
+      subtotal = Number(totalPrice);
+      tax = Number(subtotal * 0.15);
+      total = subtotal + tax;
+      console.log(total)
+      }).done(() => {
 
 
 
-    $.get(`/api/orders/${userid}`).then((items) => {
-      const orderTotals = {
-        subtotal: '',
-        tax: '',
-        total: ''
-      }
-      console.log(items)
+    $.get(`/cart/show`).then((items) => {
+
+
+
       for (const item of items) {
         console.log(item)
         const newItem = `
@@ -33,13 +39,9 @@ $(() => {
   </div>
 </div>`
         $('.order-items').append(newItem)
-        orderTotals.subtotal = item.sub_total;
-        orderTotals.tax = item.tax;
-        orderTotals.total = item.total;
 
       }
-      return orderTotals
-      }).then((orderTotals) => {
+      }).then(() => {
         $('.order-items').append(`
 
         <div class="container" style="width: 600px">
@@ -48,24 +50,26 @@ $(() => {
           <input type="text" class="cart-input" id="customerPhone" placeholder="(000) 000-0000"></input>
           </div>
         <div class="row cart-row">
-        <p>Subtotal: $${Number(orderTotals.subtotal).toFixed(2)}</p>
-        <p>Tax: $${Number(orderTotals.tax).toFixed(2)}</p>
-        <h2>Total: $${Number(orderTotals.total).toFixed(2)}</h2>
+        <p>Subtotal: $${subtotal.toFixed(2)}</p>
+        <p>Tax: $${tax.toFixed(2)}</p>
+        <h2>Total: $${Number(total).toFixed(2)}</h2>
         </div>
 
 
           <div class="row cart-row" style="border: none">
 
               <div class="col-lg-12 col-sm-12 cart-checkout-button">
-              <form action="/api/orders/user_order" method="GET">
+
                  <input type="submit" style="display: none"><button style="height: 100px" class="btn btn-success checkout-btn">Confirm Order</button></input>
                  </form>
               </div>
               </div>
           </div>
         `)
+        // <form action="/api/orders/user_order" method="GET">
         renderCheckoutButton()
       })
+    })
 
 })
 })
