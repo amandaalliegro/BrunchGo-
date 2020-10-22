@@ -132,7 +132,7 @@ body h1 {
 }
 
 .navhome {
-  background-color: #c9aa70;
+  background-color: #c9aa70 !important;
   border-color: #c9aa70;
   color: #6d4700;
 }

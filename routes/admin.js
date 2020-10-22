@@ -9,6 +9,7 @@ const express = require('express');
 const { sendSMS } = require('../twilio');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+require('dotenv').config();
 
 module.exports = (db) => {
 
@@ -64,10 +65,7 @@ module.exports = (db) => {
   router.post("/order/accept/:order_id", (req, res) => {
     console.log(req.body.ordertime)
     const orderId = req.params.order_id;
-    console.log('orderId:', orderId);
-
-    // need the prep time from the request body
-    // const { <variable name of estPrepTime> } = req.body;
+    const {ordertime } = req.body;
 
     const currentDatetime = new Date().toISOString();
 
@@ -76,16 +74,18 @@ module.exports = (db) => {
     SET accept_order_datetime = $1, order_status = $2, estimated_prep_time = $3
     WHERE id = $4
     RETURNING *;
-    `,[currentDatetime, 'accepted', null, orderId])
+    `,[currentDatetime, 'accepted', ordertime, orderId])
     // Send SMS to customer to notify the order is accepted
     .then(data => {
-      console.log(data)
       const {id, phone} = data.rows[0];
-      sendSMS(phone, 'order accepted');
-
+      const acceptedOrderDatetime = data.rows[0].accept_order_datetime;
+      const estPrepTime = data.rows[0].estimated_prep_time;
+      const estCompletionTime = new Date(acceptedOrderDatetime.getTime() + estPrepTime * 60000);
+      const estCompletionTimeString = estCompletionTime.toLocaleString('en-US', {timeZone: 'Canada/Eastern', year:"numeric", month:"2-digit", day: "2-digit", hour: '2-digit', minute:'2-digit'});
+      sendSMS(phone, `We're preparing your order! The estimated pick up time is ${estCompletionTimeString}. Order #${id} `);
     })
-    .then(data =>
-      res.send('db updated; SMS sent'))
+    .then(() =>
+      res.redirect('/'))
     .catch(err => {
       res.status(500).json({ error: err.message })});
 
@@ -105,11 +105,10 @@ module.exports = (db) => {
     // Send SMS to customer to notify the order is completed
     .then(data => {
       const {id, phone} = data.rows[0];
-      sendSMS(phone, 'order completed');
-      res.sendStatus(200)
+      sendSMS(phone, `Your order is ready for pickup! See you soon. Order #${id}`);
     })
     .then(() => {
-      res.send('db updated, SMS sent');
+      res.redirect('/');
     })
     .catch(err => {
       res.status(500).json({ error: err.message })});
@@ -131,11 +130,10 @@ module.exports = (db) => {
     .then(data => {
       // console.log(data)
       const {id, phone} = data.rows[0];
-      sendSMS(phone, 'order denied');
-      res.sendStatus(200)
+      sendSMS(phone, `Sorry, we can't accept your order at this moment. Please try again later. Order #${id}`);
     })
     .then(() => {
-      res.send('db updated, SMS sent');
+      res.redirect('/');
     })
     .catch(err => {
       res.status(500).json({ error: err.message })});

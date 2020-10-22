@@ -70,7 +70,6 @@ const renderCheckoutButton = function () {
             data: newOrder,
             dataType: 'json'
           }).then((data) => {
-
             window.location.href = "api/orders/pending"
             console.log(data)
           });

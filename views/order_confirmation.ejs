@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <title>BrunchGo!</title>
-
   <%- include ./partials/_head.ejs %>
   <script type="text/javascript" src="/scripts/confirmation.js"></script>
-
 </head>
-
 <body>
   <%- include ./partials/_navbar_plain.ejs %>
   <%- include ./partials/_banner.ejs %>
+  <!-- LAST CART AND CHECKOUT  container -->
     <div class='container'>
-
-        <div id='order-items' class="container order-items" style="border: 1px solid #5c260f; border-radius: 10px; margin-bottom: 10px">
-          <div class="container" style="width: 500px; text-align: center">
-            <h1>Review Your Order</h1>
-          </div>
-
+      <div id='order-items' class="container order-items" style="border: 1px solid #5c260f; border-radius: 10px; margin-bottom: 10px">
+        <div class="container" style="width: 500px; text-align: center">
+          <h1>Review Your Order</h1>
+        </div>
+      </div>
     </div>
-
-    </div>
-  </div>
 </body>
+<!-- Footer with hyperlink to the login page -->
+<div class='footer'>
+  <h4>Brunch<b>Go!</b>
+  <a href='admin/login' class="btn btn-secondary btn-sml active" role="button" aria-pressed="true">Admin</a></h4>
+</div>
+</html>

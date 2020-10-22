@@ -11,15 +11,13 @@ const router = express.Router();
 
 module.exports = (db) => {
 
-  // GET: for customer to check their order
-  // post
+  // GET: Customer to check their order
   router.get("/confirmation", (req, res) => {
-    // !!Manually set orderId
-    const orderId = 4;
+    const orderId = req.session.order_id;
     // if no order_id in session, redirect to menu
     // const orderId = req.session.order_id;
     if (!orderId) {
-      return redirect("../");
+      return res.redirect("../../");
     }
 
     // Query for the order_status
@@ -56,6 +54,7 @@ module.exports = (db) => {
 
 
   // POST: for customer to place an order
+
   /*
   Workflow
   1. INSERT INTO orders table
@@ -84,15 +83,15 @@ module.exports = (db) => {
     RETURNING *;
     `, [restaurantId, req.session.user_id, name, phone, currentDateTime, subtotal, tax, total, 'received', null, null, null])
       /* 2 INSERT INTO order item table */
-      .then(data => {
+      .then((data) => {
         //retrieve id from orders table
 
         const orderId = data.rows[0].id
         req.session.user_id = orderId;
-        console.log(req.session.user_id)
+
 
         const { order } = req.body;
-        console.log(req.body)
+
         const orderLength = order.length;
         let count = 0;
         let queryString = 'INSERT INTO order_items (order_id, item_id, quantity) VALUES ';
@@ -106,33 +105,25 @@ module.exports = (db) => {
         }
         queryString += 'RETURNING * ;';
 
-        console.log(queryString);
-
-        return queryString
-      // Send SMS message to restaruant
-      }).then(queryString => {
+        return queryString, orderId;
+      })
+      .then((queryString, orderId) => {
         db.query(`${queryString}`).then((data) => {
-          sendSMS('7783194360', 'new order received!');
-        res.send(data)
 
-        }).then(()=> {
-          db.query(`
-          DELETE FROM carts
-          WHERE id = ${req.session.user_id};
-          `).then((data) =>{
-          })
+        });
+        return orderId;
+      })
+      // Send SMS message to restaruant
+      .then((orderId) => {
+        sendSMS(process.env.OWNERPHONE, `Order #${orderId} New order received!`);
+      }).then(()=> {
+        db.query(`
+        DELETE FROM carts
+        WHERE id = ${req.session.user_id};
+        `).then((data) => {
+          res.send(data)
         })
-        // currently using George's phone number
       })
-      // Set cookie with order_id and redirect to /order page
-      .then(data => {
-        console.log()
-        const orderId = data.rows[0].order_id;
-        // Set cookie on browser for order_id
-
-        // Check the name of view
-      })
-
   });
 
   router.get('/user_order', (req, res) => {
@@ -142,7 +133,5 @@ module.exports = (db) => {
   router.get('/pending', (req, res) => {
     res.render('index_user_order');
   });
-
-
   return router;
 };

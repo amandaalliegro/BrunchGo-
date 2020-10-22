@@ -1,5 +1,4 @@
 node_modules/
-twilio.js
 .env
 *.log
 *.sqlite3
