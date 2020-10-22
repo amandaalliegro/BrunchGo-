@@ -131,10 +131,15 @@ body h1 {
   height: 40px;
 }
 
+.container > .navbar-header, .container-fluid > .navbar-header, .container > .navbar-collapse, .container-fluid > .navbar-collapse {
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+
 .navhome {
   background-color: #c9aa70 !important;
-  border-color: #c9aa70;
-  color: #6d4700;
+  border-color: #c9aa70 !important;
+  color: #6d4700 !important;
 }
 
 .btn-secondary {

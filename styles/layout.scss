@@ -132,11 +132,16 @@ body {
   line-height: 20px;
   height: 40px;
 }
+.container>.navbar-header, .container-fluid>.navbar-header, .container>.navbar-collapse, .container-fluid>.navbar-collapse {
+  margin-right: 0 !important;
+  margin-left:0 !important;
+}
+
 .navhome {
 
   background-color: rgb(201, 170, 112) !important;
-  border-color: rgb(201, 170, 112);
-  color: rgb(109, 71, 0);
+  border-color: rgb(201, 170, 112) !important;
+  color: rgb(109, 71, 0) !important;
 }
 .btn-secondary{
   background-color: rgb(201, 170, 112) !important;
