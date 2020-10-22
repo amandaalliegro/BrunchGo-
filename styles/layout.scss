@@ -49,9 +49,6 @@ body {
   border: 1px solid transparent;
 }
 
-
-
-
 .main-container {
   border: 2px red solid;
   width: 80%;
@@ -137,7 +134,7 @@ body {
 }
 .navhome {
 
-  background-color: rgb(201, 170, 112);
+  background-color: rgb(201, 170, 112) !important;
   border-color: rgb(201, 170, 112);
   color: rgb(109, 71, 0);
 }
@@ -146,7 +143,6 @@ body {
   border-color: rgb(201, 170, 112) !important;
   color: rgb(109, 71, 0) !important;
 }
-
 
 .btn {
 
