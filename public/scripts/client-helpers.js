@@ -47,7 +47,7 @@ const renderCheckoutButton = function () {
       let tax;
       let total;
       getOrderTotal().then((totalPrice) => {
-        subtotal = totalPrice;
+        subtotal = Number(totalPrice);
         tax = totalPrice * 0.15;
         total = Number(totalPrice) + Number(tax);
 
@@ -63,13 +63,16 @@ const renderCheckoutButton = function () {
             total,
             order: data
           };
+          console.log(newOrder)
           $.ajax({
             method: "POST",
-            url: '/api/orders/confirmation',
+            url: '/api/orders/new',
             data: newOrder,
             dataType: 'json'
           }).then((data) => {
+
             window.location.href = "api/orders/pending"
+            console.log(data)
           });
         });
       });
