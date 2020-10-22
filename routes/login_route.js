@@ -35,3 +35,13 @@ WHERE username = $1;
 
 })
 });
+
+router.post('/logout' = () => {
+  const { username, password } = req.body;
+  if ([username]) {
+  res.clearCookie("session");
+  res.clearCookie("session.sig");
+  res.redirect('/login');
+
+  };
+}
