@@ -14,12 +14,11 @@ module.exports = (db) => {
   // GET: for customer to check their order
   // post
   router.get("/confirmation", (req, res) => {
-    // !!Manually set orderId
-    const orderId = 4;
+    const orderId = req.session.order_id;
     // if no order_id in session, redirect to menu
     // const orderId = req.session.order_id;
     if (!orderId) {
-      return redirect("../");
+      return res.redirect("../../");
     }
 
     // Query for the order_status
