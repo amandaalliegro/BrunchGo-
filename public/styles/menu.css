@@ -1,6 +1,7 @@
 main {
   margin-left: 1.5rem;
   display: flex;
+  font-family: 'Libre Baskerville', serif;
   flex-direction: column;
   background-color: #A0522D;
   align-items: center;
@@ -9,8 +10,11 @@ main {
   position: fixed;
   width: 100%;
   z-index: 5;
+  color: #A0522D !important;
 }
 
 .row {
   border-top: 2px solid #A0522D;
+  font-family: 'Libre Baskerville', serif;
+  color: #744029 !important;
 }
