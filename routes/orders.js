@@ -49,7 +49,7 @@ module.exports = (db) => {
         }
       })
       .catch(err => {
-        res.status(500).json({ error: err.message })
+        res.status(500).json({ error: err.message });
       });
 
   });
@@ -69,7 +69,7 @@ module.exports = (db) => {
 
     // Set orderDatetime to current time
     const { name, phone, subtotal, tax, total } = req.body;
-    console.log(req.body)
+    console.log(req.body);
     // console.log(name, phone, sub_total, tax, total);
     /* 1. INSERT the data to order database */
     const currentDateTime = new Date().toLocaleString();
@@ -131,17 +131,17 @@ module.exports = (db) => {
         res.redirect('/confirmation');
       })
       .catch(err => {
-        res.status(500).json({ error: err.message })
+        res.status(500).json({ error: err.message });
       });
   });
 
   router.get('/user_order', (req, res) => {
-    res.render('order_confirmation')
-  })
+    res.render('order_confirmation');
+  });
 
   router.get('/pending', (req, res) => {
-    res.render('index_user_order')
-  })
+    res.render('index_user_order');
+  });
 
 
   return router;
