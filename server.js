@@ -2,13 +2,13 @@
 require('dotenv').config();
 
 // Web server config
-const PORT       = process.env.PORT || 8080;
-const ENV        = process.env.ENV || "development";
-const express    = require("express");
+const PORT = process.env.PORT || 3050;
+const ENV = process.env.ENV || "development";
+const express = require("express");
 const bodyParser = require("body-parser");
-const sass       = require("node-sass-middleware");
-const app        = express();
-const morgan     = require('morgan');
+const sass = require("node-sass-middleware");
+const app = express();
+const morgan = require('morgan');
 const cookieSession = require('cookie-session');
 const { sendSMS } = require('./twilio');
 
@@ -45,6 +45,7 @@ const ordersRoutes = require('./routes/orders');
 const adminRoutes = require('./routes/admin');
 const cartRoutes = require('./routes/cart');
 
+
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/menu", menuRoutes(db));
@@ -52,6 +53,8 @@ app.use("/api/widgets", widgetsRoutes(db));
 app.use('/api/orders', ordersRoutes(db));
 app.use("/admin", adminRoutes(db));
 app.use("/cart", cartRoutes(db));
+
+
 // Note: mount other resources here, using the same pattern above
 
 
@@ -68,7 +71,17 @@ app.get("/", (req, res) => {
   }
 });
 
+app.get('/cookie', (req, res) => {
+  console.log(req.session)
+  const cookie = String(req.session.user_id);
+  res.send(cookie);
+});
 
+app.get('/test', (req, res) => {
+  // console.log(req.session)
+  // const cookie = req.session.user_id;
+  res.send('test');
+});
 
 app.get('/manager/orders', (req, res) => {
   const returnObj = [];
@@ -78,9 +91,10 @@ app.get('/manager/orders', (req, res) => {
 
   db.query(`
     SELECT * FROM orders
+    WHERE order_status = 'received'
     ORDER BY place_order_datetime DESC;
   `).then((data) => {
-    res.send(data.rows);
+    res.send(data.rows)
   }).then(() => {
     for (const item in returnObj[0]) {
       orderids.push(returnObj[0][item].id);
@@ -89,14 +103,14 @@ app.get('/manager/orders', (req, res) => {
     db.query(`
     SELECT * FROM orders;
     `);
-  }).then((data)=> {
-    console.log(data);
+  }).then((data) => {
   });
 
 
 });
 
 app.get('/manager/orders/:orderid', (req, res) => {
+
   db.query(`
   SELECT items.name, order_items.quantity
   FROM items
@@ -110,32 +124,13 @@ app.get('/manager/orders/:orderid', (req, res) => {
 });
 
 app.get("/manager", (req, res) => {
-  if (req.session.user_id) {
+  if (req.session.adminLogin) {
     res.render('index_manager');
   } else {
-    const newId = Math.round(Math.random() * 100000);
-    req.session.user_id = newId;
-    res.render('index_manager');
-  }
-});
-app.get("/update", (req, res) => {
-  if (req.session.user_id) {
-    res.render('index_menu_update');
-  } else {
-    const newId = Math.round(Math.random() * 100000);
-    req.session.user_id = newId;
-    res.render('index_menu_update');
+    res.redirect('/admin/login');
   }
 });
 
-app.post("/update", (req, res) => {
-  console.log(req.body);
-  db.query(`
-  INSERT INTO items (id, name, category, price, available, prep_time, image, stock)
-  VALUES(1000000, '${req.body.name}', '${req.body.category}', ${req.body.price}, ${req.body.available}, ${req.body.prep_time}, '${req.body.image}', ${req.body.stock});
-  `);
-  res.send('ok');
-});
 
 // Returns the user's cookie so it can be used to create a local entry with the user's menu selections
 app.get("/userid", (req, res) => {
@@ -154,6 +149,7 @@ app.get("/orderclient", (req, res) => {
   }
 });
 app.post("/orderaccepted", (req, res) => {
+  console.log(req.params.ordertime)
   if (req.session.user_id) {
     res.render('index_user_accept');
   } else {

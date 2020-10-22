@@ -31,23 +31,7 @@ const getUserId = function () {
 
 const refreshCart = function () {
 
-  if ($('.cart-items').children().length === 0) {
-    $('.cart-footer').append(`
-          <div class="row cart-row" id="order-total">Order Total: </div>
-          <div class="row cart-row" style="border: none">
-              <div class="col-lg-12 col-sm-12 cart-checkout-button">
-              <form action="/api/orders/user_order" method="GET">
-                 <input type="submit" style="display: none"><button class="btn btn-success">Checkout</button></input>
-                 </form>
-              </div>
-          </div>
-  `);
 
-    $('.cart-input').click((e) => {
-      e.stopPropagation();
-    });
-    renderCheckoutButton()
-  }
 
   getUserId().then((userid) => {
     $('.cart-items').empty()
@@ -78,13 +62,30 @@ const refreshCart = function () {
     `
         $('.cart-items').append(newCartItem)
       }
-      console.log($('.cart-footer').children().length)
-      console.log($('.cart-items').children().length)
+
+
+      $('.cart-footer').empty()
       if ($('.cart-items').children().length === 0) {
-        $('.cart-footer').empty()
-        $('.cart').append(`
+        $('.cart-footer').append(`
         <div class="alert alert-info" role="alert" id="empty-cart-msg">Cart empty</div>
         `)
+
+      } else if ($('.cart-items').children().length > 0) {
+          $('.cart-footer').append(`
+                <div class="row cart-row" id="order-total">Order Total: </div>
+                <div class="row cart-row" style="border: none">
+                    <div class="col-lg-12 col-sm-12 cart-checkout-button">
+                    <form action="/api/orders/user_order" method="GET">
+                       <input type="submit" style="display: none"><button class="btn btn-success">Checkout</button></input>
+                       </form>
+                    </div>
+                </div>
+        `);
+          $('.cart-input').click((e) => {
+            e.stopPropagation();
+          });
+          renderCheckoutButton()
+
       }
 
       return cart

@@ -28,7 +28,7 @@ module.exports = (db) => {
   router.get("/login", (req, res) => {
 
     // direct to order page if already login
-    if (req.session.admin) {
+    if (req.session.adminLogin) {
       res.redirect("../manager");
     }
     res.render("index_login");
@@ -40,23 +40,21 @@ module.exports = (db) => {
 
 
     const { username, password } = req.body;
-
     db.query(`SELECT * FROM manager
     WHERE user_name = $1;
     `, [username])
       .then(data => {
+        console.log(data)
         console.log('data.rows is', data.rows);
         const result = data.rows[0];
         console.log('result is', result);
         if (!result) {
           res.send('User does not exist.');
-
-
         } else if (!bcrypt.compareSync(password, result.password)) {
           res.send('Incorrect password.');
         } else {
         // set cookie for user
-          req.session.admin = 'jamie_roll';
+          req.session.adminLogin = 'jamie_roll';
           res.redirect("../manager");
         }
       });
@@ -64,6 +62,7 @@ module.exports = (db) => {
 
   // POST accept order base on order_id
   router.post("/order/accept/:order_id", (req, res) => {
+    console.log(req.body.ordertime)
     const orderId = req.params.order_id;
     console.log('orderId:', orderId);
 
@@ -83,7 +82,7 @@ module.exports = (db) => {
 
       const {id, phone} = data.rows[0];
       sendSMS(phone, 'order accepted');
-      res.sendStatus(200)
+
     })
     .then(data =>
       res.send('db updated; SMS sent'))
@@ -139,6 +138,14 @@ module.exports = (db) => {
     })
     .catch(err => {
       res.status(500).json({ error: err.message })});
+    });
+
+    router.post('/logout', (req, res) => {
+        res.clearCookie("session");
+        res.clearCookie("session.sig");
+        res.redirect('/admin/login');
+
+
     });
 
   return router;
