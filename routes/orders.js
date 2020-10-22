@@ -11,8 +11,7 @@ const router = express.Router();
 
 module.exports = (db) => {
 
-  // GET: for customer to check their order
-  // post
+  // GET: Customer to check their order
   router.get("/confirmation", (req, res) => {
     const orderId = req.session.order_id;
     // if no order_id in session, redirect to menu
@@ -55,6 +54,7 @@ module.exports = (db) => {
 
 
   // POST: for customer to place an order
+
   /*
   Workflow
   1. INSERT INTO orders table
@@ -106,8 +106,9 @@ module.exports = (db) => {
       })
       // Send SMS message to restaruant
       .then(data => {
+        const orderId = data.rows[0].order_id;
         // currently using George's phone number
-        sendSMS('7783194360', 'new order received!');
+        sendSMS(process.env.OWNERPHONE, `Order #${orderId} New order received!`);
         return data;
       })
       // Set cookie with order_id and redirect to /order page

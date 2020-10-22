@@ -8,7 +8,8 @@
 const express = require('express');
 const { sendSMS } = require('../twilio');
 const router = express.Router();
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+require('dotenv').config();
 
 module.exports = (db) => {
 
@@ -81,7 +82,7 @@ module.exports = (db) => {
       const estPrepTime = data.rows[0].estimated_prep_time;
       const estCompletionTime = new Date(acceptedOrderDatetime.getTime() + estPrepTime * 60000);
       const estCompletionTimeString = estCompletionTime.toLocaleString('en-US', {timeZone: 'Canada/Eastern', year:"numeric", month:"2-digit", day: "2-digit", hour: '2-digit', minute:'2-digit'});
-      sendSMS(phone, `Order #${id} We're preparing your order! The estimated pick up time is ${estCompletionTimeString}`);
+      sendSMS(phone, `We're preparing your order! The estimated pick up time is ${estCompletionTimeString}. Order #${id} `);
     })
     .then(() =>
       res.redirect('/'))
@@ -105,7 +106,7 @@ module.exports = (db) => {
     // Send SMS to customer to notify the order is completed
     .then(data => {
       const {id, phone} = data.rows[0];
-      sendSMS(phone, `Order #${id} Your order is ready for pickup! See you soon.`);
+      sendSMS(phone, `Your order is ready for pickup! See you soon. Order #${id}`);
     })
     .then(() => {
       res.redirect('/');
@@ -129,7 +130,7 @@ module.exports = (db) => {
     // Send SMS to customer to notify the order is completed
     .then(data => {
       const {id, phone} = data.rows[0];
-      sendSMS(phone, `Order #${id} Sorry, we can't accept your order at this moment. Please try again later.`);
+      sendSMS(phone, `Sorry, we can't accept your order at this moment. Please try again later. Order #${id}`);
     })
     .then(() => {
       res.redirect('/');
