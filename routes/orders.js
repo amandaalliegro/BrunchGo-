@@ -39,11 +39,11 @@ module.exports = (db) => {
         } else if (orderStatus === 'completed') {
           return res.render(/* page "order completed" */);
         } else if (orderStatus === 'denied') {
-          return res.render(/* page 'order denied */)
+          return res.render(/* page 'order denied */);
         }
       })
       .catch(err => {
-        res.status(500).json({ error: err.message })
+        res.status(500).json({ error: err.message });
       });
 
   });
@@ -63,7 +63,7 @@ module.exports = (db) => {
 
     // Set orderDatetime to current time
     const { name, phone, subtotal, tax, total } = req.body;
-    console.log(req.body)
+    console.log(req.body);
     // console.log(name, phone, sub_total, tax, total);
     /* 1. INSERT the data to order database */
     const currentDateTime = new Date().toISOString();
@@ -114,17 +114,17 @@ module.exports = (db) => {
         res.send('message placed');
       })
       .catch(err => {
-        res.status(500).json({ error: err.message })
+        res.status(500).json({ error: err.message });
       });
   });
 
   router.get('/user_order', (req, res) => {
-    res.render('order_confirmation')
-  })
+    res.render('order_confirmation');
+  });
 
   router.get('/pending', (req, res) => {
-    res.render('index_user_order')
-  })
+    res.render('index_user_order');
+  });
 
 
   return router;

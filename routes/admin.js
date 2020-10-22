@@ -9,7 +9,7 @@ const e = require('express');
 const express = require('express');
 const { sendSMS } = require('../twilio');
 const router = express.Router();
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 
 module.exports = (db) => {
 
@@ -37,7 +37,7 @@ module.exports = (db) => {
 
   // POST login username and password
   router.post("/login", (req, res) => {
-    console.log(req.body)
+    console.log(req.body);
 
 
     const { username, password } = req.body;
@@ -45,22 +45,22 @@ module.exports = (db) => {
     db.query(`SELECT * FROM manager
     WHERE user_name = $1;
     `, [username])
-    .then(data => {
-      console.log('data.rows is', data.rows);
-      const result = data.rows[0];
-      console.log('result is', result);
-      if (!result) {
-        res.send('User does not exist.');
+      .then(data => {
+        console.log('data.rows is', data.rows);
+        const result = data.rows[0];
+        console.log('result is', result);
+        if (!result) {
+          res.send('User does not exist.');
 
 
-      } else if (!bcrypt.compareSync(password, result.password)) {
-        res.send('Incorrect password.');
-      } else {
+        } else if (!bcrypt.compareSync(password, result.password)) {
+          res.send('Incorrect password.');
+        } else {
         // set cookie for user
-        req.session.admin = 'jamie_roll';
-        res.redirect("../manager");
-      }
-    });
+          req.session.admin = 'jamie_roll';
+          res.redirect("../manager");
+        }
+      });
   });
 
   // POST accept order base on order_id
@@ -79,12 +79,13 @@ module.exports = (db) => {
     RETURNING *;
     `,[currentDatetime, 'accepted', '<estPrepTime>',orderId])
     // Send SMS to customer to notify the order is accepted
-    .then(data => {
-      const {id, phone} = data.rows[0];
-      sendSMS(phone, 'order accepted');
-    })
-    .catch(err => {
-      res.status(500).json({ error: err.message })});
+      .then(data => {
+        const {id, phone} = data.rows[0];
+        sendSMS(phone, 'order accepted');
+      })
+      .catch(err => {
+        res.status(500).json({ error: err.message });
+      });
 
 
     // .then(() => res.send(`Thank you for your order! Order ID: ${id}`))
@@ -102,13 +103,14 @@ module.exports = (db) => {
     RETURNING *;
     `,[currentDatetime, 'completed', orderId])
     // Send SMS to customer to notify the order is completed
-    .then(data => {
-      const {id, phone} = data.rows[0];
-      sendSMS(phone, 'order completed');
-    })
-    .catch(err => {
-      res.status(500).json({ error: err.message })});
-    });
+      .then(data => {
+        const {id, phone} = data.rows[0];
+        sendSMS(phone, 'order completed');
+      })
+      .catch(err => {
+        res.status(500).json({ error: err.message });
+      });
+  });
 
 
   // POST deny order by restaruant
@@ -123,13 +125,14 @@ module.exports = (db) => {
     RETURNING *;
     `,['denied', orderId])
     // Send SMS to customer to notify the order is completed
-    .then(data => {
-      const {id, phone} = data.rows[0];
-      sendSMS(phone, 'order denied');
-    })
-    .catch(err => {
-      res.status(500).json({ error: err.message })});
-    });
+      .then(data => {
+        const {id, phone} = data.rows[0];
+        sendSMS(phone, 'order denied');
+      })
+      .catch(err => {
+        res.status(500).json({ error: err.message });
+      });
+  });
 
   return router;
 };
