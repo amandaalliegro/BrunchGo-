@@ -140,5 +140,13 @@ module.exports = (db) => {
       res.status(500).json({ error: err.message })});
     });
 
+    router.post('/logout', (req, res) => {
+        res.clearCookie("session");
+        res.clearCookie("session.sig");
+        res.redirect('/admin/login');
+
+
+    });
+
   return router;
 };
