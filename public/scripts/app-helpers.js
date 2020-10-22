@@ -31,7 +31,23 @@ const getUserId = function () {
 
 const refreshCart = function () {
 
+  if ($('.cart-items').children().length === 0) {
+    $('.cart-footer').append(`
+          <div class="row cart-row" id="order-total">Order Total: </div>
+          <div class="row cart-row" style="border: none">
+              <div class="col-lg-12 col-sm-12 cart-checkout-button">
+              <form action="/api/orders/user_order" method="GET">
+                 <input type="submit" style="display: none"><button class="btn btn-success">Checkout</button></input>
+                 </form>
+              </div>
+          </div>
+  `);
 
+    $('.cart-input').click((e) => {
+      e.stopPropagation();
+    });
+    renderCheckoutButton()
+  }
 
   getUserId().then((userid) => {
     $('.cart-items').empty()
@@ -155,9 +171,9 @@ const renderPlusMinusButtons = function () {
 // generates a new html row for a menu category (appetizers, mains, etc) with a column for each menu item in that category
 const renderMenuRow = function (data, title, id, order) {
 
-  let newMenuCategory = `<div class="row">
+  let newMenuCategory = `<div class="row" style= #A0522D>
   <a id="${id}"></a>
-  <h2>${title}</h2>
+  <h2><b>${title}</b> </h2>
   </div>`;
 
   $('#main-container').append(newMenuCategory);
@@ -168,7 +184,7 @@ const renderMenuRow = function (data, title, id, order) {
   <a href="#" class="thumbnail">
     <img src=${item.image} alt="Card image cap">
   </a>
-  <h2>${item.name}</h2>
+  <h3><i>${item.name}</i></h3>
   <span class="menu-item-price"> $${(item.price / 100).toFixed(2)} </span>
   <span><a class="minusbutton btn btn-default" role="button">-</a></span>
   <span class="counter">0</span>
