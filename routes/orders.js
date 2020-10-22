@@ -85,13 +85,11 @@ module.exports = (db) => {
       /* 2 INSERT INTO order item table */
       .then((data) => {
         //retrieve id from orders table
-
         const orderId = data.rows[0].id
         req.session.user_id = orderId;
-
-
+        // Send SMS message to restaruant
+        sendSMS(process.env.OWNERPHONE, `Order #${orderId} New order received!`);
         const { order } = req.body;
-
         const orderLength = order.length;
         let count = 0;
         let queryString = 'INSERT INTO order_items (order_id, item_id, quantity) VALUES ';
@@ -104,26 +102,20 @@ module.exports = (db) => {
           count++;
         }
         queryString += 'RETURNING * ;';
-
-        return queryString, orderId;
+        return queryString
       })
-      .then((queryString, orderId) => {
+      .then((queryString) => {
         db.query(`${queryString}`).then((data) => {
+        }).then(()=> {
+          db.query(`
+          DELETE FROM carts
+          WHERE id = ${req.session.user_id};
+          `).then((data) => {
+            res.send(data);
+          });
+        });
 
-        });
-        return orderId;
       })
-      // Send SMS message to restaruant
-      .then((orderId) => {
-        sendSMS(process.env.OWNERPHONE, `Order #${orderId} New order received!`);
-      }).then(()=> {
-        db.query(`
-        DELETE FROM carts
-        WHERE id = ${req.session.user_id};
-        `).then((data) => {
-          res.send(data);
-        });
-      });
   });
 
   router.get('/user_order', (req, res) => {

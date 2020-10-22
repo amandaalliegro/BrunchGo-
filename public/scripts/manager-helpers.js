@@ -1,7 +1,7 @@
 const refreshManagerOrders = function () {
   $('.orders').empty()
   $.get('/manager/orders').then((data) => {
-
+    console.log(data)
 
     const row = `
     <h2 class="sub-header">Orders details:</h2>
@@ -31,7 +31,7 @@ const refreshManagerOrders = function () {
     for (const item of data) {
 
       $.get(`/manager/orders/${item.id}`).then(function (data) {
-
+        console.log(data)
         let itemsDiv = ``;
         for (const item of data) {
           let sentence = `${item.quantity}x ${item.name}<br>`

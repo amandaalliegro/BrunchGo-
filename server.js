@@ -2,13 +2,8 @@
 require('dotenv').config();
 
 // Web server config
-<<<<<<< HEAD
 const PORT = process.env.PORT || 3050;
 // const ENV = process.env.ENV || "development";
-=======
-const PORT = process.env.PORT || 8080;
-const ENV = process.env.ENV || "development";
->>>>>>> 8404c3843d2e8a712f8ad6b5e0fa73c9094a42cf
 const express = require("express");
 const bodyParser = require("body-parser");
 const sass = require("node-sass-middleware");
@@ -125,13 +120,14 @@ app.get('/manager/orders', (req, res) => {
 });
 
 app.get('/manager/orders/:orderid', (req, res) => {
-
+  console.log('query received')
   db.query(`
   SELECT items.name, order_items.quantity
   FROM items
   JOIN order_items ON order_items.item_id = items.id
   WHERE order_items.order_id = ${req.params.orderid};
   `).then((data) => {
+    console.log(data.rows)
     res.send(data.rows);
   });
 
