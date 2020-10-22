@@ -6,10 +6,11 @@
 
   <base href="/">
 
+<!-- CSS imported -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
 
-
+<!-- CSS styles -->
   <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="/styles/menu.css" type="text/css" />
@@ -21,8 +22,8 @@
   <!-- Bootstrap 3.1.1 -->
   <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   <!-- Font awesome -->
-
-
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<!-- Scripts -->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app-helpers.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
@@ -33,17 +34,13 @@
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/scripts/manager.js"></script>
   <script type="text/javascript" src="/scripts/manager-helpers.js"></script>
-
-
 </head>
 
 <body>
   <%- include ./partials/_navbar_plain.ejs %>
   <div class="container-fluid">
-
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <h1 class="page-header">Last Orders</h1>
-
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <h1 class="page-header">Last Orders</h1>
         <div class="row placeholders">
           <div class="col-xs-6 col-sm-3 placeholder">
             <img src='styles/avatar1.jpg'>
@@ -67,20 +64,11 @@
           </div>
         </div>
         <div class="orders">
-
         </div>
-
-      </div>
     </div>
-
-
-
-
-
-
-
-
+  </div>
 </body>
+
 <div class='footer'>
   <form id='logout' class="signout" action="/admin/logout" method="POST"></form>
   <p>Brunch<b>Go!</b> <a name='logout' target="_blank"><B>Logout</B></a></p>
