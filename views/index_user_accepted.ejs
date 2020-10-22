@@ -21,13 +21,16 @@
       <div class="container" style="height: 600px;">
 
 
+      <img src='styles/Sms.png' style='justify-content: center;' alt='sms'>
+      <h2>We're preparing your order!</h2>
+      <h3>The expected pickup is: <span class='time_expectation_counter'><%= estCompletionTime.toLocaleString([],
+        {year:"numeric", month:"2-digit", day: "2-digit", hour: '2-digit', minute:'2-digit'}) %></span></h3>
+      <h3>We'll send you and SMS message when it's ready!</h3>
+      <h4>Order #<%= orderId %></h4>
 
-        <img src='styles/Sms.png' style='justify-content: center;' alt='sms'>
-        <h2>Your order was accepted!</h2>
-        <h3>You will receive a SMS as soon as your order is done!
-            The time expectation is: <span class='time_expectation_counter'>0</span>
   </div>
   </div>
   </div>
 </div>
 </body>
+

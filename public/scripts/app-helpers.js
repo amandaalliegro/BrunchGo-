@@ -30,7 +30,6 @@ const getUserId = function () {
 };
 
 const refreshCart = function () {
-  console.log($('.cart-items').children().length)
 
   if ($('.cart-items').children().length === 0) {
     $('.cart-footer').append(`
@@ -79,6 +78,15 @@ const refreshCart = function () {
     `
         $('.cart-items').append(newCartItem)
       }
+      console.log($('.cart-footer').children().length)
+      console.log($('.cart-items').children().length)
+      if ($('.cart-items').children().length === 0) {
+        $('.cart-footer').empty()
+        $('.cart').append(`
+        <div class="alert alert-info" role="alert" id="empty-cart-msg">Cart empty</div>
+        `)
+      }
+
       return cart
     }).then((cart) => {
       syncCounters(cart)
@@ -140,7 +148,7 @@ const renderPlusMinusButtons = function () {
     const itemid = $(this).closest('div')[0].id;
     removeCartItem(itemid);
     refreshCart();
-    });
+  });
 };
 
 // generates a new html row for a menu category (appetizers, mains, etc) with a column for each menu item in that category
@@ -201,7 +209,6 @@ const syncCounters = function (data) {
 const getOrderTotal = function () {
   return $.get('/cart/').then((data) => {
 
-
     let totalPrice = 0;
 
     for (const item of data) {
@@ -210,15 +217,16 @@ const getOrderTotal = function () {
     }
     totalPrice = (totalPrice / 100).toFixed(2)
     return totalPrice;
-  }).then((totalPrice) => {
-    return totalPrice
   })
 }
+
 
 const syncOrderTotal = function () {
   getOrderTotal().then((totalPrice) => {
     const orderTotalDiv = $('body').find('#order-total')[0];
     $(orderTotalDiv).text(`Order total: $${totalPrice}`)
+
+    $('#cart-btn').html(`<i class="fas fa-shopping-cart"></i> Cart ($${totalPrice})`)
   })
 }
 
