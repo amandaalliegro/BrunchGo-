@@ -196,6 +196,13 @@ const syncCounters = function (data) {
     const counterDiv = $(itemDiv).find('.counter')[0]
     $(counterDiv).text(`${item.quantity}`)
 
+<<<<<<< HEAD
+const setItemQuantity = function (userid, itemid) {
+  return user_carts[userid][itemid].quantity;
+};
+
+
+=======
     // cart counters
 
     const cartItemDiv = $('body').find(`#cart-item${item.id}`)[0];
@@ -230,4 +237,5 @@ const syncOrderTotal = function () {
     $('#cart-btn').html(`<i class="fas fa-shopping-cart"></i> Cart ($${totalPrice})`)
   })
 }
+>>>>>>> 0b724c3fdc58d3ffc7f6631faaa5f54b2ebfde07
 
