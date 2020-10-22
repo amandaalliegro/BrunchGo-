@@ -24,7 +24,7 @@ CREATE TABLE orders (
   sub_total           NUMERIC NOT NULL,
   tax                 NUMERIC NOT NULL,
   total               NUMERIC NOT NULL,
-  order_status              VARCHAR(255) NOT NULL,
+  order_status            VARCHAR(255) NOT NULL,
   accept_order_datetime   TIMESTAMP,
   estimated_prep_time     INTEGER,
   complete_order_datetime  TIMESTAMP

@@ -15,6 +15,7 @@ $(() => {
                 <th>Items ordered</th>
                 <th>Phone Number</th>
                 <th>Total</th>
+                <th>Status</th>
                 <th>Accept</th>
                 <th>Finish</th>
               </tr>
@@ -47,6 +48,7 @@ $(() => {
           <td id="${item.id}"class="items-ordered">${itemsDiv}</td>
           <td>${item.phone}</td>
           <td>$${item.total}</td>
+          <td>${item.order_status}</td>
           <td>
           <form action="/orderaccepted" method="POST">
           <input type="submit" style="display: none" value="${item.id}" name="orderid">
