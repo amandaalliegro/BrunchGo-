@@ -30,9 +30,9 @@ With this app, customers can:
 - #/ Uncomment and set to true for Heroku
 - #/ DB_SSL=true if heroku
 - DB_PORT=5432
-- ACCOUNTSID=ACe5225aaf929103ff37ccf627c00642b5
-- AUTHTOKEN=4832af81424b579563f990667732651f
-- OWNERPHONE=7783194360
+- ACCOUNTSID= 'Twilio Account Sid'
+- AUTHTOKEN='Twilio Auth Token'
+- OWNERPHONE='Restaurant Phone Number'
 3. Install dependencies: `npm i`
 4. Fix to binaries for sass: `npm rebuild node-sass`
 5. Reset database: `npm run db:reset`
