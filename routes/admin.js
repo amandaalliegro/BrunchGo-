@@ -5,7 +5,6 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
-const e = require('express');
 const express = require('express');
 const { sendSMS } = require('../twilio');
 const router = express.Router();

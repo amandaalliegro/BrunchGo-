@@ -32,21 +32,20 @@ module.exports = (db) => {
       .then(data => {
         const orderStatus = data.rows[0].order_status;
         const orderId = data.rows[0].id;
-        const acceptedOrderDatetime = data.rows[0].accept_order_datetime;
-        const estimatedPrepTime = data.rows[0].estimated_prep_time;
+
         console.log(orderStatus, orderId);
         // Pseudocode logic
         if (orderStatus === 'received') {
           return res.render('index_user_order', { orderId });
         } else if (orderStatus === 'accepted') {
-
-
-          return res.render('index_user_accepted')
-          return res.render(/* page "order accepted" */); // Will need the estimated time
+          const acceptedOrderDatetime = data.rows[0].accept_order_datetime;
+          const estPrepTime = data.rows[0].estimated_prep_time;
+          const estCompletionTime = new Date(acceptedOrderDatetime.getTime() + estPrepTime * 60000);
+          return res.render('index_user_accepted', {orderId, estCompletionTime});
         } else if (orderStatus === 'completed') {
-          return res.render(/* page "order completed" */);
+          return res.render('index_user_completed', {orderId});
         } else if (orderStatus === 'denied') {
-          return res.render(/* page 'order denied */)
+          return res.render('index_user_denied', {orderId});
         }
       })
       .catch(err => {
