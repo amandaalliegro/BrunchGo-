@@ -68,7 +68,10 @@ app.get("/", (req, res) => {
   }
 });
 
-
+app.get('/cookie', (req, res) => {
+  console.log(req.session.order_id)
+  res.send(req.session.order_id);
+})
 
 app.get('/manager/orders', (req, res) => {
   const returnObj = []
