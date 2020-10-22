@@ -121,9 +121,9 @@ module.exports = (db) => {
         DELETE FROM carts
         WHERE id = ${req.session.user_id};
         `).then((data) => {
-          res.send(data)
-        })
-      })
+          res.send(data);
+        });
+      });
   });
 
   router.get('/user_order', (req, res) => {
