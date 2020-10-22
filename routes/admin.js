@@ -66,6 +66,7 @@ module.exports = (db) => {
   // POST accept order base on order_id
   router.post("/order/accept/:order_id", (req, res) => {
     const orderId = req.params.order_id;
+    console.log('orderId:', orderId);
 
     // need the prep time from the request body
     // const { <variable name of estPrepTime> } = req.body;
@@ -74,18 +75,19 @@ module.exports = (db) => {
 
     // Update order table with accept_order_datetime
     db.query(`UPDATE orders
-    SET accept_order_datetime = $1, order_status = $2
-    WHERE id = $3
+    SET accept_order_datetime = $1, order_status = $2, estimated_prep_time = $3
+    WHERE id = $4
     RETURNING *;
-    `,[currentDatetime, 'accepted', '<estPrepTime>',orderId])
+    `,[currentDatetime, 'accepted', null, orderId])
     // Send SMS to customer to notify the order is accepted
     .then(data => {
       const {id, phone} = data.rows[0];
       sendSMS(phone, 'order accepted');
     })
+    .then(data =>
+      res.send('db updated; SMS sent'))
     .catch(err => {
       res.status(500).json({ error: err.message })});
-
 
     // .then(() => res.send(`Thank you for your order! Order ID: ${id}`))
   });
@@ -105,6 +107,9 @@ module.exports = (db) => {
     .then(data => {
       const {id, phone} = data.rows[0];
       sendSMS(phone, 'order completed');
+    })
+    .then(() => {
+      res.send('db updated, SMS sent');
     })
     .catch(err => {
       res.status(500).json({ error: err.message })});
@@ -126,6 +131,9 @@ module.exports = (db) => {
     .then(data => {
       const {id, phone} = data.rows[0];
       sendSMS(phone, 'order denied');
+    })
+    .then(() => {
+      res.send('db updated, SMS sent');
     })
     .catch(err => {
       res.status(500).json({ error: err.message })});

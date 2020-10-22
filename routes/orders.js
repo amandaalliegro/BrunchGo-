@@ -66,7 +66,7 @@ module.exports = (db) => {
     const { name, phone, sub_total, tax, total } = req.body;
     // console.log(name, phone, sub_total, tax, total);
     /* 1. INSERT the data to order database */
-    const currentDateTime = new Date().toISOString();
+    const currentDateTime = new Date().toLocaleString();
 
     // Currently only accepting order from one restaruant
     const restaurantId = 100;
