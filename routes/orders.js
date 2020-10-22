@@ -88,6 +88,9 @@ module.exports = (db) => {
         //retrieve id from orders table
 
         const orderId = data.rows[0].id
+        req.session.user_id = orderId;
+        console.log(req.session.user_id)
+
         const { order } = req.body;
         console.log(req.body)
         const orderLength = order.length;
@@ -126,7 +129,7 @@ module.exports = (db) => {
         console.log()
         const orderId = data.rows[0].order_id;
         // Set cookie on browser for order_id
-        req.session.order_id = orderId;
+
         // Check the name of view
       })
       // .catch(err => {

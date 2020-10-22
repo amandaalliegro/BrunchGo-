@@ -2,13 +2,13 @@
 require('dotenv').config();
 
 // Web server config
-const PORT       = process.env.PORT || 3050;
-const ENV        = process.env.ENV || "development";
-const express    = require("express");
+const PORT = process.env.PORT || 3050;
+const ENV = process.env.ENV || "development";
+const express = require("express");
 const bodyParser = require("body-parser");
-const sass       = require("node-sass-middleware");
-const app        = express();
-const morgan     = require('morgan');
+const sass = require("node-sass-middleware");
+const app = express();
+const morgan = require('morgan');
 const cookieSession = require('cookie-session');
 const { sendSMS } = require('./twilio');
 
@@ -32,7 +32,7 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
-app.use(cookieSession ({
+app.use(cookieSession({
   name: 'session',
   keys: ['a']
 }));
@@ -69,9 +69,16 @@ app.get("/", (req, res) => {
 });
 
 app.get('/cookie', (req, res) => {
-  console.log(req.session.order_id)
-  res.send(req.session.order_id);
-})
+  console.log(req.session)
+  const cookie = String(req.session.user_id);
+  res.send(cookie);
+});
+
+app.get('/test', (req, res) => {
+  // console.log(req.session)
+  // const cookie = req.session.user_id;
+  res.send('test');
+});
 
 app.get('/manager/orders', (req, res) => {
   const returnObj = []
@@ -81,9 +88,10 @@ app.get('/manager/orders', (req, res) => {
 
   db.query(`
     SELECT * FROM orders
+    WHERE order_status = 'received'
     ORDER BY place_order_datetime DESC;
   `).then((data) => {
-res.send(data.rows)
+    res.send(data.rows)
   }).then(() => {
     for (const item in returnObj[0]) {
       orderids.push(returnObj[0][item].id)
@@ -92,7 +100,7 @@ res.send(data.rows)
     db.query(`
     SELECT * FROM orders;
     `)
-  }).then((data)=> {
+  }).then((data) => {
     console.log(data)
   })
 
@@ -100,6 +108,7 @@ res.send(data.rows)
 })
 
 app.get('/manager/orders/:orderid', (req, res) => {
+
   db.query(`
   SELECT items.name, order_items.quantity
   FROM items
@@ -157,6 +166,7 @@ app.get("/orderclient", (req, res) => {
   }
 });
 app.post("/orderaccepted", (req, res) => {
+  console.log(req.params.ordertime)
   if (req.session.user_id) {
     res.render('index_user_accept');
   } else {

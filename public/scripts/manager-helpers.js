@@ -1,7 +1,7 @@
 const refreshManagerOrders = function () {
   $('.orders').empty()
   $.get('/manager/orders').then((data) => {
-    console.log(data)
+
 
     const row = `
     <h2 class="sub-header">Orders details:</h2>
@@ -41,7 +41,6 @@ const refreshManagerOrders = function () {
         return itemsDiv
       }).then((itemsDiv) => {
         let orderDate = new Date(item.place_order_datetime)
-        console.log()
         const $divToInsert = `
         <tr id="${item.id}">
           <td>${item.id}</td>
@@ -53,7 +52,7 @@ const refreshManagerOrders = function () {
           <td>$${item.total}</td>
           <td>${item.order_status}</td>
           <td >
-
+          <input type="text" class="order_time" name="order_time" style="width: 50px" placeholder="mins"></input>
           <button type="button" class="btn btn-default btn-sm accept-order-btn">
             <span class="glyphicon glyphicon-play " aria-hidden="true"></span> Accept
             </button>
@@ -72,14 +71,23 @@ const refreshManagerOrders = function () {
         $('.manager-table').append($divToInsert);
 
         const acceptOrderBtn = $(`#${item.id}`).find('.accept-order-btn')[0];
-        $(acceptOrderBtn).click(() => {
-          $.post(`/admin/order/accept/${item.id}`).then((res) => {
+
+
+
+        $(acceptOrderBtn).click(function () {
+          const parent = $(this).parent()[0]
+            const orderTime = $(parent).find('.order_time').val();
+
+          $.ajax({method: 'post',
+          url: `/admin/order/accept/${item.id}`,
+          data: {ordertime: orderTime}
+          }
+            ).then((res) => {
             refreshManagerOrders();
           })
         })
 
         const completeOrderBtn = $(`#${item.id}`).find('.complete-order-btn')[0];
-        console.log(completeOrderBtn)
         $(completeOrderBtn).click(() => {
           $.post(`/admin/order/complete/${item.id}`).then((res) => {
             refreshManagerOrders();
@@ -95,5 +103,11 @@ const refreshManagerOrders = function () {
 
       });
     }
-  });
+  })
+
+
+
+
+
+
 }

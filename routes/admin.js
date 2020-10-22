@@ -64,6 +64,7 @@ module.exports = (db) => {
 
   // POST accept order base on order_id
   router.post("/order/accept/:order_id", (req, res) => {
+    console.log(req.body.ordertime)
     const orderId = req.params.order_id;
     console.log('orderId:', orderId);
 
@@ -83,7 +84,7 @@ module.exports = (db) => {
 
       const {id, phone} = data.rows[0];
       sendSMS(phone, 'order accepted');
-      res.sendStatus(200)
+
     })
     .then(data =>
       res.send('db updated; SMS sent'))
