@@ -79,15 +79,6 @@ module.exports = (db) => {
     RETURNING *;
     `,[currentDatetime, 'accepted', null, orderId])
     // Send SMS to customer to notify the order is accepted
-<<<<<<< HEAD
-      .then(data => {
-        const {id, phone} = data.rows[0];
-        sendSMS(phone, 'order accepted');
-      })
-      .catch(err => {
-        res.status(500).json({ error: err.message });
-      });
-=======
     .then(data => {
 
       const {id, phone} = data.rows[0];
@@ -98,7 +89,6 @@ module.exports = (db) => {
       res.send('db updated; SMS sent'))
     .catch(err => {
       res.status(500).json({ error: err.message })});
->>>>>>> edd98238dc8cd8227cdd37c24cf7b598ae935a35
 
     // .then(() => res.send(`Thank you for your order! Order ID: ${id}`))
   });
@@ -114,16 +104,6 @@ module.exports = (db) => {
     RETURNING *;
     `,[currentDatetime, 'completed', req.params.order_id])
     // Send SMS to customer to notify the order is completed
-<<<<<<< HEAD
-      .then(data => {
-        const {id, phone} = data.rows[0];
-        sendSMS(phone, 'order completed');
-      })
-      .catch(err => {
-        res.status(500).json({ error: err.message });
-      });
-  });
-=======
     .then(data => {
       const {id, phone} = data.rows[0];
       sendSMS(phone, 'order completed');
@@ -135,7 +115,6 @@ module.exports = (db) => {
     .catch(err => {
       res.status(500).json({ error: err.message })});
     });
->>>>>>> edd98238dc8cd8227cdd37c24cf7b598ae935a35
 
 
   // POST deny order by restaruant
@@ -150,16 +129,6 @@ module.exports = (db) => {
     RETURNING *;
     `,['denied', orderId])
     // Send SMS to customer to notify the order is completed
-<<<<<<< HEAD
-      .then(data => {
-        const {id, phone} = data.rows[0];
-        sendSMS(phone, 'order denied');
-      })
-      .catch(err => {
-        res.status(500).json({ error: err.message });
-      });
-  });
-=======
     .then(data => {
       const {id, phone} = data.rows[0];
       sendSMS(phone, 'order denied');
@@ -171,7 +140,6 @@ module.exports = (db) => {
     .catch(err => {
       res.status(500).json({ error: err.message })});
     });
->>>>>>> edd98238dc8cd8227cdd37c24cf7b598ae935a35
 
   return router;
 };

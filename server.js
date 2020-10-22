@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 // Web server config
-const PORT       = process.env.PORT || 3050;
+const PORT       = process.env.PORT || 8080;
 const ENV        = process.env.ENV || "development";
 const express    = require("express");
 const bodyParser = require("body-parser");
@@ -32,7 +32,7 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
-app.use(cookieSession ({
+app.use(cookieSession({
   name: 'session',
   keys: ['a']
 }));
@@ -71,7 +71,7 @@ app.get("/", (req, res) => {
 
 
 app.get('/manager/orders', (req, res) => {
-  const returnObj = []
+  const returnObj = [];
 
   const orderids = [];
 
@@ -80,21 +80,21 @@ app.get('/manager/orders', (req, res) => {
     SELECT * FROM orders
     ORDER BY place_order_datetime DESC;
   `).then((data) => {
-res.send(data.rows)
+    res.send(data.rows);
   }).then(() => {
     for (const item in returnObj[0]) {
-      orderids.push(returnObj[0][item].id)
+      orderids.push(returnObj[0][item].id);
     }
   }).then(() => {
     db.query(`
     SELECT * FROM orders;
-    `)
+    `);
   }).then((data)=> {
-    console.log(data)
-  })
+    console.log(data);
+  });
 
 
-})
+});
 
 app.get('/manager/orders/:orderid', (req, res) => {
   db.query(`
@@ -104,10 +104,10 @@ app.get('/manager/orders/:orderid', (req, res) => {
   WHERE order_items.order_id = ${req.params.orderid};
 
   `).then((data) => {
-    res.send(data.rows)
+    res.send(data.rows);
   });
 
-})
+});
 
 app.get("/manager", (req, res) => {
   if (req.session.user_id) {
@@ -129,13 +129,13 @@ app.get("/update", (req, res) => {
 });
 
 app.post("/update", (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   db.query(`
   INSERT INTO items (id, name, category, price, available, prep_time, image, stock)
   VALUES(1000000, '${req.body.name}', '${req.body.category}', ${req.body.price}, ${req.body.available}, ${req.body.prep_time}, '${req.body.image}', ${req.body.stock});
-  `)
-  res.send('ok')
-})
+  `);
+  res.send('ok');
+});
 
 // Returns the user's cookie so it can be used to create a local entry with the user's menu selections
 app.get("/userid", (req, res) => {

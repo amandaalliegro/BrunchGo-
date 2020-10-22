@@ -44,4 +44,4 @@ router.post('/logout' = () => {
   res.redirect('/login');
 
   };
-}
+});
