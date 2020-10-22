@@ -11,6 +11,44 @@ body {
     color: #244751;
   }
 }
+.container-fluid {
+  background-color: #fff;
+  border-color: #fff;
+  color: rgb(109, 71, 0);
+}
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+  background-color: rgb(201, 170, 112);
+  border-color: rgb(201, 170, 112);
+  color: rgb(109, 71, 0);
+}
+.brand {
+  background-color: rgb(201, 170, 112);
+  border-color: rgb(201, 170, 112);
+  color: rgb(109, 71, 0);
+  float: left;
+  padding: 15px;
+  font-size: 18px;
+  line-height: 20px;
+  height: 50px;
+}
+.navbar-header1{
+  background-color: rgb(201, 170, 112);
+  border-color: rgb(201, 170, 112);
+  color: rgb(109, 71, 0);
+}
+
+.navbar {
+  position: fixed;
+  min-height: 50px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+}
+.navbar navbar-default {
+  background-color: rgb(201, 170, 112);
+  border-color: rgb(201, 170, 112);
+}
+
+
 
 .main-container {
   border: 2px red solid;
@@ -50,13 +88,14 @@ body {
   text-align: center;
   color: orange;
   font-size: 1.5em;
-  background-color: rgb(224, 204, 176);
+  background-color: #fff;
 }
 
 .item-footer {
   display: flex;
   bottom: 0px;
-  background-color: rgb(224, 204, 176)e;
+  background-color: #fff
+  ;
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
@@ -76,6 +115,63 @@ body {
 
 .item-description {
   width: 100%;
+}
+
+.footer {
+  position: relative;
+  left: 0px;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(201, 170, 112);
+  color: rgb(109, 71, 0);
+  text-align: left;
+  float: left;
+  padding-bottom: 4%;
+  justify-content: space-between !important;
+  align-content: center !important;
+  font-size: 15px;
+  line-height: 20px;
+  height: 40px;
+}
+.navhome {
+  background-color: rgb(201, 170, 112);
+  border-color: rgb(201, 170, 112);
+  color: rgb(109, 71, 0);
+}
+.btn-secondary{
+  background-color: rgb(201, 170, 112) !important;
+  border-color: rgb(201, 170, 112) !important;
+  color: rgb(109, 71, 0) !important;
+}
+
+.container-login {
+
+  width: 400px !important;
+  height: 150px !important;
+  left: 50% !important;
+  margin: -130px 0 0 -210px !important;
+  padding:10px !important;
+  position: absolute !important;
+  top: 50% !important;
+}
+
+
+
+.footer-login {
+  position: absolute;
+  left: 0px;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(201, 170, 112);
+  color: rgb(109, 71, 0);
+  text-align: left;
+  float: left;
+  padding-bottom: 4%;
+  justify-content: left !important;
+  align-content: center !important;
+  font-size: 15px;
+  line-height: 20px;
+  height: 40px;
 }
 
 
