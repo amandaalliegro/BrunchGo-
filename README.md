@@ -6,14 +6,22 @@ BrunchGo!
 The present project was build as a partnership by [Amanda Arnaut Alliegro](https://github.com/amandaalliegro), [Erik Leisinger](https://github.com/erikleisinger) and [George Tang](https://github.com/georgecctang/).
 
 BrunchGo! Is a full stack web application for ordering meals from a restaurant for pickup. This app is built with Node, Express and Postresql database. 
-With this app, customers can:
+
+### With this app, customers can:
 - Browse through the restaurants menu, and select their favourite items
+![menu with options](sample/Menu.png)
 - Order with their name and phone number
+![place an order](sample/ReviewOrder.png)
 - View the status of their orders (received, in-preparation, ready-for-pickup, or  denied)
+![order status](sample/OrderReceived.png)
 - Receive an SMS notification for an update in status
-- Restaurant owners can:
+
+### Restaurant owners can:
 - Receive an SMS for a new order
+- Log in and out of back-end admin tools
+![admin page](sample/Login.png)
 - Browse all orders in a page
+![admin page](sample/Admin.png)
 - Enter an estimated preparation time
 - Accept or deny order
 - Notify customer with SMS when ready for pickup
@@ -23,7 +31,7 @@ With this app, customers can:
 
 1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
 2. Update the .env file with your correct local information 
-  -DB_HOST=localhost
+  DB_HOST=localhost
 - DB_USER=labber
 - DB_PASS=labber
 - DB_NAME=midterm
@@ -57,3 +65,6 @@ With this app, customers can:
 - pg: "^6.4.2",
 - pg-native: "^3.0.0",
 - twilio: "^3.50.0"
+
+
+
