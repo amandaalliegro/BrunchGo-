@@ -3,7 +3,8 @@ DROP TABLE IF EXISTS orders CASCADE;
 DROP TABLE IF EXISTS order_items CASCADE;
 DROP TABLE IF EXISTS items CASCADE;
 DROP TABLE IF EXISTS manager CASCADE;
-
+DROP TABLE IF EXISTS carts CASCADE;
+DROP TABLE IF EXISTS cart_items CASCADE;
 
 CREATE TABLE restaurants (
   id         SERIAL PRIMARY KEY NOT NULL,
@@ -15,6 +16,7 @@ CREATE TABLE restaurants (
 
 CREATE TABLE orders (
   id                  SERIAL PRIMARY KEY NOT NULL,
+  userid              INTEGER NOT NULL,
   restaurant_id        INTEGER REFERENCES restaurants(id) ON DELETE CASCADE,
   name                VARCHAR(255) NOT NULL,
   phone               VARCHAR (255) NOT NULL,
@@ -22,7 +24,7 @@ CREATE TABLE orders (
   sub_total           NUMERIC NOT NULL,
   tax                 NUMERIC NOT NULL,
   total               NUMERIC NOT NULL,
-  order_status              VARCHAR(255) NOT NULL,
+  order_status            VARCHAR(255) NOT NULL,
   accept_order_datetime   TIMESTAMP,
   estimated_prep_time     INTEGER,
   complete_order_datetime  TIMESTAMP
@@ -51,4 +53,15 @@ CREATE TABLE manager (
   id           SERIAL PRIMARY KEY NOT NULL,
   user_name    VARCHAR(255) NOT NULL,
   password     VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE carts (
+  id SERIAL PRIMARY KEY NOT NULL,
+  created TIMESTAMP
+);
+
+CREATE TABLE cart_items (
+  id SERIAL PRIMARY KEY NOT NULL,
+  item_id INTEGER REFERENCES items(id) ON DELETE CASCADE,
+  cart_id INTEGER REFERENCES carts(id) ON DELETE CASCADE
 );

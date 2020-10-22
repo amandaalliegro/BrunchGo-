@@ -27,23 +27,24 @@ module.exports = (db) => {
     FROM orders
     WHERE id = $1
     `, [orderId])
-    // render specific page based on
-    .then(data => {
-      const orderStatus = data.rows[0].order_status;
+      // render specific page based on
+      .then(data => {
+        const orderStatus = data.rows[0].order_status;
 
-      // Pseudocode logic
-      if (orderStatus === 'received') {
-        return res.render(/* page "order received" */);
-      } else if (orderStatus === 'accepted') {
-        return res.render(/* page "order accepted" */); // Will need the estimated time
-      } else if (orderStatus === 'completed') {
-        return res.render(/* page "order completed" */);
-      } else if (orderStatus === 'denied') {
-        return res.render(/* page 'order denied */)
-      }
-    })
-    .catch(err => {
-      res.status(500).json({ error: err.message })});
+        // Pseudocode logic
+        if (orderStatus === 'received') {
+          return res.render(/* page "order received" */);
+        } else if (orderStatus === 'accepted') {
+          return res.render(/* page "order accepted" */); // Will need the estimated time
+        } else if (orderStatus === 'completed') {
+          return res.render(/* page "order completed" */);
+        } else if (orderStatus === 'denied') {
+          return res.render(/* page 'order denied */)
+        }
+      })
+      .catch(err => {
+        res.status(500).json({ error: err.message })
+      });
 
   });
 
@@ -61,9 +62,8 @@ module.exports = (db) => {
   router.post("/confirmation", (req, res) => {
 
     // Set orderDatetime to current time
-    // const placeOrderDatetime = Date.now();
-
-    const { name, phone, sub_total, tax, total } = req.body;
+    const { name, phone, subtotal, tax, total } = req.body;
+    console.log(req.body)
     // console.log(name, phone, sub_total, tax, total);
     /* 1. INSERT the data to order database */
     const currentDateTime = new Date().toISOString();
@@ -71,54 +71,61 @@ module.exports = (db) => {
     // Currently only accepting order from one restaruant
     const restaurantId = 100;
     db.query(
-      `INSERT INTO orders (restaurant_id, name, phone, place_order_datetime, sub_total, tax, total, order_status, accept_order_datetime, estimated_prep_time, complete_order_datetime)
+      `INSERT INTO orders (restaurant_id, userid, name, phone, place_order_datetime, sub_total, tax, total, order_status, accept_order_datetime, estimated_prep_time, complete_order_datetime)
     VALUES
-    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
     RETURNING *
-    ;`, [restaurantId, name, phone, currentDateTime, sub_total, tax, total, 'received', null, null, null])
-    /* 2 INSERT INTO order item table */
-    .then(data => {
-      //retrieve id from orders table
-      const orderId = data.rows[0].id;
-      const { order } = req.body;
-      console.log(orderId, order);
+    ;`, [restaurantId, req.session.user_id, name, phone, currentDateTime, subtotal, tax, total, 'received', null, null, null])
+      /* 2 INSERT INTO order item table */
+      .then(data => {
+        //retrieve id from orders table
+        const orderId = data.rows[0].id;
+        const { order } = req.body;
+        console.log(orderId, order);
 
-      const orderLength = order.length;
-      let count = 0;
-      let queryString = 'INSERT INTO order_items (order_id, item_id, quantity) VALUES ';
-      for (let item of order) {
-        queryString += `(${orderId}, ${item.id}, ${item.quantity}) `;
-        if (count < orderLength - 1) {
-          queryString += ', ';
+        const orderLength = order.length;
+        let count = 0;
+        let queryString = 'INSERT INTO order_items (order_id, item_id, quantity) VALUES ';
+        for (let item of order) {
+          queryString += `(${orderId}, ${item.id}, ${item.quantity}) `;
+          if (count < orderLength - 1) {
+            queryString += ', ';
+          }
+          count++;
         }
-        count++;
-      }
-      queryString += 'RETURNING * ;';
+        queryString += 'RETURNING * ;';
 
-      console.log(queryString);
+        console.log(queryString);
 
-      return db.query(queryString);
-    })
-    // Send SMS message to restaruant
-    .then(data => {
-      // currently using George's phone number
-      sendSMS('7783194360', 'new order received!');
-      return data;
-    })
-    // Set cookie with order_id and redirect to /order page
-    .then(data => {
-      // const orderId = data.rows[0].order_id;
-      // // Set cookie on browser for order_id
-      // req.session.order_id = orderId;
-      // Check the name of view
-      res.send('message placed');
-    })
-    .catch(err => {
-      res.status(500).json({ error: err.message })});
-    });
+        return db.query(queryString);
+      })
+      // Send SMS message to restaruant
+      .then(data => {
+        // currently using George's phone number
+        sendSMS('7783194360', 'new order received!');
+        return data;
+      })
+      // Set cookie with order_id and redirect to /order page
+      .then(data => {
+        // const orderId = data.rows[0].order_id;
+        // // Set cookie on browser for order_id
+        // req.session.order_id = orderId;
+        // Check the name of view
+        res.send('message placed');
+      })
+      .catch(err => {
+        res.status(500).json({ error: err.message })
+      });
+  });
 
-    router.get('/user_order', (req, res) => {
-      res.render('index_user_order')
-    })
+  router.get('/user_order', (req, res) => {
+    res.render('order_confirmation')
+  })
+
+  router.get('/pending', (req, res) => {
+    res.render('index_user_order')
+  })
+
+
   return router;
 };

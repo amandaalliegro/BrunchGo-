@@ -1,13 +1,25 @@
 <!DOCTYPE html>
+<html lang="en">
+
 <head>
-  <title>Order Confirmation</title>
+  <title>BrunchGo!</title>
+
   <%- include ./partials/_head.ejs %>
+  <script type="text/javascript" src="/scripts/confirmation.js"></script>
+
 </head>
 
 <body>
-  <%- include ./partials/_header.ejs %>
+  <%- include ./partials/_navbar_plain.ejs %>
+  <%- include ./partials/_banner.ejs %>
+    <div class='container'>
 
-  <%= userid %>
+        <div class="container order-items" style="border: 1px solid gray; border-radius: 10px; margin-bottom: 10px">
+          <div class="container" style="width: 500px; text-align: center">
+            <h1>Review Your Order</h1>
+          </div>
+    </div>
+
+    </div>
+  </div>
 </body>
-
-

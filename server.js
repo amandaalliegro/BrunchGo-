@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 // Web server config
-const PORT       = process.env.PORT || 8080;
+const PORT       = process.env.PORT || 3050;
 const ENV        = process.env.ENV || "development";
 const express    = require("express");
 const bodyParser = require("body-parser");
@@ -43,6 +43,7 @@ const menuRoutes = require("./routes/menu");
 const widgetsRoutes = require("./routes/widgets");
 const ordersRoutes = require('./routes/orders');
 const adminRoutes = require('./routes/admin');
+const cartRoutes = require('./routes/cart');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -50,6 +51,7 @@ app.use("/api/menu", menuRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 app.use('/api/orders', ordersRoutes(db));
 app.use("/admin", adminRoutes(db));
+app.use("/cart", cartRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 
@@ -150,7 +152,7 @@ app.get("/orderclient", (req, res) => {
     res.render('index_user_order');
   }
 });
-app.get("/orderaccepted", (req, res) => {
+app.post("/orderaccepted", (req, res) => {
   if (req.session.user_id) {
     res.render('index_user_accept');
   } else {
