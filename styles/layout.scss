@@ -1,8 +1,8 @@
 // See: https://sass-lang.com/
 
 body {
-  background-color: rgb(224, 204, 176);
-  background-image: url('styles/wood.png');
+  background-color: rgb(245, 232, 214) !important;
+
 
   margin:0;
   padding: 0;
@@ -10,6 +10,11 @@ body {
   h1 {
     color: #244751;
   }
+}
+
+.thumbnail {
+  background-color: rgb(224, 204, 176) !important;
+  border: 1px solid  rgb(224, 204, 176) !important;
 }
 .container-fluid {
   background-color: #fff;

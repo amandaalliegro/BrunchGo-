@@ -1,12 +1,16 @@
 body {
-  background-color: #e0ccb0;
-  background-image: url("styles/wood.png");
+  background-color: #f5e8d6 !important;
   margin: 0;
   padding: 0;
 }
 
 body h1 {
   color: #244751;
+}
+
+.thumbnail {
+  background-color: #e0ccb0 !important;
+  border: 1px solid #e0ccb0 !important;
 }
 
 .container-fluid {
