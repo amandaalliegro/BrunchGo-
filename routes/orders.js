@@ -8,12 +8,14 @@
 const express = require('express');
 const { sendSMS } = require('../twilio');
 const router = express.Router();
+require('dotenv').config();
 
 module.exports = (db) => {
 
   // GET: Customer to check their order
   router.get("/confirmation", (req, res) => {
     const orderId = req.session.order_id;
+    console.log('at confirmation orderId', orderId);
     // if no order_id in session, redirect to menu
     // const orderId = req.session.order_id;
     if (!orderId) {
@@ -31,7 +33,6 @@ module.exports = (db) => {
         const orderStatus = data.rows[0].order_status;
         const orderId = data.rows[0].id;
 
-        console.log(orderStatus, orderId);
         // Pseudocode logic
         if (orderStatus === 'received') {
           return res.render('index_user_order', { orderId });
@@ -91,7 +92,7 @@ module.exports = (db) => {
         console.log(req.session.user_id)
 
         const { order } = req.body;
-        console.log(req.body)
+        console.log(req.body);
         const orderLength = order.length;
         let count = 0;
         let queryString = 'INSERT INTO order_items (order_id, item_id, quantity) VALUES ';
@@ -108,7 +109,7 @@ module.exports = (db) => {
         return queryString;
       })
       .then(queryString => {
-        db.query(`${queryString}`)
+        return db.query(`${queryString}`)
       })
       // Send SMS message to restaruant
       .then(data => {
@@ -116,19 +117,21 @@ module.exports = (db) => {
         // currently using George's phone number
         sendSMS(process.env.OWNERPHONE, `Order #${orderId} New order received!`);
         return data;})
-      .then(()=> {
+      .then((data)=> {
         db.query(`
         DELETE FROM carts
         WHERE id = ${req.session.user_id};
-        `)
+        `);
+        return data;
       })
       // Set cookie with order_id and redirect to /confirmation page
       .then(data => {
         const orderId = data.rows[0].order_id;
         // Set cookie on browser for order_id
         req.session.order_id = orderId;
+        console.log('set req.session.order_id', orderId);
         // Check the name of view
-        res.redirect('/confirmation');
+        res.redirect('./confirmation');
         // Check the name of view
       });
   });
