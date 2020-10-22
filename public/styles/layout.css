@@ -177,6 +177,21 @@ body h1 {
   top: 50% !important;
 }
 
+.footer-order-processed {
+  position: relative;
+  left: 0px;
+  bottom: 0;
+  width: 100%;
+  background-color: #c9aa70;
+  color: #6d4700;
+  text-align: left;
+  float: left;
+  padding-bottom: 4%;
+  font-size: 15px;
+  line-height: 20px;
+  height: 40px;
+}
+
 .footer-login {
   position: absolute;
   left: 0px;
