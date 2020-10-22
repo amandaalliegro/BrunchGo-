@@ -123,6 +123,7 @@ module.exports = (db) => {
       })
       // Set cookie with order_id and redirect to /order page
       .then(data => {
+        console.log()
         const orderId = data.rows[0].order_id;
         // Set cookie on browser for order_id
         req.session.order_id = orderId;
