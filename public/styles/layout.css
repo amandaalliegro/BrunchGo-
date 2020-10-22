@@ -116,8 +116,8 @@ body h1 {
 }
 
 .footer {
-  position: bottom;
-  left: 8px;
+  position: relative;
+  left: 0px;
   bottom: 0;
   width: 100%;
   background-color: #c9aa70;
@@ -126,6 +126,7 @@ body h1 {
   float: left;
   padding-bottom: 4%;
   justify-content: space-between !important;
+  align-content: center !important;
   font-size: 15px;
   line-height: 20px;
   height: 40px;
@@ -141,4 +142,31 @@ body h1 {
   background-color: #c9aa70 !important;
   border-color: #c9aa70 !important;
   color: #6d4700 !important;
+}
+
+.container-login {
+  width: 400px !important;
+  height: 150px !important;
+  left: 50% !important;
+  margin: -130px 0 0 -210px !important;
+  padding: 10px !important;
+  position: absolute !important;
+  top: 50% !important;
+}
+
+.footer-login {
+  position: absolute;
+  left: 0px;
+  bottom: 0;
+  width: 100%;
+  background-color: #c9aa70;
+  color: #6d4700;
+  text-align: left;
+  float: left;
+  padding-bottom: 4%;
+  justify-content: left !important;
+  align-content: center !important;
+  font-size: 15px;
+  line-height: 20px;
+  height: 40px;
 }
