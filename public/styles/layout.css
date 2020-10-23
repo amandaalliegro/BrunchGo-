@@ -8,6 +8,10 @@ body h1 {
   color: #244751;
 }
 
+img {
+  max-height: 400px !important;
+}
+
 .thumbnail {
   background-color: #e0ccb0 !important;
   border: 1px solid #e0ccb0 !important;
