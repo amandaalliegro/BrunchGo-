@@ -42,16 +42,16 @@ const refreshCart = function () {
 
         const newCartItem = `
     <div class="row cart-row" id="cart-item${item.id}">
-    <div class="col-lg-3 col-sm-3 cart-item-img">
+    <div class="col-lg-3 col-sm-3 col-xs-3 cart-item-img">
       <img src="${item.image}">
     </div>
-    <div class="col-lg-6 col-sm-6 cart-item-info">
+    <div class="col-lg-6 col-sm-6 col-xs-4 cart-item-info">
       <span>
         <h3>${item.name}</h3>
         <p class="itemprice">$${((item.price / 100) * item.quantity).toFixed(2)}</p>
       </span>
     </div>
-    <div class="col-lg-3 col-sm-3 cart-counter">
+    <div class="col-lg-3 col-sm-3 col-xs-3 cart-counter">
       <div>
         <span><a class="cart-button-minus btn btn-default" role="button">-</a></span>
         <span class="counter">${item.quantity}</span>
