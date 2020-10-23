@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 // Web server config
-const PORT = process.env.PORT || 3050;
+const PORT = process.env.PORT || 8080;
 // const ENV = process.env.ENV || "development";
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -72,7 +72,6 @@ app.get("/", (req, res) => {
 });
 
 app.get('/cookie', (req, res) => {
-  console.log(req.session)
   const cookie = String(req.session.user_id);
   res.send(cookie);
 });
@@ -80,7 +79,12 @@ app.get('/cookie', (req, res) => {
 app.get('/test', (req, res) => {
   // console.log(req.session)
   // const cookie = req.session.user_id;
-  res.send('test');
+  res.redirect("https://www.google.com");});
+
+app.post('/test', (req, res) => {
+  // console.log(req.session)
+  // const cookie = req.session.user_id;
+  return res.redirect("https://www.google.com");
 });
 
 app.get('/manager/orders', (req, res) => {

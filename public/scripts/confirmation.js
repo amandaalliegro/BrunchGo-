@@ -8,7 +8,7 @@ $(() => {
       subtotal = Number(totalPrice);
       tax = Number(subtotal * 0.15);
       total = subtotal + tax;
-      console.log(total)
+      // console.log(total)
       }).done(() => {
 
 
@@ -18,7 +18,7 @@ $(() => {
 
 
       for (const item of items) {
-        console.log(item)
+        // console.log(item)
         const newItem = `
   <div class="row cart-row" id="cart-item${item.id}">
   <div class="col-lg-3 col-sm-3 cart-item-img">

@@ -14,7 +14,7 @@ const sendSMS = function(phoneNumber, messageBody) {
     from: `+16473721872`,
     body: messageBody
   })
-  .then(message => console.log(message.sid))
+  .then(() => {return;})
   .catch(error => {
     console.log('***error delivering message***', error);
     res.send("cannot deliver message");
