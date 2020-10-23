@@ -155,7 +155,7 @@ const renderPlusMinusButtons = function () {
 // generates a new html row for a menu category (appetizers, mains, etc) with a column for each menu item in that category
 const renderMenuRow = function (data, title, id, order) {
 
-  let newMenuCategory = `<div class="row" style= #A0522D>
+  let newMenuCategory = `<div class="row">
   <a id="${id}"></a>
   <h2><b>${title}</b> </h2>
   </div>`;
