@@ -7,6 +7,7 @@ div.cart {
 div.cart > .row {
   border: none;
   border-bottom: 1px solid gray;
+  max-width: 500px !important;
 }
 
 #cart-btn {

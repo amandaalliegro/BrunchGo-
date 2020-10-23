@@ -166,7 +166,7 @@ const renderMenuRow = function (data, title, id, order) {
     let menuItem = `
   <div class="d-flex justify-content-center col-md-4 text-center" id="${item.id}">
   <a href="#" class="thumbnail">
-    <img src=${item.image} alt="Card image cap">
+    <img src=${item.image} alt="Card image cap" class="menu-img">
   </a>
   <h3><i>${item.name}</i></h3>
   <span class="menu-item-price"> $${(item.price / 100).toFixed(2)} </span>

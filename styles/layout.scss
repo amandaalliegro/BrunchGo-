@@ -12,7 +12,7 @@ body {
   }
 }
 
-img {
+img.menu-img {
   max-height: 400px!important;
 }
 
@@ -123,6 +123,9 @@ img {
 .item-description {
   width: 100%;
 }
+#main-container {
+  margin-bottom: 20px;
+}
 
 .footer {
   position: relative;
@@ -133,12 +136,12 @@ img {
   color: rgb(109, 71, 0);
   text-align: left;
   float: left;
-  padding-bottom: 4%;
+  // padding-bottom: 4%;
   justify-content: space-between !important;
   align-content: center !important;
   font-size: 15px;
   line-height: 20px;
-  height: 40px;
+  // height: 40px;
 }
 .navhome {
 

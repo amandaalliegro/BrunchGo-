@@ -1,7 +1,7 @@
 const refreshManagerOrders = function () {
   $('.orders').empty()
   $.get('/manager/orders').then((data) => {
-    console.log(data)
+
 
     const row = `
     <h2 class="sub-header">Orders details:</h2>
@@ -31,7 +31,7 @@ const refreshManagerOrders = function () {
     for (const item of data) {
 
       $.get(`/manager/orders/${item.id}`).then(function (data) {
-        console.log(data)
+
         let itemsDiv = ``;
         for (const item of data) {
           let sentence = `${item.quantity}x ${item.name}<br>`
@@ -50,7 +50,7 @@ const refreshManagerOrders = function () {
           <td id="${item.id}"class="items-ordered">${itemsDiv}</td>
           <td>${item.phone}</td>
           <td>$${item.total}</td>
-          <td>${item.order_status}</td>
+          <td class="order_status">${item.order_status}</td>
           <td >
           <input type="text" class="order_time" name="order_time" style="width: 50px" placeholder="mins"></input>
           <button type="button" class="btn btn-default btn-sm accept-order-btn">
@@ -68,7 +68,24 @@ const refreshManagerOrders = function () {
             </td>
         </tr>`;
 
+
+
         $('.manager-table').append($divToInsert);
+        if (item.order_status === 'accepted') {
+
+          const row = $('.orders').find(`#${item.id}`)[0];
+
+          $(row).css('background-color', 'rgb(162, 209, 73)')
+        } else if (item.order_status === 'denied') {
+          const row = $('.orders').find(`#${item.id}`)[0];
+          $(row).css('background-color', 'rgb(209, 100, 73)')
+        } else if (item.order_status === 'completed') {
+          const row = $('.orders').find(`#${item.id}`)[0];
+          $(row).css('background-color', 'rgb(196, 189, 188)')
+        } else if (item.order_status === 'received') {
+          const row = $('.orders').find(`#${item.id}`)[0];
+          $(row).css('background-color', 'rgb(194, 167, 92)')
+        }
 
         const acceptOrderBtn = $(`#${item.id}`).find('.accept-order-btn')[0];
 
@@ -100,9 +117,13 @@ const refreshManagerOrders = function () {
             refreshManagerOrders();
           })
         })
-
-      });
+        console.log('finished innr')
+      })
     }
+
+  }).done(() => {
+
+      console.log($('body').find('td.order_status'))
   })
 
 

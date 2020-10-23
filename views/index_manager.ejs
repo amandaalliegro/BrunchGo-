@@ -43,17 +43,6 @@
   </div>
 </body>
 <!-- Footer with hyperlink to the login page -->
-<div class='footer'>
-  <form id='logout' class="signout" action="/admin/logout" method="POST"></form>
-  <span>Brunch<b>Go!</b></span>
-    <span>
-      <form method="POST" action="/admin/logout">
-        <input type="hidden" name="logout" style="display: none">
-        <button type="submit" name='logout'><B>Logout</B></button>
-        </input>
-      </form>
-    </span>
-
-</div>
+<%- include ./partials/_footer_admin.ejs %>
 
 </html>
