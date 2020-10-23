@@ -36,8 +36,3 @@ INSERT INTO manager (id, user_name, password)
 VALUES
 (54321, 'jamie_roll', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
 
-
-INSERT INTO order_items (order_id, item_id, quantity)
-VALUES (1, 6, 3),
-(1, 4, 2),
-(1, 5, 5);

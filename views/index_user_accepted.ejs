@@ -18,8 +18,8 @@
       <div class="container" style="height: 600px;">
         <img src='styles/Sms.png' style='justify-content: center;' alt='sms'>
         <h2>We're preparing your order!</h2>
-        <h3>The expected pickup is: <span class='time_expectation_counter'><%= estCompletionTime.toLocaleString([],
-          {year:"numeric", month:"2-digit", day: "2-digit", hour: '2-digit', minute:'2-digit'}) %></span></h3>
+        <h3>The expected pickup is: <span class='time_expectation_counter'><%= estCompletionTime.toLocaleString('en-US',
+          {timeZone: 'Canada/Eastern', year:"numeric", month:"2-digit", day: "2-digit", hour: '2-digit', minute:'2-digit'}) %></span></h3>
         <h3>We'll send you and SMS message when it's ready!</h3>
         <h4>Order #<%= orderId %></h4>
       </div>
@@ -27,7 +27,6 @@
   </div>
 </body>
 <!-- Footer with hyperlink to the home page -->
-<div class='footer-login'>
+<div class='footer-order-processed'>
   <p>Brunch<b>Go!</b> <a href="/" target="_blank"><B>HOME</B></a></p>
 </div>
-

@@ -63,16 +63,18 @@ const renderCheckoutButton = function () {
             total,
             order: data
           };
-          console.log(newOrder)
           $.ajax({
             method: "POST",
             url: '/api/orders/new',
             data: newOrder,
-            dataType: 'json'
-          }).then((data) => {
-            window.location.href = "api/orders/pending"
-            console.log(data)
-          });
+            dataType: 'json',
+            success: function (data) {
+              window.location.assign('/api/orders/confirmation');
+            },
+            error: function(jqXhr, textStatus, errorMessage) {
+              console.log('error: ', errorMessage);
+            }
+          })
         });
       });
     };

@@ -14,8 +14,10 @@ module.exports = (db) => {
   // GET: Customer to check their order
   router.get("/confirmation", (req, res) => {
     const orderId = req.session.order_id;
+    console.log('***Confirmation orderId:', orderId);
     // if no order_id in session, redirect to menu
-    // const orderId = req.session.order_id;
+    // res.send('Confirmation Page');
+
     if (!orderId) {
       return res.redirect("../../");
     }
@@ -44,6 +46,8 @@ module.exports = (db) => {
           return res.render('index_user_completed', {orderId});
         } else if (orderStatus === 'denied') {
           return res.render('index_user_denied', {orderId});
+        } else {
+          return res.send('ERROR: missing order_status');
         }
       })
       .catch(err => {
@@ -79,43 +83,50 @@ module.exports = (db) => {
 
     db.query(
       `INSERT INTO orders (restaurant_id, userid, name, phone, place_order_datetime, sub_total, tax, total, order_status, accept_order_datetime, estimated_prep_time, complete_order_datetime)
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-    RETURNING *;
-    `, [restaurantId, req.session.user_id, name, phone, currentDateTime, subtotal, tax, total, 'received', null, null, null])
+      VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+      RETURNING *;
+      `, [restaurantId, req.session.user_id, name, phone, currentDateTime, subtotal, tax, total, 'received', null, null, null])
       /* 2 INSERT INTO order item table */
-      .then((data) => {
-        //retrieve id from orders table
-        const orderId = data.rows[0].id
-        req.session.user_id = orderId;
-        // Send SMS message to restaruant
-        sendSMS(process.env.OWNERPHONE, `Order #${orderId} New order received!`);
-        const { order } = req.body;
-        const orderLength = order.length;
-        let count = 0;
-        let queryString = 'INSERT INTO order_items (order_id, item_id, quantity) VALUES ';
-        for (let item of order) {
-          console.log(item)
-          queryString += `(${orderId}, ${item.id}, ${item.quantity}) `;
-          if (count < orderLength - 1) {
-            queryString += ', ';
-          }
-          count++;
-        }
-        queryString += 'RETURNING * ;';
-        return queryString
-      })
-      .then((queryString) => {
-        db.query(`${queryString}`).then((data) => {
-        }).then(()=> {
-          db.query(`
-          DELETE FROM carts
-          WHERE id = ${req.session.user_id};
-          `).then((data) => {
-            res.send(data);
-          });
-        });
+    .then((data) => {
+      console.log('***INSERT INTO ORDER_ITEM***');
+      //retrieve id from orders table
+      const orderId = data.rows[0].id
+      req.session.order_id = orderId;
 
-      })
+      // Send SMS message to restaruant
+      sendSMS(process.env.OWNERPHONE, `Order #${orderId} New order received!`);
+      const { order } = req.body;
+      const orderLength = order.length;
+
+      // Create INSERT query for order_items table
+      let count = 0;
+      let queryString = 'INSERT INTO order_items (order_id, item_id, quantity) VALUES ';
+      for (let item of order) {
+        // console.log(item)
+        queryString += `(${orderId}, ${item.id}, ${item.quantity}) `;
+        if (count < orderLength - 1) {
+          queryString += ', ';
+        }
+        count++;
+      }
+        queryString += 'RETURNING * ;';
+        return queryString;
+    })
+    // INSERT INTO order_itmes
+    .then((queryString) => {
+      return db.query(`${queryString}`)
+    })
+    .then(()=> {
+      console.log('***DELETE CARTS***');
+      return db.query(`
+      DELETE FROM carts
+      WHERE id = ${req.session.user_id};
+    `)})
+    .then(() => {
+      console.log('***GET CONFIRMATION***');
+      // Send response to broswer to trigger 'success' function in ajax
+      return res.json({success: true});
+    });
   });
 
   router.get('/user_order', (req, res) => {

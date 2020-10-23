@@ -10,8 +10,6 @@ const user_cart = {};
 
 module.exports = (db) => {
 
-
-
   router.post('/create', (req, res) => {
     const userid = req.session.user_id;
 
